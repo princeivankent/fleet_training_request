@@ -4,18 +4,7 @@
         <div class="form-row">
             <div class="col-md-3"></div>
             <div class="col-md-6">
-
-                {{-- <div class="form-group">
-                    <label for="company_name">Company Name</label>
-                    <input v-model="company_name" type="text" class="form-control" id="company_name" aria-describedby="textHelp">
-                </div>
-
-                <div class="form-group">
-                    <label for="office_address">Office Address</label>
-                    <input type="text" class="form-control" id="office_address" aria-describedby="textHelp">
-                </div> --}}
-
-                <div class="form-row">
+                <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="training_participants">
@@ -25,49 +14,44 @@
                             <table class="table table-sm table-striped">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Participants</th>
-                                        <th scope="col">Qty</th>
+                                        <th scope="col" class="text-center">Participants</th>
+                                        <th scope="col" width="80" class="text-center">Qty</th>
+                                        <th width="20" class="text-center">&nbsp;</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr v-for="(item, index) in training_participants">
-                                        <td>@{{ item.participants }}</td>
-                                        <td>@{{ item.quantity }}</td>
+                                        <td class="text-center">@{{ item.participants }}</td>
+                                        <td class="text-center">@{{ item.quantity }}</td>
+                                        <td class="text-center">
+                                            <button v-on:click="remove(index)"
+                                            class="btn btn-sm btn-danger">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td>
-                                            <select class="custom-select">
-                                                <option selected>Open this select menu</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
+                                        <td class="text-center">
+                                            <select class="custom-select" v-model="participants.participants">
+                                                <option selected></option>
+                                                <option value="Driver">Driver</option>
+                                                <option value="Mechanic">Mechanic</option>
+                                                <option value="Fleet Head">Fleet Head</option>
+                                                <option v-on:click="others">Others</option>
                                             </select>
                                         </td>
-                                        <td>
-                                            <input type="number" class="form-control">
+                                        <td class="text-center">
+                                            <input type="number" class="form-control" v-model="participants.quantity">
+                                        </td>
+                                        <td class="text-center">
+                                            <button v-on:click="add"
+                                            class="btn btn-sm btn-success mt-1">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email Address</label>
-                            <input type="email" class="form-control" id="email" aria-describedby="textHelp">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="contact_number">Selling Dealer</label>
-                            <select class="selectpicker" 
-                            multiple data-live-search="true" 
-                            multiple data-selected-text-format="count > 4"
-                            data-width="100%"
-                            data-size="6">
-                                <option data-content="<span class='badge badge-info' style='padding: 7px;'>Relish</span>">Mustard</option>
-                                <option data-content="<span class='badge badge-info' style='padding: 7px;'>Relish</span>">Ketchup</option>
-                                <option data-content="<span class='badge badge-info' style='padding: 7px;'>Relish</span>">Relish</option>
-                                <option data-content="<span class='badge badge-info' style='padding: 7px;'>Relish</span>">Relish</option>
-                                <option data-content="<span class='badge badge-info' style='padding: 7px;'>Relish</span>">Relish</option>
-                            </select>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -78,21 +62,32 @@
                             </label>
                             <input type="date" class="form-control" id="position" aria-describedby="textHelp">
                         </div>
-                        <div class="form-group">
-                            <label for="contact_number">Contact Number</label>
-                            <input type="text" class="form-control" id="contact_number" aria-describedby="textHelp">
+                        <div class="form-group mt-4">
+                            <div class="form-group">
+                                <label for="training_venue">
+                                    Training Venue
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <select class="selectpicker" data-live-search="true"
+                                title="Click to pick items"
+                                data-style="btn-info"
+                                data-width="100%"
+                                data-size="6">
+                                    <option>Fleet Customer</option>
+                                    <option>IPC</option>
+                                </select>
+                            </div>
                         </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
                         <div class="form-group">
-                            <label for="unit_models">Isuzu Specific Unit Model</label>
-                            <select class="selectpicker" multiple data-live-search="true" 
-                            data-style="btn-info"
-                            data-width="100%"
-                            data-size="6">
-                                <option>Mustard</option>
-                                <option>Ketchup</option>
-                                <option>Relish</option>
-                                <option>Relish</option>
-                            </select>
+                            <label for="training_address">
+                                Address of Training Venue
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" class="form-control" id="training_address" aria-describedby="textHelp">
                         </div>
                     </div>
                 </div>
@@ -101,3 +96,5 @@
         </div>
     </div>
 </div>
+
+@include('guest.participants_dialog')

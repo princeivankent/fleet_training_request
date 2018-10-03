@@ -9,7 +9,7 @@
                         Company Name
                         <span class="text-danger">*</span>
                     </label>
-                    <input v-model="company_name" type="text" class="form-control" id="company_name" aria-describedby="textHelp">
+                    <input type="text" class="form-control" id="company_name" aria-describedby="textHelp">
                 </div>
 
                 <div class="form-group">

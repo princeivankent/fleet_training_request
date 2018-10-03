@@ -4,6 +4,8 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="author" content="Prince Ivan Kent Tiburcio">
+    <link rel="shortcut icon" type="image/x-icon" href="{{{ url('public/favicon.ico') }}}">
 
 	<!-- CSRF Token -->
 	<meta name="csrf-token" content="{{ csrf_token() }}">
@@ -17,71 +19,37 @@
 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
 
 	<!-- Styles -->
-	<link href="{{ url('public/libraries/css/bootstrap.min.css') }}" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="{{ url('public/css/styles.css') }}">
 
 	@stack('styles')
 </head>
 <body>
-	<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-		<div class="container">
-			<a class="navbar-brand" href="{{ url('/') }}">
-				<strong>{{ config('app.name', 'Laravel') }}</strong>
-			</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false">
-				<span class="navbar-toggler-icon"></span>
-			</button>
+	<v-app id="app">
+		<v-toolbar 
+		class="header"
+		app fixed clipped-left>
+			<v-toolbar-title>
+				<img src="{{ url('public/images/isuzu-logo-compressor.png') }}" alt="image not found" style="height: 35px;">
+			</v-toolbar-title>
+			<v-spacer></v-spacer>
+			<v-toolbar-items>
+				<v-btn flat color="white">Request for Training</v-btn>
+			</v-toolbar-items>
+		</v-toolbar>
+		
+		<v-content dark>
+			<v-container>
+				@yield('content')
+			</v-container>
+		</v-content>
 
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<!-- Left Side Of Navbar -->
-				<ul class="navbar-nav mr-auto">
+		<v-footer class="footer" app fixed>
+			<span>&copy; 2017</span>
+		</v-footer>
+	</v-app>
 
-				</ul>
-
-				<!-- Right Side Of Navbar -->
-				<ul class="navbar-nav ml-auto">
-					<!-- Authentication Links -->
-					<li class="nav-item">
-						<a class="nav-link" href="">link1</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="">link2</a>
-					</li>
-					{{-- @guest
-						<li class="nav-item">
-							<a class="nav-link" href=""></a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href=""></a>
-						</li>
-					@else
-						<li class="nav-item dropdown">
-							<a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-								{{ Auth::user()->name }} <span class="caret"></span>
-							</a>
-
-							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-								<a class="dropdown-item" href="{{ route('logout') }}"
-									onclick="event.preventDefault();
-													document.getElementById('logout-form').submit();">
-									{{ __('Logout') }}
-								</a>
-
-								<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-									@csrf
-								</form>
-							</div>
-						</li>
-					@endguest --}}
-				</ul>
-			</div>
-		</div>
-	</nav>
-
-	<main class="container py-4" id="app">
-		@yield('content')
-	</main>
-
-	<script src="{{ url('public/libraries/js/bootstrap.min.js') }}"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
 
 	@stack('scripts')
 </body>
