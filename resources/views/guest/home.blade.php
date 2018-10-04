@@ -36,6 +36,8 @@
 		<v-stepper-items>
 			<v-stepper-content step="1">
 				@include('guest.customer_information')
+
+				<pre>@{{ form }}</pre>
 		
 				<v-btn
 				color="primary"
@@ -94,24 +96,39 @@
 				return {
 					e1: 0,
 					dialog: false,
+					photo_gallery: false,
 					drawer: true,
-					training_participants: [],
+					training_participants: array = [],
 					participants: {},
-
 					//
 					step1: true,
 					step2: false,
 					step3: false,
-					step4: false
+					step4: false,
+					// Form
+					form: {
+						company_name: '',
+						office_address: '',
+						contact_person: '',
+						email: '',
+						selling_dealer: {},
+						position: '',
+						contact_number: '',
+						unit_models: {}
+					}
 				}
 			},
 			props: {
 				source: String
 			},
 			created() {
-				
+				this.e1 = 1;
 			},
 			methods: {
+				submit_form() {
+					
+				},
+
 				step(step) {
 					this.e1 = step;
 					if (step === 2) {
@@ -149,9 +166,6 @@
 				},
 				others() {
 					this.dialog = true;
-				},
-				vehicle_models() {
-
 				}
 			}
 		})

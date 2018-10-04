@@ -1,3 +1,17 @@
+[v-cloak] { display: none; }
+[v-cloak]::before { content: "loading…" }
+/* [v-cloak]::before { 
+    content: " ";
+    display: block;
+    width: 16px;
+    height: 16px;
+    background-image: url('images/sampl1.jpg');
+} */
+
+.v-progress-circular {
+    margin: 1rem
+}
+
 .v-toolbar.header {
     background-color: #424242;
     color: white;

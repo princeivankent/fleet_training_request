@@ -9,7 +9,7 @@
                         Company Name
                         <span class="text-danger">*</span>
                     </label>
-                    <input type="text" class="form-control" id="company_name" aria-describedby="textHelp">
+                    <input v-model="form.company_name" type="text" class="form-control" id="company_name" aria-describedby="textHelp">
                 </div>
 
                 <div class="form-group">
@@ -17,7 +17,7 @@
                         Office Address
                         <span class="text-danger">*</span>
                     </label>
-                    <input type="text" class="form-control" id="office_address" aria-describedby="textHelp">
+                    <input v-model="form.office_address" type="text" class="form-control" id="office_address" aria-describedby="textHelp">
                 </div>
 
                 <div class="form-row">
@@ -27,19 +27,19 @@
                                 Contact Person
                                 <span class="text-danger">*</span>
                             </label>
-                            <input type="text" class="form-control" id="contact_person" aria-describedby="textHelp">
+                            <input v-model="form.contact_person" type="text" class="form-control" id="contact_person" aria-describedby="textHelp">
                         </div>
                         <div class="form-group">
                             <label for="email">
                                 Email Address
                                 <span class="text-danger">*</span>
                             </label>
-                            <input type="email" class="form-control" id="email" aria-describedby="textHelp">
+                            <input v-model="form.email" type="email" class="form-control" id="email" aria-describedby="textHelp">
                         </div>
                         
                         <div class="form-group">
-                            <label for="contact_number">Selling Dealer</label>
-                            <select class="selectpicker" multiple data-live-search="true"
+                            <label for="selling_dealer">Selling Dealer</label>
+                            <select v-model="form.selling_dealer" class="selectpicker" multiple data-live-search="true"
                             multiple data-selected-text-format="count > 3"
                             title="Click to pick items"
                             data-style="btn-info"
@@ -72,10 +72,10 @@
                             data-style="btn-info"
                             data-width="100%"
                             data-size="6">
-                                <option>Mustard</option>
-                                <option>Ketchup</option>
-                                <option>Relish</option>
-                                <option>Relish</option>
+                                <option>mu-X</option>
+                                <option>D-max</option>
+                                <option>Crosswind</option>
+                                <option>Bus</option>
                             </select>
                         </div>
                     </div>

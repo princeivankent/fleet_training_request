@@ -47,13 +47,13 @@
                 </ol>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                    <img class="d-block w-100" src="https://d1davtdyzp5pbo.cloudfront.net/content/2-products/1-lcv/1-mu-x/thumb-mux.png?auto=compress&h=120" alt="First slide">
+                    <img class="d-block w-100" src="{{ url('public/images/sample3.jpg') }}" height="300" alt="First slide">
                     </div>
                     <div class="carousel-item">
-                    <img class="d-block w-100" src="https://d1davtdyzp5pbo.cloudfront.net/content/2-products/1-lcv/1-mu-x/thumb-mux.png?auto=compress&h=120" alt="Second slide">
+                    <img class="d-block w-100" src="{{ url('public/images/sample2.jpg') }}" height="300" alt="Second slide">
                     </div>
                     <div class="carousel-item">
-                    <img class="d-block w-100" src="https://d1davtdyzp5pbo.cloudfront.net/content/2-products/1-lcv/1-mu-x/thumb-mux.png?auto=compress&h=120" alt="Third slide">
+                    <img class="d-block w-100" src="{{ url('public/images/sample1.jpg') }}" height="300" alt="Third slide">
                     </div>
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -80,13 +80,13 @@
                 </ol>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                    <img class="d-block w-100" src="https://d1davtdyzp5pbo.cloudfront.net/content/2-products/1-lcv/1-mu-x/thumb-mux.png?auto=compress&h=120" alt="First slide">
+                    <img class="d-block w-100" src="{{ url('public/images/sample3.jpg') }}" height="300" alt="First slide">
                     </div>
                     <div class="carousel-item">
-                    <img class="d-block w-100" src="https://d1davtdyzp5pbo.cloudfront.net/content/2-products/1-lcv/1-mu-x/thumb-mux.png?auto=compress&h=120" alt="Second slide">
+                    <img class="d-block w-100" src="{{ url('public/images/sample2.jpg') }}" height="300" alt="Second slide">
                     </div>
                     <div class="carousel-item">
-                    <img class="d-block w-100" src="https://d1davtdyzp5pbo.cloudfront.net/content/2-products/1-lcv/1-mu-x/thumb-mux.png?auto=compress&h=120" alt="Third slide">
+                    <img class="d-block w-100" src="{{ url('public/images/sample1.jpg') }}" height="300" alt="Third slide">
                     </div>
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -113,13 +113,13 @@
                     </ol>
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                        <img class="d-block w-100" src="https://d1davtdyzp5pbo.cloudfront.net/content/2-products/1-lcv/1-mu-x/thumb-mux.png?auto=compress&h=120" alt="First slide">
+                        <img class="d-block w-100" src="{{ url('public/images/sample3.jpg') }}" height="300" alt="First slide">
                         </div>
                         <div class="carousel-item">
-                        <img class="d-block w-100" src="https://d1davtdyzp5pbo.cloudfront.net/content/2-products/1-lcv/1-mu-x/thumb-mux.png?auto=compress&h=120" alt="Second slide">
+                        <img class="d-block w-100" src="{{ url('public/images/sample2.jpg') }}" height="300" alt="Second slide">
                         </div>
                         <div class="carousel-item">
-                        <img class="d-block w-100" src="https://d1davtdyzp5pbo.cloudfront.net/content/2-products/1-lcv/1-mu-x/thumb-mux.png?auto=compress&h=120" alt="Third slide">
+                        <img class="d-block w-100" src="{{ url('public/images/sample1.jpg') }}" height="300" alt="Third slide">
                         </div>
                     </div>
                     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">

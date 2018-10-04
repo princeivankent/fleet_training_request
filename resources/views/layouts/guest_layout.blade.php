@@ -25,7 +25,7 @@
 	@stack('styles')
 </head>
 <body>
-	<v-app id="app">
+	<v-app id="app" v-cloak>
 		<v-toolbar 
 		class="header"
 		app fixed clipped-left>
