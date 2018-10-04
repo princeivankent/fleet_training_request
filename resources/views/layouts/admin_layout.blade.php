@@ -12,11 +12,6 @@
 
 	<title>{{ config('app.name', 'Laravel') }}</title>
 
-	<!-- Scripts -->
-    <script src="{{ url('public/js/admin.js') }}"></script>
-    
-    <link rel="stylesheet" href="{{ url('public/libraries/adminlte/') }}">
-
     <link rel="stylesheet" href="{{ url('public/libraries/adminlte/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url('public/libraries/adminlte/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ url('public/libraries/adminlte/ionicons.min.css') }}">
@@ -38,7 +33,7 @@
         <aside class="main-sidebar">@include('admin_templates.sidebar')</aside>
 
         <!-- Main Content -->
-        <div class="content-wrapper">
+        <div class="content-wrapper" id="app">
             @yield('content')
         </div>
 
@@ -49,9 +44,31 @@
         <div class="control-sidebar-bg"></div>
     </div>
 
-    <script src="{{ url('public/libraries/adminlte/jquery.min.js') }}"></script>
-    <script src="{{ url('public/libraries/adminlte/bootstrap.min.js') }}"></script>
-    <script src="{{ url('public/libraries/adminlte/adminlte.min.js') }}"></script>
+    <!-- Scripts -->
+	<script src="{{ url('public/js/admin.js') }}"></script>
+	<script src="{{ url('public/libraries/adminlte/jquery.min.js') }}"></script>
+	<script src="{{ url('public/libraries/adminlte/bootstrap.min.js') }}"></script>
+	<script src="{{ url('public/libraries/adminlte/adminlte.min.js') }}"></script>
+	<script src="{{ url('public/libraries/js/moment.js') }}"></script>
+	<script>
+        Vue.mixin({
+            data() {
+                return {}
+            },
+            filters: {
+				dateFormat: function (value) {
+					if (!value) return ''
+					value = value.toString()
+					return moment(value).format('MMMM D, YYYY')
+				},
+				dateTimeFormat: function (value) {
+					if (!value) return ''
+					value = value.toString()
+					return moment(value).format('MMMM D, YYYY | h:mm:ss a')
+				}
+			},
+        });
+	</script>
 
 	@stack('scripts')
 </body>
