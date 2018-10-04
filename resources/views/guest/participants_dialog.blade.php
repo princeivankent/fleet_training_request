@@ -3,7 +3,7 @@
         <v-card-text>
             <div class="form-group">
                 <label for="">Participants</label>
-                <input type="text" class="form-control" v-model="participants.participants">
+                <input type="text" class="form-control" v-model="participants.participant">
             </div>
             <div class="form-group">
                 <label for="">Quantity</label>

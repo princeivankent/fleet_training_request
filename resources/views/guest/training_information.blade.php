@@ -20,8 +20,8 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr v-for="(item, index) in training_participants">
-										<td class="text-center">@{{ item.participants }}</td>
+									<tr v-for="(item, index) in form.training_participants">
+										<td class="text-center">@{{ item.participant }}</td>
 										<td class="text-center">@{{ item.quantity }}</td>
 										<td class="text-center">
 											<button v-on:click="remove(index)"
@@ -32,7 +32,9 @@
 									</tr>
 									<tr>
 										<td class="text-center">
-											<select class="custom-select text-center" v-model="participants.participants">
+											<select 
+											v-model="participants.participant"
+											class="custom-select text-center" >
 												<option selected></option>
 												<option value="Driver">Driver</option>
 												<option value="Mechanic">Mechanic</option>
@@ -62,7 +64,7 @@
 								Request Training Date
 								<span class="text-danger">*</span>
 							</label>
-							<input type="date" class="form-control" id="position" aria-describedby="textHelp">
+							<input v-model="form.training_date" type="date" class="form-control" id="position" aria-describedby="textHelp">
 						</div>
 					</div>
 					<div class="col-md-6">
@@ -71,13 +73,16 @@
 								Training Venue
 								<span class="text-danger">*</span>
 							</label>
-							<select class="selectpicker" data-live-search="true"
+							<select 
+							v-model="form.training_venue"
+							class="selectpicker" 
+							data-live-search="true"
 							title="Click to pick items"
 							data-style="btn-info"
 							data-width="100%"
 							data-size="6">
-								<option>Fleet Customer</option>
-								<option>IPC</option>
+								<option value="Flee Customer">Fleet Customer</option>
+								<option value="IPC">IPC</option>
 							</select>
 						</div>
 					</div>
@@ -89,7 +94,7 @@
 								Address of Training Venue
 								<span class="text-danger">*</span>
 							</label>
-							<input type="text" class="form-control" id="training_address" aria-describedby="textHelp">
+							<input v-model="form.training_address" type="text" class="form-control" id="training_address" aria-describedby="textHelp">
 						</div>
 					</div>
 				</div>
@@ -99,4 +104,5 @@
 	</div>
 </div>
 
+<pre>@{{ form }}</pre>
 @include('guest.participants_dialog')

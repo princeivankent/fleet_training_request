@@ -98,7 +98,6 @@
 					dialog: false,
 					photo_gallery: false,
 					drawer: true,
-					training_participants: array = [],
 					participants: {},
 					//
 					step1: true,
@@ -111,10 +110,16 @@
 						office_address: '',
 						contact_person: '',
 						email: '',
-						selling_dealer: {},
+						contact_number: '',
+						selling_dealer: [],
 						position: '',
 						contact_number: '',
-						unit_models: {}
+						unit_models: [],
+						
+						training_date: '',
+						training_participants: [],
+						training_venue: [],
+						training_address: ''
 					}
 				}
 			},
@@ -122,7 +127,7 @@
 				source: String
 			},
 			created() {
-				this.e1 = 1;
+				this.e1 = 2;
 			},
 			methods: {
 				submit_form() {
@@ -158,9 +163,9 @@
 					this.training_participants.splice(index, 1);
 				},
 				add() {
-					if (this.participants.participants != null && this.participants.quantity != null) {
-						this.training_participants.push(this.participants);
-						this.participants= {};
+					if (this.participants.participant != null && this.participants.quantity != null) {
+						this.form.training_participants.push(this.participants);
+						this.participants = {};
 						this.dialog = false;
 					}
 				},

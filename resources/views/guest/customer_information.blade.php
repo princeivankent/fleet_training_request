@@ -39,43 +39,49 @@
                         
                         <div class="form-group">
                             <label for="selling_dealer">Selling Dealer</label>
-                            <select v-model="form.selling_dealer" class="selectpicker" multiple data-live-search="true"
+                            <select 
+                            v-model="form.selling_dealer"
+                            class="selectpicker" 
+                            multiple data-live-search="true"
                             multiple data-selected-text-format="count > 3"
                             title="Click to pick items"
                             data-style="btn-info"
                             data-width="100%"
                             data-size="6">
-                                <option>Mustard</option>
-                                <option>Ketchup</option>
-                                <option>Relish</option>
-                                <option>Relish</option>
+                                <option value="test1">Mustard</option>
+                                <option value="test2">Ketchup</option>
+                                <option value="test3">Relish</option>
+                                <option value="test4">Relish</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="position">Position</label>
-                            <input type="text" class="form-control" id="position" aria-describedby="textHelp">
+                            <input v-model="form.position" type="text" class="form-control" id="position" aria-describedby="textHelp">
                         </div>
                         <div class="form-group">
                             <label for="contact_number">
                                 Contact Number
                                 <span class="text-danger">*</span>
                             </label>
-                            <input type="text" class="form-control" id="contact_number" aria-describedby="textHelp">
+                            <input v-model="form.contact_number" type="text" class="form-control" id="contact_number" aria-describedby="textHelp">
                         </div>
                         <div class="form-group">
                             <label for="unit_models">Isuzu Specific Unit Model</label>
-                            <select class="selectpicker" multiple data-live-search="true" 
+                            <select 
+                            v-model="form.unit_models"
+                            class="selectpicker" 
+                            multiple data-live-search="true" 
                             multiple data-selected-text-format="count > 3"
                             title="Click to pick items"
                             data-style="btn-info"
                             data-width="100%"
                             data-size="6">
-                                <option>mu-X</option>
-                                <option>D-max</option>
-                                <option>Crosswind</option>
-                                <option>Bus</option>
+                                <option value="car1">mu-X</option>
+                                <option value="car2">D-max</option>
+                                <option value="car3">Crosswind</option>
+                                <option value="car4">Bus</option>
                             </select>
                         </div>
                     </div>
