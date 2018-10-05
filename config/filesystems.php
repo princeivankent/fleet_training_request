@@ -42,6 +42,13 @@ return [
     */
 
     'disks' => [
+        //
+        'images' => [
+            'driver' => 'local',
+            'root' => public_path('images/unit_models'),
+            'visibility' => 'public',
+        ],
+        //
 
         'local' => [
             'driver' => 'local',
@@ -53,7 +60,7 @@ return [
             'root' => storage_path('app/public'),
             'visibility' => 'public',
         ],
-
+        
         's3' => [
             'driver' => 's3',
             'key' => 'your-key',
