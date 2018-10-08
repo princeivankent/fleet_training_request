@@ -62,7 +62,7 @@ class UnitModelController extends Controller
             // $name = 'prince';
             Image::make($request->get('image'))->save(public_path('images/unit_models/').$name);
             $query->image = $name;
-            Storage::disk('images')->delete($old_image);
+            Storage::disk('unit_models')->delete($old_image);
         }
         
 		$query->save();
@@ -74,7 +74,7 @@ class UnitModelController extends Controller
     {
         $query = UnitModel::findOrFail($unit_model_id);
 
-        if (Storage::disk('images')->delete($query->image)) {
+        if (Storage::disk('unit_models')->delete($query->image)) {
             $query->delete();
         }
 

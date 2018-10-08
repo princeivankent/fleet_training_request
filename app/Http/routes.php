@@ -31,7 +31,9 @@ Route::put('/admin/training_programs/update/{training_program_id}', 'TrainingPro
 Route::delete('/admin/training_programs/delete/{training_program_id}', 'TrainingProgramController@delete');
 
 // ============== GUEST ================ //
-
+Route::get('/guest/unit_models/get', 'UnitModelController@index');
+Route::get('/guest/training_programs/get', 'TrainingProgramController@index');
+Route::get('/guest/dealers/get', 'DealerController@index');
 
 
 

@@ -127,13 +127,23 @@
 					});
 				},
 				deleteItem(dealer_id, index) {
-					axios.delete(`${this.base_url}/admin/dealers/delete/${dealer_id}`)
-					.then(({data}) => {
-						this.items.splice(index, 1);
-						toastr.success('Successfully deleted!');
+					swal({
+						title: "Delete this item?",
+						icon: "warning",
+						buttons: true,
+						dangerMode: true,
 					})
-					.catch((error) => {
-						console.log(error.response);
+					.then((willDelete) => {
+						if (willDelete) {
+							axios.delete(`${this.base_url}/admin/dealers/delete/${dealer_id}`)
+							.then(({data}) => {
+								this.items.splice(index, 1);
+								toastr.success('Successfully deleted!');
+							})
+							.catch((error) => {
+								console.log(error.response);
+							});
+						}
 					});
 				},
 				// --------

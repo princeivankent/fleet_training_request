@@ -104,5 +104,4 @@
 	</div>
 </div>
 
-<pre>@{{ form }}</pre>
 @include('guest.participants_dialog')

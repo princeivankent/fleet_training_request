@@ -43,9 +43,14 @@ return [
 
     'disks' => [
         //
-        'images' => [
+        'unit_models' => [
             'driver' => 'local',
             'root' => public_path('images/unit_models'),
+            'visibility' => 'public',
+        ],
+        'photo_gallery' => [
+            'driver' => 'local',
+            'root' => public_path('images/photo_gallery'),
             'visibility' => 'public',
         ],
         //

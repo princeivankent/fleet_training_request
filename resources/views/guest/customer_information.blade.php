@@ -48,10 +48,9 @@
                             data-style="btn-info"
                             data-width="100%"
                             data-size="6">
-                                <option value="test1">Mustard</option>
-                                <option value="test2">Ketchup</option>
-                                <option value="test3">Relish</option>
-                                <option value="test4">Relish</option>
+                                <option v-for="(item, index) in dealers" v-bind:value="`${item.dealer}|${item.branch}`">
+                                    @{{item.dealer}} | @{{item.branch}}
+                                </option>
                             </select>
                         </div>
                     </div>
@@ -78,11 +77,14 @@
                             data-style="btn-info"
                             data-width="100%"
                             data-size="6">
-                                <option value="car1">mu-X</option>
-                                <option value="car2">D-max</option>
-                                <option value="car3">Crosswind</option>
-                                <option value="car4">Bus</option>
+                                <option v-for="(item, index) in unit_models" v-bind:value="item.model_name">
+                                    @{{ item.model_name }}
+                                </option>
                             </select>
+
+                            {{-- <select v-model="form.unit_models" class="custom-select" size="5" multiple>
+                                <option v-for="(item, index) in unit_models" v-bind:value="item.model_name">@{{ item.model_name }}</option>
+                            </select> --}}
                         </div>
                     </div>
                 </div>
