@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-6">
-        <div class="card elevation-6 mb-4">
+        <div class="card shadow p-3 mb-5 bg-white rounded">
             <div class="card-body">
                 <h5 class="card-title">
                     <span class="badge badge-pill badge-success">
@@ -39,7 +39,7 @@
         </div>
     </div>
     <div class="col-md-6">
-        <div class="card elevation-6 mb-4">
+        <div class="card shadow p-3 mb-5 bg-white rounded">
             <div class="card-body">
                 <h5 class="card-title">
                     <span class="badge badge-pill badge-success">

@@ -13,7 +13,7 @@
 	</section>
 	
 	<section class="content container-fluid">
-		<div class="box box-primary">
+		<div class="box box-primary shadow-lg">
 			<div class="box-header with-border clearfix">
 				<h3 class="box-title"><i class="fa fa-th-list"></i> List of Dealers</h3>
 				<button 
@@ -153,6 +153,6 @@
 				}
 			}
         })
-        $('#dealer_tab').addClass('active');
+		document.querySelector('#dealer_tab').setAttribute('class', 'active');
 	</script>
 @endpush

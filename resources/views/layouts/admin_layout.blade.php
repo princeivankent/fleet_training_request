@@ -16,15 +16,17 @@
     <link rel="stylesheet" href="{{ url('public/libraries/adminlte/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ url('public/libraries/adminlte/ionicons.min.css') }}">
     <link rel="stylesheet" href="{{ url('public/libraries/adminlte/AdminLTE.min.css') }}">
-    <link rel="stylesheet" href="{{ url('public/libraries/adminlte/skin-blue.min.css') }}">
+	<link rel="stylesheet" href="{{ url('public/libraries/adminlte/skin-blue.min.css') }}">
+	<link rel="stylesheet" href="{{ url('public/libraries/css/toastr.css') }}">
     
 	<!-- Styles -->
 	<link rel="stylesheet" href="{{ url('public/css/styles.css') }}">
-    
-    @stack('styles')
+	<link rel="stylesheet" href="{{ url('public/css/bootstrap_prototype.css') }}">
     
 	<!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+	@stack('styles')
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
@@ -50,10 +52,14 @@
 	<script src="{{ url('public/libraries/adminlte/bootstrap.min.js') }}"></script>
 	<script src="{{ url('public/libraries/adminlte/adminlte.min.js') }}"></script>
 	<script src="{{ url('public/libraries/js/moment.js') }}"></script>
+	<script src="{{ url('public/libraries/js/toastr.min.js') }}"></script>
+	<script src="{{ url('public/js/toastr.config.js') }}"></script>
 	<script>
         Vue.mixin({
             data() {
-                return {}
+                return {
+                    base_url: "{{ url('/') }}"
+                }
             },
             filters: {
 				dateFormat: function (value) {

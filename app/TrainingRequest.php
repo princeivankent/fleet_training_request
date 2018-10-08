@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Request extends Model
+class TrainingRequest extends Model
 {
     protected $fillable = [
         'company_name',
@@ -22,7 +22,7 @@ class Request extends Model
         'training_program_id', // Training Program
         'unit_model_id' // Focus of training
     ];
-    protected $primaryKey = 'request_id';
+    protected $primaryKey = 'training_request_id';
     public $timestamps = false;
 
     public function training_program()

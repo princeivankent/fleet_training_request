@@ -50,7 +50,27 @@
 	</v-app>
 
 	<script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
-
+	<script>
+		Vue.mixin({
+			data() {
+				return {
+					base_url: "{{ url('/') }}"
+				}
+			},
+			filters: {
+				dateFormat: function (value) {
+					if (!value) return ''
+					value = value.toString()
+					return moment(value).format('MMMM D, YYYY')
+				},
+				dateTimeFormat: function (value) {
+					if (!value) return ''
+					value = value.toString()
+					return moment(value).format('MMMM D, YYYY | h:mm:ss a')
+				}
+			},
+		});
+	</script>
 	@stack('scripts')
 </body>
 </html>

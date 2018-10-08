@@ -7,18 +7,16 @@
 @section('content')
 <div v-cloak>
 	<section class="content-header">
-		<h1>
-			Administrator's Dashboard
-		</h1>
+		<h1>Administrator's Dashboard</h1>
 	</section>
 	
 	<section class="content container-fluid">
 		<div class="row">
 			<div class="col-lg-3 col-xs-6">
 				<!-- small box -->
-				<div class="small-box bg-aqua">
+				<div class="small-box bg-aqua shadow">
 					<div class="inner">
-						<h3>120</h3>
+						<h3>0</h3>
 	
 						<p>All Requests</p>
 					</div>
@@ -32,10 +30,10 @@
 			<!-- ./col -->
 			<div class="col-lg-3 col-xs-6">
 				<!-- small box -->
-				<div class="small-box bg-green">
+				<div class="small-box bg-green shadow">
 					<div class="inner">
 						{{-- <h3>53<sup style="font-size: 20px">%</sup></h3> --}}
-						<h3>53</h3>
+						<h3>0</h3>
 	
 						<p>Pending Requests</p>
 					</div>
@@ -48,9 +46,9 @@
 			<!-- ./col -->
 			<div class="col-lg-3 col-xs-6">
 				<!-- small box -->
-				<div class="small-box bg-yellow">
+				<div class="small-box bg-yellow shadow">
 					<div class="inner">
-						<h3>44</h3>
+						<h3>0</h3>
 	
 						<p>Approved Requests</p>
 					</div>
@@ -63,9 +61,9 @@
 			<!-- ./col -->
 			<div class="col-lg-3 col-xs-6">
 				<!-- small box -->
-				<div class="small-box bg-red">
+				<div class="small-box bg-red shadow">
 					<div class="inner">
-						<h3>65</h3>
+						<h3>0</h3>
 	
 						<p>Denied Requests</p>
 					</div>
@@ -77,7 +75,7 @@
 			</div>
 		</div>
 	
-		<div class="box box-primary">
+		<div class="box box-primary shadow-lg">
 			<div class="box-header with-border">
 				<h3 class="box-title">Customer's Requests</h3>
 			</div>
@@ -134,6 +132,6 @@
 				}
 			}
 		})
-		$('#dashboard_tab').addClass('active');
+		document.querySelector('#dashboard_tab').setAttribute('class', 'active');
 	</script>
 @endpush

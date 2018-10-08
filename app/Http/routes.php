@@ -19,6 +19,12 @@ Route::post('/admin/unit_models/store', 'UnitModelController@store');
 Route::put('/admin/unit_models/update/{unit_model_id}', 'UnitModelController@update');
 Route::delete('/admin/unit_models/delete/{unit_model_id}', 'UnitModelController@delete');
 
+// Training Programs
+Route::get('/admin/training_programs/get', 'TrainingProgramController@index');
+Route::get('/admin/training_programs/show/{training_program_id}', 'TrainingProgramController@show');
+Route::post('/admin/training_programs/store', 'TrainingProgramController@store');
+Route::put('/admin/training_programs/update/{training_program_id}', 'TrainingProgramController@update');
+Route::delete('/admin/training_programs/delete/{training_program_id}', 'TrainingProgramController@delete');
 
 // ============== GUEST ================ //
 

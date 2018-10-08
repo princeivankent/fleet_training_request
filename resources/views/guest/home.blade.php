@@ -74,7 +74,7 @@
 		
 				<v-btn
 				color="primary"
-				v-on:click="step(1)"
+				v-on:click="submit_form()"
 				>
 				Submit
 				</v-btn>
@@ -131,7 +131,13 @@
 			},
 			methods: {
 				submit_form() {
-					
+					axios.post(`${this.base_url}/admin/training_requests/store`, this.form)
+					.then(({data}) => {
+						console.log(data);
+					})
+					.catch((error) => {
+						console.log(error.response);
+					});
 				},
 
 				step(step) {
