@@ -3,6 +3,7 @@
 @push('styles')
 	<link rel="stylesheet" href="{{ url('public/libraries/adminlte/dataTables.bootstrap.min.css') }}">
 	<link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="{{ url('public/libraries/css/viewer.min.css') }}">
 	<style>
 		.raleway {
 			color: #636b6f;
@@ -36,12 +37,12 @@
 						<div class="card raleway shadow" style="min-height: 220px; margin-bottom: 12px;">
 							<div class="card-header bg-white">
 								<div class="row">
-									<div class="col-md-9">
+									<div class="col-md-7">
 										<h4 class="card-title text-bold">
 											<span class="text-primary">@{{ item.program_title }}</span>
 										</h4>
 									</div>
-									<div class="col-md-3 clearfix mt-3">
+									<div class="col-md-5 clearfix mt-3">
 										<button 
 										v-on:click="deleteItem(item.training_program_id, index)"
 										class="btn btn-sm btn-default pull-right ml-3" 
@@ -50,9 +51,15 @@
 										</button>
 										<button 
 										v-on:click="editTrainingProgram(item.training_program_id)"
-										class="btn btn-sm btn-default pull-right" 
+										class="btn btn-sm btn-default pull-right ml-3" 
 										style="margin-top: -10px; margin-right: -4px;">
 											<i class="fa fa-pencil"></i>
+										</button>
+										<button 
+										v-on:click="openGallery(item.training_program_id)"
+										class="btn btn-sm btn-default pull-right" 
+										style="margin-top: -10px; margin-right: -4px;">
+											<i class="fa fa-image"></i>
 										</button>
 									</div>
 								</div>
@@ -71,12 +78,14 @@
 	</section>
 
 	@include('admin.modals.training_program_modal')
+	@include('admin.modals.gallery_modal')
 </div>
 @endsection
 
 @push('scripts')
 	<script src="{{ url('public/libraries/adminlte/jquery.dataTables.min.js') }}"></script>
 	<script src="{{ url('public/libraries/adminlte/dataTables.bootstrap.min.js') }}"></script>
+	<script src="{{ url('public/libraries/js/viewer.min.js') }}"></script>
 	<script>
 		new Vue({
 			el: '#app',
@@ -88,7 +97,10 @@
 					form_title: '',
 					errors: [],
 					features: [],
-					program_feature_ids: []
+					program_feature_ids: [],
+					training_program_id: 0,
+					image: '',
+					images: [],
 				}
 			},
 			created() {
@@ -200,6 +212,68 @@
 				removeFeature(program_feature_id, index) {
 					this.program_feature_ids.push(program_feature_id);
 					this.features.splice(index, 1);
+				},
+				openGallery(training_program_id) {
+					this.training_program_id = training_program_id;
+					axios.get(`${this.base_url}/admin/gallery/get_images/${training_program_id}`)
+					.then(({data}) => {
+						this.images = data.images;
+						$('#gallery_modal').modal('show');
+
+						if (this.images.length > 0) {
+							setTimeout(() => {
+								var viewer = new Viewer(document.getElementById('images'));
+								viewer.update();
+							});
+						}
+					})
+					.catch((error) => {
+						console.log(error.response);
+					});
+				},
+				onImageChange(e) {
+					let files = e.target.files || e.dataTransfer.files;
+					if (!files.length) return;
+					this.createImage(files[0]);
+				},
+				createImage(file) {
+					let reader = new FileReader();
+					let vm = this;
+					reader.onload = (e) => {
+						vm.image = e.target.result;
+					};
+					reader.readAsDataURL(file);
+				},
+				uploadImage() {
+					var uri = `${this.base_url}/admin/gallery/upload_image`;
+					axios.post(uri, {
+						image: this.image,
+						training_program_id: this.training_program_id
+					})
+					.then(({data}) => {
+						this.updateImages();
+						toastr.success('Image Successfully saved!');
+					})
+					.catch((error) => {
+						this.errors = error.response.data;
+						console.log(error.response);
+					});
+				},
+				updateImages() {
+					axios.get(`${this.base_url}/admin/gallery/get_images/${this.training_program_id}`)
+					.then(({data}) => {
+						this.images = data.images;
+
+						if (this.images.length > 0) {
+							setTimeout(() => {
+								var viewer = new Viewer(document.getElementById('images'));
+								viewer.update();
+							});
+						}
+					})
+					.catch((error) => {
+						console.log(error.response);
+					});
 				}
 			}
         })

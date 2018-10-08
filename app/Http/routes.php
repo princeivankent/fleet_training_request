@@ -5,6 +5,10 @@
 Route::get('/admin/training_requests/get', 'TrainingRequestController@index');
 Route::post('/admin/training_requests/store', 'TrainingRequestController@store');
 
+// Gallery
+Route::get('/admin/gallery/get_images/{training_program_id}', 'TrainingProgramController@get_images');
+Route::post('/admin/gallery/upload_image', 'TrainingProgramController@upload_image');
+
 // Dealers
 Route::get('/admin/dealers/get', 'DealerController@index');
 Route::get('/admin/dealers/get/{dealer_id}', 'DealerController@show');

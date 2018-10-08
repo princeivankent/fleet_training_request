@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Image as Gallery;
+use Image;
+use Storage;
 use Illuminate\Support\Facades\DB;
 use App\TrainingProgram;
 use App\Http\Requests;
@@ -96,5 +99,29 @@ class TrainingProgramController extends Controller
     public function delete($training_program_id)
     {
         return response()->json(TrainingProgram::findOrFail($training_program_id)->delete());
+    }
+
+    public function upload_image(Request $request)
+    {
+        $training_program_id = $request->training_program_id;
+
+        $query = new Gallery;
+		$query->training_program_id = $training_program_id;
+
+        if ($request->get('image')) {
+            $image = $request->get('image');
+            $name = time() . '.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
+            Image::make($request->get('image'))->save(public_path('images/photo_gallery/').$name);
+        }
+
+        $query->image = $name;
+        $query->save();
+
+        return response()->json($query);
+    }
+
+    public function get_images($training_program_id)
+    {
+        return response()->json(TrainingProgram::where('training_program_id', $training_program_id)->with('images')->first());
     }
 }
