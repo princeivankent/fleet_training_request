@@ -33,20 +33,15 @@
 <template>
 	<v-stepper non-linear v-model="e1">
 		<v-stepper-header>
-			{{-- <v-stepper-step :editable="step1" :complete="e1 > 1" step="1">I. Fleet Customer Information</v-stepper-step> --}}
 			<v-stepper-step editable :complete="e1 > 1" step="1">I. Customer Information</v-stepper-step>
 			<v-divider></v-divider>
-			{{-- <v-stepper-step :editable="step2" :complete="e1 > 2" step="2">II. Training Information</v-stepper-step> --}}
 			<v-stepper-step editable :complete="e1 > 2" step="2">II. Training Information</v-stepper-step>
 			<v-divider></v-divider>
-			{{-- <v-stepper-step :editable="step3" :complete="e1 > 3" step="3">Training Program Offerings</v-stepper-step> --}}
 			<v-stepper-step editable :complete="e1 > 3" step="3">Program Offerings</v-stepper-step>
 			<v-divider></v-divider>
-
 			<v-stepper-step editable :complete="e1 > 4" step="4">Isuzu Models</v-stepper-step>
 			<v-divider></v-divider>
-			{{-- <v-stepper-step :editable="step4" step="4">Submit</v-stepper-step> --}}
-			<v-stepper-step editable step="5">Submit</v-stepper-step>
+			<v-stepper-step editable :complete="e1 > 5" step="5">Submit</v-stepper-step>
 		</v-stepper-header>
 	
 		<v-stepper-items>
@@ -92,7 +87,7 @@
 		
 				<v-btn
 				color="primary"
-				v-on:click="submit_form()"
+				v-on:click="submitDummyRequestData()"
 				>
 				Submit
 				</v-btn>
@@ -156,6 +151,7 @@
 			watch: {
 				e1() {
 					if (this.e1 == 1) {
+						this.fetchDealers();
 						this.fetchUnitModels();
 					} else if (this.e1 == 2) {
 
@@ -176,19 +172,11 @@
 			mounted() {
 				setTimeout(() => {
 					$('.selectpicker').selectpicker();
+					this.fetchDealers();
+					this.fetchUnitModels();
 				}, 500);
 			},
 			methods: {
-				submit_form() {
-					axios.post(`${this.base_url}/admin/training_requests/store`, this.form)
-					.then(({data}) => {
-						console.log(data);
-					})
-					.catch((error) => {
-						console.log(error.response);
-					});
-				},
-
 				step(step) {
 					this.e1 = step;
 					if (step === 2) {
@@ -297,6 +285,49 @@
 					})
 					.then((res) => {
 						if (res) this.step(5);
+					});
+				},
+				submitDummyRequestData() {
+					// var data = {
+					// 	"company_name": "Sample Company",
+					// 	"office_address": "isuzu binan",
+					// 	"contact_person": "Prince Ivan Kent",
+					// 	"email": "princeivankentmtiburcio@gmail.com",
+					// 	"contact_number": "09467311489",
+					// 	"selling_dealer": [
+					// 		"GenCars|Alabang",
+					// 		"GenCars|Batangas"
+					// 	],
+					// 	"position": "Web Developer",
+					// 	"unit_models": [
+					// 		"Bus",
+					// 		"Crosswind",
+					// 		"C&E Series",
+					// 		"N Series"
+					// 	],
+					// 	"training_date": "2018-10-08",
+					// 	"training_participants": [
+					// 		{
+					// 			"participant": "Fleet Head",
+					// 			"quantity": "5"
+					// 		},
+					// 		{
+					// 			"participant": "Driver",
+					// 			"quantity": "1"
+					// 		}
+					// 	],
+					// 	"training_venue": "Flee Customer",
+					// 	"training_address": "Isuzu Philippines Corporation",
+					// 	"training_program_id": 32,
+					// 	"unit_model_id": 29
+					// }
+
+					axios.post(`${this.base_url}/guest/submit_request/post`, this.form)
+					.then(({data}) => {
+						console.log(data);
+					})
+					.catch((error) => {
+						console.log(error.response);
 					});
 				}
 			}

@@ -3,6 +3,7 @@
 
 // ============== ADMINISTRATOR ================ //
 Route::get('/admin/training_requests/get', 'TrainingRequestController@index');
+Route::get('/admin/training_requests/get/{training_request_id}', 'TrainingRequestController@show');
 Route::post('/admin/training_requests/store', 'TrainingRequestController@store');
 
 // Gallery
@@ -34,6 +35,7 @@ Route::delete('/admin/training_programs/delete/{training_program_id}', 'Training
 Route::get('/guest/unit_models/get', 'UnitModelController@index');
 Route::get('/guest/training_programs/get', 'TrainingProgramController@index');
 Route::get('/guest/dealers/get', 'DealerController@index');
+Route::post('/guest/submit_request/post', 'TrainingRequestController@store');
 
 
 

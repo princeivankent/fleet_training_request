@@ -26,10 +26,9 @@
                     </button>
                     <button 
                     v-if="item.training_program_id === form.training_program_id" 
-                    v-model="item.training_program_id" 
                     v-on:click="trainingProgramPicked(item.training_program_id)" 
                     class="btn btn-success" style="margin: -12px 0px;">
-                        SELECTED&nbsp; 
+                        SELECTED &nbsp; 
                         <i class="fa fa-check-circle"></i>
                     </button>
                     <button v-else v-on:click="trainingProgramPicked(item.training_program_id)" class="btn btn-outline-success" style="margin: -12px 0px;">

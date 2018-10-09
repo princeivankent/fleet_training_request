@@ -10,41 +10,51 @@ use App\Http\Requests;
 
 class TrainingRequestController extends Controller
 {
-    public function index()
-    {
-        return response()->json('haha');
-        return response()->json(
-            TrainingRequest::with([
-                'training_program',
-                'unit_model'
-            ])->get()
-        );
-    }
+	public function index()
+	{
+		return response()->json(
+			TrainingRequest::with([
+				'training_program',
+				'unit_model'
+			])
+			->get()
+		);
+	}
 
-    public function show($training_request_id)
-    {
-        return response()->json(TrainingRequest::findOrFail($training_request_id));
-    }
+	public function show($training_request_id)
+	{
+		return response()->json(TrainingRequest::findOrFail($training_request_id));
+	}
 
-    public function store(Request $request)
-    {
-        $this->validate($request, [
-            'company_name' => 'required|string',
-            'office_address' => 'required|string',
-            'contact_person' => 'required|string',
-            'email' => 'required|string',
-            'selling_dealer' => 'required|json',
-            'position' => 'required|string',
-            'contact_number' => 'required|string',
-            'unit_models' => 'required|json',
-            'training_participants' => 'required|json',
-            'training_date' => 'required|date',
-            'training_venue' => 'required|string',
-            'training_address' => 'required|string',
-            'training_program_id' => 'required|integer|exists:training_programs,training_program_id',
-            'unit_model_id' => 'required|integer|exists:unit_models,unit_model_id'
-        ]);
+	public function store(Request $request)
+	{
+		$this->validate($request, [
+			'company_name' => 'required|string',
+			'office_address' => 'required|string',
+			'contact_person' => 'required|string',
+			'email' => 'required|string',
+			'position' => 'required|string',
+			'contact_number' => 'required|string',
+			'training_date' => 'required|date',
+			'training_venue' => 'required|string',
+			'training_address' => 'required|string',
+			'training_program_id' => 'required|integer|exists:training_programs,training_program_id',
+			'unit_model_id' => 'required|integer|exists:unit_models,unit_model_id'
 
-        return response()->json($request->all());
-    }
+			// 'selling_dealer' => 'required|json',
+			// 'unit_models' => 'required|json',
+			// 'training_participants' => 'required|json'
+		]);
+		
+		$input = $request->all();
+
+		$input['selling_dealer'] = json_encode($input['selling_dealer']);
+		$input['training_participants'] = json_encode($input['training_participants']);
+		$input['unit_models'] = json_encode($input['unit_models']);
+		
+		$query = TrainingRequest::create($input);
+
+		return response()->json($query);
+
+	}
 }

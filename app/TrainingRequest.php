@@ -10,7 +10,7 @@ class TrainingRequest extends Model
         'company_name',
         'office_address',
         'contact_person',
-        'email_address',
+        'email',
         'selling_dealer', // JSON
         'position',
         'contact_number',
