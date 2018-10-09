@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
+use Carbon\Carbon;
 use App\TrainingRequest;
 use App\Http\Requests;
 
@@ -48,6 +49,7 @@ class TrainingRequestController extends Controller
 		
 		$input = $request->all();
 
+		$input['training_date'] = Carbon::parse($input['training_date'])->toDateTimeString();
 		$input['selling_dealer'] = json_encode($input['selling_dealer']);
 		$input['training_participants'] = json_encode($input['training_participants']);
 		$input['unit_models'] = json_encode($input['unit_models']);

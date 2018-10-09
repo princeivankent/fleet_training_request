@@ -20,6 +20,8 @@
 
 	<!-- Styles -->
 	<link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="{{ url('public/libraries/adminlte/font-awesome.min.css') }}">
+	<link rel="stylesheet" href="{{ url('public/libraries/css/bootstrap-datetimepicker.min.css') }}">
 	<link rel="stylesheet" href="{{ url('public/css/styles.css') }}">
 
 	@stack('styles')
@@ -50,6 +52,8 @@
 	</v-app>
 
 	<script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+	<script src="{{ url('public/libraries/js/moment.js') }}"></script>
+	<script src="{{ url('public/libraries/js/bootstrap-datetimepicker.min.js') }}"></script>
 	<script>
 		Vue.mixin({
 			data() {

@@ -1,10 +1,51 @@
-<div class="card my-4">
+<div class="card" style="height: 480px;">
 	<h5 class="card-header">II. Training Information</h5>
 	<div class="card-body">
 		<div class="form-row">
 			<div class="col-md-3"></div>
 			<div class="col-md-6">
 				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="training_date">
+								Request Training Date
+								<span class="text-danger">*</span>
+							</label>
+							<input v-on:blur="getDate" v-model="form.training_date" type="text" class="form-control" id="training-date">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="training_venue">
+								Training Venue
+								<span class="text-danger">*</span>
+							</label>
+							<select 
+							v-model="form.training_venue"
+							class="selectpicker" 
+							data-live-search="true"
+							title="Click to pick items"
+							data-style="btn-info"
+							data-width="100%"
+							data-size="6">
+								<option value="Flee Customer">Fleet Customer</option>
+								<option value="IPC">IPC</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<label for="training_address">
+								Address of Training Venue
+								<span class="text-danger">*</span>
+							</label>
+							<input v-model="form.training_address" type="text" class="form-control" id="training_address" aria-describedby="textHelp">
+						</div>
+					</div>
+				</div>
+				<div class="form-row">
 					<div class="col-md-12">
 						<div class="form-group">
 							<label for="training_participants">
@@ -54,47 +95,6 @@
 									</tr>
 								</tbody>
 							</table>
-						</div>
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="col-md-6">
-						<div class="form-group">
-							<label for="training_date">
-								Request Training Date
-								<span class="text-danger">*</span>
-							</label>
-							<input v-model="form.training_date" type="date" class="form-control" id="position" aria-describedby="textHelp">
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="form-group">
-							<label for="training_venue">
-								Training Venue
-								<span class="text-danger">*</span>
-							</label>
-							<select 
-							v-model="form.training_venue"
-							class="selectpicker" 
-							data-live-search="true"
-							title="Click to pick items"
-							data-style="btn-info"
-							data-width="100%"
-							data-size="6">
-								<option value="Flee Customer">Fleet Customer</option>
-								<option value="IPC">IPC</option>
-							</select>
-						</div>
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="col-md-12">
-						<div class="form-group">
-							<label for="training_address">
-								Address of Training Venue
-								<span class="text-danger">*</span>
-							</label>
-							<input v-model="form.training_address" type="text" class="form-control" id="training_address" aria-describedby="textHelp">
 						</div>
 					</div>
 				</div>
