@@ -6,6 +6,13 @@ Route::get('/admin/training_requests/get', 'TrainingRequestController@index');
 Route::get('/admin/training_requests/get/{training_request_id}', 'TrainingRequestController@show');
 Route::post('/admin/training_requests/store', 'TrainingRequestController@store');
 
+// Approvers
+Route::get('/admin/approvers/get', 'ApproverController@index');
+Route::get('/admin/approvers/get/{approver_id}', 'ApproverController@show');
+Route::post('/admin/approvers/post', 'ApproverController@store');
+Route::put('/admin/approvers/put/{approver_id}', 'ApproverController@update');
+Route::delete('/admin/approvers/delete/{approver_id}', 'ApproverController@destroy');
+
 // Gallery
 Route::get('/admin/gallery/get_images/{training_program_id}', 'TrainingProgramController@get_images');
 Route::post('/admin/gallery/upload_image', 'TrainingProgramController@upload_image');
@@ -46,3 +53,4 @@ Route::get('admin/dashboard', function() { return view('admin.dashboard'); })->n
 Route::get('admin/dealers', function() { return view('admin.dealers'); })->name('dealers');
 Route::get('admin/unit_models', function() { return view('admin.unit_models'); })->name('unit_models');
 Route::get('admin/training_programs', function() { return view('admin.training_programs'); })->name('training_programs');
+Route::get('admin/approvers', function() { return view('admin.approvers'); })->name('approvers');

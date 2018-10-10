@@ -12,6 +12,6 @@ class Approver extends Model
 
 	public function approval_statuses()
 	{
-		return $this->hasMany('App\ApprovalStatus', 'approve_id', 'approver_id');
+		return $this->hasMany('App\ApprovalStatus', 'approver_id', 'approver_id');
 	}
 }
