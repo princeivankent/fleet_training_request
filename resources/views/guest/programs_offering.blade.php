@@ -22,7 +22,7 @@
                 <div class="float-right">
                     <button v-on:click="openGallery(item.training_program_id)" class="btn btn-outline-secondary" style="margin: -12px 0px;">
                         GALLERY
-                        <i class="fa fa-images"></i>
+                        <i class="fa fa-image"></i>
                     </button>
                     <button 
                     v-if="item.training_program_id === form.training_program_id" 

@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card" style="height: 480px;">
 	<h5 class="card-header">I. Fleet Customer Information</h5>
 	<div class="card-body">
 		<div class="form-row">
@@ -53,7 +53,7 @@
 								</option>
 							</select> --}}
 
-							<select v-model="form.selling_dealer" class="custom-select" size="5" multiple>
+							<select v-model="form.selling_dealer" class="custom-select" size="3" multiple>
 								<option v-for="(item, index) in dealers" v-bind:value="`${item.dealer}|${item.branch}`">
 									@{{item.dealer}} | @{{item.branch}}
 								</option>
@@ -88,7 +88,7 @@
 								</option>
 							</select> --}}
 
-							<select v-model="form.unit_models" class="custom-select" size="5" multiple>
+							<select v-model="form.unit_models" class="custom-select" size="3" multiple>
 								<option v-for="(item, index) in unit_models" v-bind:value="item.model_name">@{{ item.model_name }}</option>
 							</select>
 						</div>

@@ -48,7 +48,6 @@ class TrainingRequestController extends Controller
 		]);
 		
 		$input = $request->all();
-
 		$input['training_date'] = Carbon::parse($input['training_date'])->toDateTimeString();
 		$input['selling_dealer'] = json_encode($input['selling_dealer']);
 		$input['training_participants'] = json_encode($input['training_participants']);

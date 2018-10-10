@@ -47,9 +47,6 @@
 		<v-stepper-items>
 			<v-stepper-content step="1">
 				@include('guest.customer_information')
-
-				<pre>@{{ form }}</pre>
-		
 				<v-btn
 				color="primary"
 				v-on:click="step(2)"
@@ -61,7 +58,6 @@
 		
 			<v-stepper-content step="2">
 				@include('guest.training_information')
-				<pre>@{{ form }}</pre>
 				<v-btn
 				color="primary"
 				v-on:click="step(3)"
@@ -73,25 +69,14 @@
 		
 			<v-stepper-content step="3">
 				@include('guest.programs_offering')
-				<pre>@{{ form }}</pre>
 			</v-stepper-content>
 
 			<v-stepper-content step="4">
 				@include('guest.isuzu_models')
-				<pre>@{{ form }}</pre>
 			</v-stepper-content>
 
 			<v-stepper-content step="5">
 				@include('guest.submit_form')
-				<pre>@{{ form }}</pre>
-		
-				<v-btn
-				color="primary"
-				v-on:click="submitDummyRequestData()"
-				>
-				Submit
-				</v-btn>
-		
 			</v-stepper-content>
 		</v-stepper-items>
 	</v-stepper>
@@ -102,7 +87,16 @@
 	<script src="{{ url('public/libraries/js/bootstrap.min.js') }}"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>
 	<script src="{{ url('public/libraries/js/viewer.min.js') }}"></script>
-	
+	<script>
+		$(function () {
+			$('#training-date').datetimepicker({
+				focusOnShow: true,
+				disabledDates: [
+					'2018-10-08', '2018-10-10'
+				]
+			});
+		});
+	</script>
 	<script>
 		new Vue({
 			el: '#app',
@@ -142,7 +136,8 @@
 					dealers: [],
 					training_programs: [],
 					images: '',
-					selected_unit: 0
+					selected_unit: 0,
+					didNotReadYet: true
 				}
 			},
 			props: {
@@ -288,47 +283,34 @@
 					});
 				},
 				submitDummyRequestData() {
-					// var data = {
-					// 	"company_name": "Sample Company",
-					// 	"office_address": "isuzu binan",
-					// 	"contact_person": "Prince Ivan Kent",
-					// 	"email": "princeivankentmtiburcio@gmail.com",
-					// 	"contact_number": "09467311489",
-					// 	"selling_dealer": [
-					// 		"GenCars|Alabang",
-					// 		"GenCars|Batangas"
-					// 	],
-					// 	"position": "Web Developer",
-					// 	"unit_models": [
-					// 		"Bus",
-					// 		"Crosswind",
-					// 		"C&E Series",
-					// 		"N Series"
-					// 	],
-					// 	"training_date": "2018-10-08",
-					// 	"training_participants": [
-					// 		{
-					// 			"participant": "Fleet Head",
-					// 			"quantity": "5"
-					// 		},
-					// 		{
-					// 			"participant": "Driver",
-					// 			"quantity": "1"
-					// 		}
-					// 	],
-					// 	"training_venue": "Flee Customer",
-					// 	"training_address": "Isuzu Philippines Corporation",
-					// 	"training_program_id": 32,
-					// 	"unit_model_id": 29
-					// }
-
 					axios.post(`${this.base_url}/guest/submit_request/post`, this.form)
 					.then(({data}) => {
-						console.log(data);
+						swal({
+							title: "Alright!",
+							text: "Your request has been submitted.",
+							icon: "success",
+							buttons: ["Okay"],
+							closeOnClickOutside: false,
+						})
+						.then((res) => {
+							if (res) this.step(5);
+						});
 					})
 					.catch((error) => {
 						console.log(error.response);
+						swal({
+							title: "Ooops!",
+							text: "You need to complete all of the fields.",
+							icon: "error",
+							closeOnClickOutside: false,
+						})
+						.then((res) => {
+							if (res) return true;
+						});
 					});
+				},
+				getDate() {
+					this.form.training_date = document.getElementById('training-date').value;
 				}
 			}
 		})
