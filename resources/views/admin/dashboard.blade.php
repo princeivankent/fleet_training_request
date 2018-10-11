@@ -162,7 +162,7 @@
 						this.items = data;
 					})
 					.catch((error) => {
-						console.log(error)
+						console.log(error.response)
 					});
 				},
 				willApprove(training_request_id) {

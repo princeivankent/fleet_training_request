@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Approver extends Model
 {
-	protected $fillable = ['approver_name','status'];
+	protected $fillable = ['approver_name','email','position'];
 	protected $primaryKey = 'approver_id';
 	public $timestamps = false;
 

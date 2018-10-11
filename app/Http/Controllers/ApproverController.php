@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Mail;
 use App\Approver;
 use App\Http\Requests;
 
@@ -23,10 +24,11 @@ class ApproverController extends Controller
 
         $query = new Approver;
         $query->approver_name = $request->approver_name;
+        $query->email = $request->email;
         $query->position = $request->position;
-        $query->created_by = 'Prince Ivan Kent Tiburcio';
+        $query->created_by = '(By dafault) Prince Ivan Kent Tiburcio';
         $query->save();
-
+        
         return response()->json($query);
     }
 

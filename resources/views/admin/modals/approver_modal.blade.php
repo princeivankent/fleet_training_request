@@ -19,6 +19,14 @@
                             </span>
                         </div>
                         <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" v-model="form.email">
+    
+                            <span v-if="errors.email" class="text-danger">
+                                @{{ errors.email[0] }}
+                            </span>
+                        </div>
+                        <div class="form-group">
                             <label for="position">Position</label>
                             <input type="text" class="form-control" id="position" v-model="form.position">
     

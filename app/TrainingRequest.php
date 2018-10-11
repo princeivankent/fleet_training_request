@@ -34,4 +34,13 @@ class TrainingRequest extends Model
     {
         return $this->belongsTo('App\UnitModel', 'unit_model_id', 'unit_model_id');
     }
+
+    public function email()
+    {
+        return $this->belongsTo('App\Email', 'training_request_id', 'training_request_id');
+    }
+    public function approval_statuses()
+    {
+        return $this->hasMany('App\ApprovalStatus', 'training_request_id', 'training_request_id');
+    }
 }

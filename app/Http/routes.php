@@ -44,7 +44,7 @@ Route::get('/guest/training_programs/get', 'TrainingProgramController@index');
 Route::get('/guest/dealers/get', 'DealerController@index');
 Route::post('/guest/submit_request/post', 'TrainingRequestController@store');
 
-
+Route::get('/guest/send_fake_email', 'FakeEmailTestsController@send');
 
 // ============== Views ================ //
 Route::get('/', function() { return view('guest.home'); });

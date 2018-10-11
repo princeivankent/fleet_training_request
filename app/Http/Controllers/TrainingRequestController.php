@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
+use App\Services\SendEmails;
 use Carbon\Carbon;
 use App\TrainingRequest;
 use App\Http\Requests;
@@ -27,7 +28,7 @@ class TrainingRequestController extends Controller
 		return response()->json(TrainingRequest::findOrFail($training_request_id));
 	}
 
-	public function store(Request $request)
+	public function store(Request $request, SendEmails $mail)
 	{
 		$this->validate($request, [
 			'company_name' => 'required|string',
@@ -55,7 +56,16 @@ class TrainingRequestController extends Controller
 		
 		$query = TrainingRequest::create($input);
 
-		return response()->json($query);
+		$mail->send([
+			'email_type' => 'request_for_acceptance',
+			'subject'	 => 'Request for Training',
+			'to'		 => $query->email,
+			'data'       => [
+				'header'  => 'Request for Training',
+				'message' => 'Hi Sir/Mam, '.$query->contact_person.' of '.$query->company_name.' is requesting for a training. </br> Please see more details here <a href="http://localhost/laravel5.2/admin/dashboard" class="btn btn-sm btn-success">IPC Fleet Training System</a>'
+			]
+		]);
 
+		return response()->json($query);
 	}
 }

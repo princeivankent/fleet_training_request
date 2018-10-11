@@ -26,6 +26,7 @@
 						<tr>
 							<th class="text-center text-uppercase"></th>
 							<th class="text-center text-uppercase">Approver Name</th>
+							<th class="text-center text-uppercase">Email</th>
 							<th class="text-center text-uppercase">Position</th>
 							<th class="text-center text-uppercase">Created By</th>
 						</tr>
@@ -50,6 +51,7 @@
 								</div>
 							</td>
 							<td class="text-center">@{{ item.approver_name }}</td>
+							<td class="text-center">@{{ item.email }}</td>
 							<td class="text-center">@{{ item.position }}</td>
 							<td class="text-center">@{{ item.created_by }}</td>
 						</tr>
@@ -157,6 +159,7 @@
 					this.isEdit = 0;
 					this.formTitle = 'Add Approver';
 					this.errors = [];
+					this.form = {};
 					$('#approver_modal').modal('show');
 				},
 				editItem(approver_id) {
