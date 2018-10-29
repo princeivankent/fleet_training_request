@@ -35,7 +35,7 @@
         </a></li>
         <li id="trainor_tab"><a href="">
             <i class="fa fa-caret-right"></i>&nbsp; 
-            <span>Trainors</span>
+            <span>Trainors (development)</span>
         </a></li>
         <li id="approver_tab"><a href="{{ route('approvers') }}">
             <i class="fa fa-caret-right"></i>&nbsp; 
@@ -49,7 +49,7 @@
         </a></li>
         <li id="special_offer_tab"><a href="">
             <i class="fa fa-caret-right"></i>&nbsp; 
-            <span>Special Offers</span>
+            <span>Special Offers (development)</span>
         </a></li>
 
         <li class="header">VEHICLES</li>

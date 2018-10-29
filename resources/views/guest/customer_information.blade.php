@@ -39,25 +39,30 @@
 						
 						<div class="form-group">
 							<label for="selling_dealer">Selling Dealer</label>
-							{{-- <select 
-							v-model="form.selling_dealer"
-							class="selectpicker" 
-							multiple data-live-search="true"
-							multiple data-selected-text-format="count > 3"
-							title="Click to pick items"
-							data-style="btn-info"
-							data-width="100%"
-							data-size="6">
-								<option v-for="(item, index) in dealers" v-bind:value="`${item.dealer}|${item.branch}`">
-									@{{item.dealer}} | @{{item.branch}}
-								</option>
-							</select> --}}
-
-							<select v-model="form.selling_dealer" class="custom-select" size="3" multiple>
-								<option v-for="(item, index) in dealers" v-bind:value="`${item.dealer}|${item.branch}`">
-									@{{item.dealer}} | @{{item.branch}}
-								</option>
-							</select>
+							<v-select
+								v-model="form.selling_dealer"
+								:items="dealers"
+								item-text="dealer"
+          						item-value="dealer_id"
+								chips
+								label="Models"
+								deletable-chips
+								multiple
+								solo
+							>
+								<template
+								slot="selection"
+								slot-scope="{ item, index }"
+								>
+								<v-chip v-if="index === 0">
+									<span>@{{ item.dealer }}</span>
+								</v-chip>
+								<span
+									v-if="index === 1"
+									class="grey--text caption"
+								>(+@{{ form.selling_dealer.length - 1 }} others)</span>
+								</template>
+							</v-select>
 						</div>
 					</div>
 					<div class="col-md-6">
@@ -74,23 +79,30 @@
 						</div>
 						<div class="form-group">
 							<label for="unit_models">Isuzu Specific Unit Model</label>
-							{{-- <select 
-							v-model="form.unit_models"
-							class="selectpicker" 
-							multiple data-live-search="true" 
-							multiple data-selected-text-format="count > 3"
-							title="Click to pick items"
-							data-style="btn-info"
-							data-width="100%"
-							data-size="6">
-								<option v-for="(item, index) in unit_models" v-bind:value="item.model_name">
-									@{{ item.model_name }}
-								</option>
-							</select> --}}
-
-							<select v-model="form.unit_models" class="custom-select" size="3" multiple>
-								<option v-for="(item, index) in unit_models" v-bind:value="item.model_name">@{{ item.model_name }}</option>
-							</select>
+							<v-select
+								v-model="form.unit_models"
+								:items="unit_models"
+								item-text="model_name"
+          						item-value="model_name"
+								chips
+								label="Models"
+								deletable-chips
+								multiple
+								solo
+							>
+								<template
+								slot="selection"
+								slot-scope="{ item, index }"
+								>
+								<v-chip v-if="index === 0">
+									<span>@{{ item.model_name }}</span>
+								</v-chip>
+								<span
+									v-if="index === 1"
+									class="grey--text caption"
+								>(+@{{ form.unit_models.length - 1 }} others)</span>
+								</template>
+							</v-select>
 						</div>
 					</div>
 				</div>

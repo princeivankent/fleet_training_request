@@ -11,11 +11,8 @@ class TrainingRequest extends Model
         'office_address',
         'contact_person',
         'email',
-        'selling_dealer', // JSON
         'position',
         'contact_number',
-        'unit_models', // JSON
-        'training_participants', // JSON
         'training_date',
         'training_venue',
         'training_address',
@@ -39,8 +36,24 @@ class TrainingRequest extends Model
     {
         return $this->belongsTo('App\Email', 'training_request_id', 'training_request_id');
     }
+
     public function approval_statuses()
     {
         return $this->hasMany('App\ApprovalStatus', 'training_request_id', 'training_request_id');
+    }
+
+    public function customer_dealers()
+    {
+        return $this->hasMany('App\CustomerDealer', 'training_request_id', 'training_request_id');
+    }
+
+    public function customer_models()
+    {
+        return $this->hasMany('App\CustomerModel', 'training_request_id', 'training_request_id');
+    }
+
+    public function customer_participants()
+    {
+        return $this->hasMany('App\CustomerParticipant', 'training_request_id', 'training_request_id');
     }
 }

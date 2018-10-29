@@ -12,7 +12,7 @@ class FakeEmailTestsController extends Controller
     public function send(SendEmails $mail)
     {
         $mail->send([
-			'email_type' => 'request_for_acceptance',
+			'email_type' => 'request_for_approval',
 			'subject'	 => 'Request for Training',
 			'to'		 => 'prince-tiburcio@isuzuphil.com',
 			'data'       => [

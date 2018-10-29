@@ -120,24 +120,30 @@
 						contact_person: '',
 						email: '',
 						contact_number: '',
-						selling_dealer: [],
 						position: '',
 						contact_number: '',
-						unit_models: [],
-						
 						training_date: '',
-						training_participants: [],
 						training_venue: [],
 						training_address: '',
 						training_program_id: 0,
 						unit_model_id: 0,
+
+						selling_dealer: [],
+						unit_models: [],
+						training_participants: []
 					},
 					unit_models: [],
 					dealers: [],
 					training_programs: [],
 					images: '',
 					selected_unit: 0,
-					didNotReadYet: true
+					didNotReadYet: true,
+					items: [
+						{name:'foo'},
+						{name:'bar'},
+						{name:'fizz'},
+						{name:'buzz'} 
+					],
 				}
 			},
 			props: {
@@ -222,6 +228,10 @@
 				fetchDealers() {
 					axios.get(`${this.base_url}/guest/dealers/get`)
 					.then(({data}) => {
+						data.forEach(element => {
+							element.dealer = element.dealer + ' | ' + element.branch
+						});
+
 						this.dealers = data;
 					})
 					.catch((error) => {
@@ -289,8 +299,7 @@
 							title: "Alright!",
 							text: "Your request has been submitted.",
 							icon: "success",
-							buttons: ["Okay"],
-							closeOnClickOutside: false,
+							timer: 4000,
 						})
 						.then((res) => {
 							if (res) this.step(5);
@@ -302,7 +311,7 @@
 							title: "Ooops!",
 							text: "You need to complete all of the fields.",
 							icon: "error",
-							closeOnClickOutside: false,
+							timer: 4000,
 						})
 						.then((res) => {
 							if (res) return true;

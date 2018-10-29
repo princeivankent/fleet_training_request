@@ -19,8 +19,9 @@
 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
 
 	<!-- Styles -->
-	<link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="{{ url('public/libraries/css/vuetify.min.css') }}">
 	<link rel="stylesheet" href="{{ url('public/libraries/adminlte/font-awesome.min.css') }}">
+	<link rel="stylesheet" href="{{ url('public/libraries/adminlte/ionicons.min.css') }}">
 	<link rel="stylesheet" href="{{ url('public/libraries/css/bootstrap-datetimepicker.min.css') }}">
 	<link rel="stylesheet" href="{{ url('public/css/styles.css') }}">
 
@@ -36,7 +37,7 @@
 			</v-toolbar-title>
 			<v-spacer></v-spacer>
 			<v-toolbar-items>
-				<v-btn flat color="white">Request for Training</v-btn>
+				<v-btn flat color="white">Fleet Training Request System</v-btn>
 			</v-toolbar-items>
 		</v-toolbar>
 		
@@ -51,7 +52,7 @@
 		</v-footer>
 	</v-app>
 
-	<script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+	<script src="{{ url('public/libraries/js/vuetify.min.js') }}"></script>
 	<script src="{{ url('public/libraries/js/moment.js') }}"></script>
 	<script src="{{ url('public/libraries/js/bootstrap-datetimepicker.min.js') }}"></script>
 	<script>

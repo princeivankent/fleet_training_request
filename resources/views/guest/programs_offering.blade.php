@@ -3,9 +3,7 @@
         <div class="card shadow p-3 mb-5 bg-white rounded">
             <div class="card-body">
                 <h5 class="card-title">
-                    <span class="badge badge-pill badge-success">
-                        <i class="fa fa-star fa-sm" style="padding: 6px 0px;"></i>
-                    </span>
+                    <i class="ion ion-checkmark-circled green--text"></i>
                     @{{ item.program_title }}
                     <small class="grey--text float-left mt-1">
                         @{{ item.description }}

@@ -1,7 +1,17 @@
 <?php
 
+// Approver email urls
+Route::get('/approver/update_request/{approval_status_id}/{status}', 'ApproveRequestController@update_approval_request');
+
 
 // ============== ADMINISTRATOR ================ //
+// Dashboard
+Route::get('/admin/dashboard_statuses', 'TrainingRequestController@dashboard_statuses');
+Route::get('/admin/approver_statuses/{training_request_id}', 'TrainingRequestController@approver_statuses');
+
+// Request Approval
+Route::put('/admin/update_request/{training_request_id}', 'ApproveRequestController@update_request');
+
 Route::get('/admin/training_requests/get', 'TrainingRequestController@index');
 Route::get('/admin/training_requests/get/{training_request_id}', 'TrainingRequestController@show');
 Route::post('/admin/training_requests/store', 'TrainingRequestController@store');

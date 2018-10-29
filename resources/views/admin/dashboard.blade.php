@@ -16,7 +16,7 @@
 				<!-- small box -->
 				<div class="small-box bg-aqua shadow">
 					<div class="inner">
-						<h3>0</h3>
+						<h3>@{{ dashboard.all_requests }}</h3>
 	
 						<p>All Requests</p>
 					</div>
@@ -33,7 +33,7 @@
 				<div class="small-box bg-green shadow">
 					<div class="inner">
 						{{-- <h3>53<sup style="font-size: 20px">%</sup></h3> --}}
-						<h3>0</h3>
+						<h3>@{{ dashboard.pending_requests }}</h3>
 	
 						<p>Pending Requests</p>
 					</div>
@@ -48,7 +48,7 @@
 				<!-- small box -->
 				<div class="small-box bg-yellow shadow">
 					<div class="inner">
-						<h3>0</h3>
+						<h3>@{{ dashboard.approved_requests }}</h3>
 	
 						<p>Approved Requests</p>
 					</div>
@@ -63,7 +63,7 @@
 				<!-- small box -->
 				<div class="small-box bg-red shadow">
 					<div class="inner">
-						<h3>0</h3>
+						<h3>@{{ dashboard.denied_requests }}</h3>
 	
 						<p>Denied Requests</p>
 					</div>
@@ -90,6 +90,7 @@
 							<th class="text-center text-uppercase">Contact Number</th>
 							<th class="text-center text-uppercase">Requesting For</th>
 							<th class="text-center text-uppercase">Training Date</th>
+							<th class="text-center text-uppercase">Status</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -101,11 +102,28 @@
 										<i class="fa fa-ellipsis-h"></i>
 									</button>
 									<ul class="dropdown-menu shadow-lg">
-										<li class="text-left"><a href="#" v-on:click="willApprove(item.training_request_id)">
-											<i class="fa fa-check text-success"></i>
+										<li class="text-left"><a href="#" v-on:click="openRequest(item.training_request_id)">
+											<i class="fa fa-folder-open text-yellow"></i>
+											Open Request
+										</a></li>
+										<li class="text-left"><a href="#" v-on:click="getApproverStatuses(item.training_request_id)">
+											<i class="fa fa-th-list text-primary"></i>
+											Approver Statuses
+										</a></li>
+
+										<li role="separator" class="divider"></li>
+										<li class="dropdown-header">Your actions</li>
+										<li v-if="item.request_status == 'approved'" class="text-center">
+											<div class="label label-success">
+												<i class="fa fa-check-circle"></i>
+												already approved
+											</div>
+										</li>
+										<li v-if="item.request_status != 'approved'" class="text-left"><a href="#" v-on:click="willApprove(item.training_request_id)">
+											<i class="fa fa-check text-success"></i>&nbsp;
 											Approve
 										</a></li>
-										<li class="text-left"><a href="#" v-on:click="willDeny(item.training_request_id)">
+										<li v-if="item.request_status != 'approved'" class="text-left"><a href="#" v-on:click="willDeny(item.training_request_id)">
 											<i class="fa fa-times text-danger"></i>
 											Deny</a>
 										</li>
@@ -118,16 +136,20 @@
 							<td class="text-center">@{{ item.contact_person }}</td>
 							<td class="text-center">@{{ item.training_program.program_title }}</td>
 							<td class="text-center">@{{ item.training_date | dateTimeFormat }}</td>
+							<td class="text-center">
+								<div :class="`label label-${item.request_status == 'pending' ? 'warning' : 'primary'}`">
+									@{{ item.request_status }}
+								</div>
+							</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
-			<div class="box-footer clearfix">
-				<button v-on:click="getItems" class="btn btn-sm btn-primary pull-right">REFRESH</button>
-			</div>
 		</div>
 	</section>
 </div>
+@include('admin.modals.request_details_modal')
+@include('admin.modals.approver_statuses')
 @endsection
 
 @push('scripts')
@@ -138,19 +160,44 @@
 			el: '#app',
 			data() {
 				return {
-					items: []
+					dashboard: {},
+					data_loaded: 0,
+					items: [],
+					training_request: {},
+					approval_statuses: []
 				}
 			},
 			created() {
+				this.getDashboard();
 				this.displayItems();
 			},
 			methods: {
+				// Dashboard
+				getDashboard() {
+					axios.get(`${this.base_url}/admin/dashboard_statuses`)
+					.then(({data}) => {
+						this.dashboard = data;
+					})
+					.catch((error) => {
+						console.log(error.response);
+					});
+				},
+				getApproverStatuses(training_request_id) {
+					axios.get(`${this.base_url}/admin/approver_statuses/${training_request_id}`)
+					.then(({data}) => {
+						this.approval_statuses = data;
+						$('#approver_statuses').modal('show');
+					})
+					.catch((error) => {
+						console.log(error.response);
+					});
+				},
+				// 
 				displayItems() {
 					return this.getItems()
 					.then((data) => {
 						$('#training_requests').DataTable({
 							"paging": true,
-							// "ordering": false,
 							"info": true,
 							"autoWidth": false
 						});
@@ -160,9 +207,21 @@
 					return axios.get(`${this.base_url}/admin/training_requests/get`)
 					.then(({data}) => {
 						this.items = data;
+						this.getDashboard();
 					})
 					.catch((error) => {
 						console.log(error.response)
+					});
+				},
+				openRequest(training_request_id) {
+					axios.get(`${this.base_url}/admin/training_requests/get/${training_request_id}`)
+					.then(({data}) => {
+						this.training_request = data;
+						this.data_loaded = 1;
+						$('#request_details_modal').modal('show');
+					})
+					.catch((error) => {
+						console.log(error.response);
 					});
 				},
 				willApprove(training_request_id) {
@@ -175,9 +234,16 @@
 							confirm: 'Approve'
 						},
 					})
-					.then((data) => {
-						if (data) {
-							swal('Success', 'Request has been approved', 'success');
+					.then((res) => {
+						if (res) {
+							axios.put(`${this.base_url}/admin/update_request/${training_request_id}`, {request_status: 'approved'})
+							.then(({data}) => {
+								this.displayItems();
+								swal('Success', 'Request has been approved', 'success');
+							})
+							.catch((error) => {
+								console.log(error.response);
+							});
 						}
 					});
 				},
