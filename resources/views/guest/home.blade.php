@@ -1,6 +1,14 @@
 @extends('layouts.guest_layout')
 
 @push('styles')
+	<style>
+		.swal-button--confirm {
+			background-color: #F44336;
+		}
+	</style>
+@endpush
+
+@push('styles')
 	<link href="{{ url('public/libraries/css/bootstrap.min.css') }}" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
 	<link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700" rel="stylesheet" type="text/css">
@@ -33,37 +41,46 @@
 <template>
 	<v-stepper non-linear v-model="e1">
 		<v-stepper-header>
-			<v-stepper-step editable :complete="e1 > 1" step="1">I. Customer Information</v-stepper-step>
+			<v-stepper-step :editable="step1" :complete="e1 > 1" step="1" color="red" edit-icon="$vuetify.icons.complete">I. Customer Information</v-stepper-step>
 			<v-divider></v-divider>
-			<v-stepper-step editable :complete="e1 > 2" step="2">II. Training Information</v-stepper-step>
+			<v-stepper-step :editable="step2" :complete="e1 > 2" step="2" color="red" edit-icon="$vuetify.icons.complete">II. Training Information</v-stepper-step>
 			<v-divider></v-divider>
-			<v-stepper-step editable :complete="e1 > 3" step="3">Program Offerings</v-stepper-step>
+			<v-stepper-step :editable="step3" :complete="e1 > 3" step="3" color="red" edit-icon="$vuetify.icons.complete">Program Offerings</v-stepper-step>
 			<v-divider></v-divider>
-			<v-stepper-step editable :complete="e1 > 4" step="4">Isuzu Models</v-stepper-step>
+			<v-stepper-step :editable="step4" :complete="e1 > 4" step="4" color="red" edit-icon="$vuetify.icons.complete">Isuzu Models</v-stepper-step>
 			<v-divider></v-divider>
-			<v-stepper-step editable :complete="e1 > 5" step="5">Submit</v-stepper-step>
+			<v-stepper-step :editable="step5" :complete="e1 > 5" step="5" color="red" edit-icon="$vuetify.icons.complete">Submit</v-stepper-step>
 		</v-stepper-header>
 	
 		<v-stepper-items>
 			<v-stepper-content step="1">
 				@include('guest.customer_information')
-				<v-btn
-				color="primary"
-				v-on:click="step(2)"
-				>
-				Continue
-				</v-btn>
-		
+				<v-layout justify-end row>
+					<v-btn
+					color="red darken-1"
+					v-on:click="checkFirstForm"
+					dark
+					v-bind:disabled="disabledBtn1"
+					>
+					<v-icon small>ion ion-android-checkmark-circle</v-icon>&nbsp;
+					Continue
+					</v-btn>
+				</v-layout>
 			</v-stepper-content>
 		
 			<v-stepper-content step="2">
 				@include('guest.training_information')
-				<v-btn
-				color="primary"
-				v-on:click="step(3)"
-				>
-				Continue
-				</v-btn>
+				<v-layout justify-end row>
+					<v-btn
+					color="red darken-1"
+					v-on:click="checkSecondForm"
+					dark
+					v-bind:disabled="disabledBtn2"
+					>
+					<v-icon small>ion ion-android-checkmark-circle</v-icon>&nbsp;
+					Continue
+					</v-btn>
+				</v-layout>
 		
 			</v-stepper-content>
 		
@@ -138,12 +155,9 @@
 					images: '',
 					selected_unit: 0,
 					didNotReadYet: true,
-					items: [
-						{name:'foo'},
-						{name:'bar'},
-						{name:'fizz'},
-						{name:'buzz'} 
-					],
+
+					disabledBtn1: false,
+					disabledBtn2: false
 				}
 			},
 			props: {
@@ -178,6 +192,48 @@
 				}, 500);
 			},
 			methods: {
+				checkFirstForm() {
+					if (
+						this.form.company_name === '' ||
+						this.form.office_address === '' ||
+						this.form.contact_person === '' ||
+						this.form.position === '' ||
+						this.form.email_address === '' ||
+						this.form.contact_number === '' ||
+						this.form.selling_dealer === [] ||
+						this.form.unit_models === []
+					) {
+						swal({
+							title: "Ooops!",
+							text: "Please complete all of the fields.",
+							icon: "error",
+							button: false,
+							timer: 4000,
+						})
+					}
+					else {
+						this.step(2);
+					}
+				},
+				checkSecondForm() {
+					if (
+						this.form.training_date === '' ||
+						this.form.training_participants.length == 0 ||
+						this.form.training_venue === '' ||
+						this.form.training_address === ''
+					) {
+						swal({
+							title: "Ooops!",
+							text: "Please complete all of the fields.",
+							icon: "error",
+							button: false,
+							timer: 4000,
+						})
+					}
+					else {
+						this.step(3);
+					}
+				},
 				step(step) {
 					this.e1 = step;
 					if (step === 2) {
@@ -271,7 +327,7 @@
 						title: "Alright!",
 						text: "You can now proceed to the next step.",
 						icon: "success",
-						buttons: ["I'll change it", "Okay, Proceed!"],
+						buttons: ["I'll change it", "NEXT"],
 						closeOnClickOutside: false,
 					})
 					.then((res) => {

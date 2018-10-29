@@ -3,7 +3,6 @@
         <div class="card shadow p-3 mb-5 bg-white rounded">
             <div class="card-body">
                 <h5 class="card-title">
-                    <i class="ion ion-checkmark-circled green--text"></i>
                     @{{ item.program_title }}
                     <small class="grey--text float-left mt-1">
                         @{{ item.description }}
@@ -12,14 +11,14 @@
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item" v-for="(item, index) in item.program_features">
-                    <i class="fa fa-caret-right"></i>&nbsp;
+                    <i class="fa fa-caret-right"></i> &nbsp;
                     @{{ item.feature }}
                 </li>
             </ul>
             <div class="card-body">
                 <div class="float-right">
                     <button v-on:click="openGallery(item.training_program_id)" class="btn btn-outline-secondary" style="margin: -12px 0px;">
-                        GALLERY
+                        GALLERY &nbsp;
                         <i class="fa fa-image"></i>
                     </button>
                     <button 
@@ -29,8 +28,8 @@
                         SELECTED &nbsp; 
                         <i class="fa fa-check-circle"></i>
                     </button>
-                    <button v-else v-on:click="trainingProgramPicked(item.training_program_id)" class="btn btn-outline-success" style="margin: -12px 0px;">
-                        PROCEED
+                    <button v-else v-on:click="trainingProgramPicked(item.training_program_id)" class="btn btn-outline-danger" style="margin: -12px 0px;">
+                        PROCEED &nbsp; 
                         <i class="fa fa-arrow-right"></i>
                     </button>
                 </div>

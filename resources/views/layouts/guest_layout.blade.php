@@ -28,10 +28,10 @@
 	@stack('styles')
 </head>
 <body>
-	<v-app id="app" v-cloak>
+	<v-app id="app" v-cloak style="background-color: #222D32;">
 		<v-toolbar 
 		class="header"
-		app fixed clipped-left>
+		app fixed clipped-left style="background-color: #424242; z-index: 10;">
 			<v-toolbar-title>
 				<img src="{{ url('public/images/isuzu-logo-compressor.png') }}" alt="image not found" style="height: 35px;">
 			</v-toolbar-title>

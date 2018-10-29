@@ -45,10 +45,11 @@
 								item-text="dealer"
           						item-value="dealer_id"
 								chips
-								label="Models"
+								label="Selling Dealers"
 								deletable-chips
 								multiple
 								solo
+								single-line
 							>
 								<template
 								slot="selection"
