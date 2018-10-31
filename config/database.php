@@ -52,6 +52,22 @@ return [
             'prefix' => '',
         ],
 
+        // ecommerce5
+        'ipc_central' => [
+            'driver' => 'mysql',
+            'host' => '172.16.1.34',
+            'port' => '3306',
+            'database' => 'ipc_central',
+            'username' => 'root',
+            'password' => 'latropcpi',
+            'unix_socket' => '',
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ],
+
         'training' => [
             'driver' => 'mysql',
             'host' => env('DB_HOST', 'localhost'),

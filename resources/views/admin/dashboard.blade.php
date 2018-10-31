@@ -33,12 +33,12 @@
 				<div class="small-box bg-green shadow">
 					<div class="inner">
 						{{-- <h3>53<sup style="font-size: 20px">%</sup></h3> --}}
-						<h3>@{{ dashboard.pending_requests }}</h3>
+						<h3>@{{ dashboard.approved_requests }}</h3>
 	
-						<p>Pending Requests</p>
+						<p>Approved Requests</p>
 					</div>
 					<div class="icon">
-						<i class="ion ion-android-notifications"></i>
+						<i class="ion ion-thumbsup"></i>
 					</div>
 					<a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
 				</div>
@@ -48,12 +48,12 @@
 				<!-- small box -->
 				<div class="small-box bg-yellow shadow">
 					<div class="inner">
-						<h3>@{{ dashboard.approved_requests }}</h3>
+						<h3>@{{ dashboard.pending_requests }}</h3>
 	
-						<p>Approved Requests</p>
+						<p>Pending Requests</p>
 					</div>
 					<div class="icon">
-						<i class="ion ion-thumbsup"></i>
+						<i class="ion ion-android-notifications"></i>
 					</div>
 					<a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
 				</div>
@@ -114,8 +114,8 @@
 										<li role="separator" class="divider"></li>
 										<li class="dropdown-header">Your actions</li>
 										<li v-if="item.request_status == 'approved'" class="text-center">
-											<div class="label label-success">
-												<i class="fa fa-check-circle"></i>
+											<div class="label label-success" style="pading: 8px;">
+												<i class="fa fa-check-circle"></i> &nbsp;
 												already approved
 											</div>
 										</li>
@@ -125,7 +125,7 @@
 										</a></li>
 										<li v-if="item.request_status != 'approved'" class="text-left"><a href="#" v-on:click="willDeny(item.training_request_id)">
 											<i class="fa fa-times text-danger"></i>
-											Deny</a>
+											Disapprove</a>
 										</li>
 									</ul>
 								</div>
@@ -169,7 +169,7 @@
 			},
 			created() {
 				this.getDashboard();
-				this.displayItems();
+				this.getItems();
 			},
 			methods: {
 				// Dashboard
@@ -192,22 +192,14 @@
 						console.log(error.response);
 					});
 				},
-				// 
-				displayItems() {
-					return this.getItems()
-					.then((data) => {
-						$('#training_requests').DataTable({
-							"paging": true,
-							"info": true,
-							"autoWidth": false
-						});
-					});
-				},
 				getItems() {
 					return axios.get(`${this.base_url}/admin/training_requests/get`)
 					.then(({data}) => {
 						this.items = data;
-						this.getDashboard();
+						
+						setTimeout(() => {
+							$('#training_requests').DataTable();
+						});
 					})
 					.catch((error) => {
 						console.log(error.response)
@@ -229,6 +221,7 @@
 						title: "Accept Request?",
 						text: "Once approved, it will automatically send email to next approver",
 						icon: "warning",
+						closeOnClickOutside: false,
 						buttons: {
 							cancel: true,
 							confirm: 'Approve'
@@ -238,8 +231,17 @@
 						if (res) {
 							axios.put(`${this.base_url}/admin/update_request/${training_request_id}`, {request_status: 'approved'})
 							.then(({data}) => {
-								this.displayItems();
-								swal('Success', 'Request has been approved', 'success');
+								console.log(data);
+								if (data) {
+									this.getItems();
+									swal({
+										title: "Alright!",
+										text: "Request has been approved",
+										icon: "success",
+										button: false,
+										timer: 4000,
+									})
+								}
 							})
 							.catch((error) => {
 								console.log(error.response);

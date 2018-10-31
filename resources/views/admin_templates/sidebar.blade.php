@@ -20,11 +20,11 @@
             </span>
         </div>
     </form>
-
+    
     <ul class="sidebar-menu" data-widget="tree">
         <li class="header">DASHBOARD</li>
         <li id="dashboard_tab"><a href="{{ route('dashboard') }}">
-            <i class="fa fa-dashboard"></i> 
+            <i class="fa fa-dashboard"></i>
             <span>Dashboard</span>
         </a></li>
 

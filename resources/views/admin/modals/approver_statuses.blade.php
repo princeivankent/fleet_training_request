@@ -20,7 +20,7 @@
                             <td class="text-center">@{{ index+1 }}</td>
                             <td class="text-center">@{{ item.approver.approver_name }}</td>
                             <td class="text-center">
-                                <div v-if="item.status == 'pending'" class="label label-warning">
+                                {{-- <div v-if="item.status == 'pending'" class="label label-warning">
                                     @{{ item.status }}
                                 </div>
                                 <div v-else-if="item.status == 'approved'" class="label label-success">
@@ -28,7 +28,10 @@
                                 </div>
                                 <div v-else class="label label-danger">
                                     @{{ item.status }}
-                                </div>
+                                </div> --}}
+                                <i v-if="item.status == 'pending'" class="fa fa-clock-o text-yellow" style="font-size: 16px;"></i>
+                                <i v-else-if="item.status == 'approved'" class="fa fa-check-circle text-green" style="font-size: 16px;"></i>
+                                <i v-else class="fa fa-times-circle text-red" style="font-size: 16px;"></i>
                             </td>
                         </tr>
                     </tbody>

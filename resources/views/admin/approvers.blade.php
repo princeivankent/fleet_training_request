@@ -80,21 +80,17 @@
 				}
 			},
 			created() {
-				this.displayItems();
+				this.getItems();
 			},
 			methods: {
-				displayItems() {
-					return this.getItems()
-					.then((data) => {
-						$('#approver_table').DataTable();
-					});
-				},
 				getItems() {
 					return axios.get(`${this.base_url}/admin/approvers/get`)
 					.then(({data}) => {
 						this.items = data;
 
-						if (this.items.length > 0) return true; 
+						setTimeout(() => {
+							$('#approver_table').DataTable();
+						});
 					})
 					.catch((error) => {
 						console.log(error.response);
@@ -113,7 +109,7 @@
 					if (this.isEdit) {
 						axios.put(`${this.base_url}/admin/approvers/put/${this.form.approver_id}`, this.form)
 						.then(({data}) => {
-							this.displayItems();
+							this.getItems();
 							toastr.success('Approver has been updated', 'Success', 'success');
 							$('#approver_modal').modal('hide');
 						})
@@ -125,7 +121,7 @@
 					else {
 						axios.post(`${this.base_url}/admin/approvers/post`, this.form)
 						.then(({data}) => {
-							this.displayItems();
+							this.getItems();
 							toastr.success('New Approver has been added', 'Success', 'success');
 							this.resetForm();
 						})
@@ -146,7 +142,7 @@
 						if (data) {
 							axios.delete(`${this.base_url}//admin/approvers/delete/${approver_id}`)
 							.then(({data}) => {
-								this.displayItems();
+								this.getItems();
 								toastr.success('Approver has been deleted', 'Success', 'success');
 							})
 							.catch((error) => {

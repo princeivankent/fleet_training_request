@@ -60,7 +60,6 @@
 					color="red darken-1"
 					v-on:click="checkFirstForm"
 					dark
-					v-bind:disabled="disabledBtn1"
 					>
 					<v-icon small>ion ion-android-checkmark-circle</v-icon>&nbsp;
 					Continue
@@ -75,7 +74,6 @@
 					color="red darken-1"
 					v-on:click="checkSecondForm"
 					dark
-					v-bind:disabled="disabledBtn2"
 					>
 					<v-icon small>ion ion-android-checkmark-circle</v-icon>&nbsp;
 					Continue
@@ -154,10 +152,7 @@
 					training_programs: [],
 					images: '',
 					selected_unit: 0,
-					didNotReadYet: true,
-
-					disabledBtn1: false,
-					disabledBtn2: false
+					didNotReadYet: true
 				}
 			},
 			props: {
@@ -349,29 +344,54 @@
 					});
 				},
 				submitDummyRequestData() {
-					axios.post(`${this.base_url}/guest/submit_request/post`, this.form)
-					.then(({data}) => {
-						swal({
-							title: "Alright!",
-							text: "Your request has been submitted.",
-							icon: "success",
-							timer: 4000,
-						})
-						.then((res) => {
-							if (res) this.step(5);
-						});
+					swal({
+						title: 'Are you sure?',
+						text: 'There\'s no way to revert changes here.',
+						icon: 'warning',
+						dangerMode: true,
+						buttons: {
+							cancel: {
+								text: "Cancel",
+								value: null,
+								visible: true,
+								closeModal: true,
+							},
+							confirm: {
+								text: "Proceed",
+								value: true,
+								visible: true,
+								closeModal: false,
+							},
+						}
 					})
-					.catch((error) => {
-						console.log(error.response);
-						swal({
-							title: "Ooops!",
-							text: "You need to complete all of the fields.",
-							icon: "error",
-							timer: 4000,
-						})
-						.then((res) => {
-							if (res) return true;
-						});
+					.then((res) => {
+						if (res)
+							axios.post(`${this.base_url}/guest/submit_request/post`, this.form)
+							.then(({data}) => {
+								if (data) 
+									swal({
+										title: "Alright!",
+										text: "Your request has been submitted.",
+										icon: 'success',
+										button: false,
+										timer: 4000
+									})
+									.then((res) => {
+										if (res) this.step(5);
+									});
+							})
+							.catch((error) => {
+								console.log(error.response);
+								swal({
+									title: "Ooops!",
+									text: "You need to complete all of the fields.",
+									icon: "error",
+									timer: 4000,
+								})
+								.then((res) => {
+									if (res) return true;
+								});
+							});
 					});
 				},
 				getDate() {

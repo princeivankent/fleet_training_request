@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
+use App\UserAccess;
 use App\ApprovalStatus;
 use App\TrainingRequest;
-use Carbon\Carbon;
+use App\Services\BatchMails;
 use App\Services\SendEmails;
+use App\TrainingProgram;
+use Carbon\Carbon;
 use App\Http\Requests;
 
 class TrainingRequestController extends Controller
@@ -58,7 +61,7 @@ class TrainingRequestController extends Controller
 		return response()->json($query);
 	}
 
-	public function store(Request $request, SendEmails $mail)
+	public function store(Request $request, SendEmails $mail, BatchMails $batch_mails)
 	{
 		$this->validate($request, [
 			'company_name' => 'required|string',
@@ -112,15 +115,44 @@ class TrainingRequestController extends Controller
 
 			DB::commit();
 
+			$training_program = TrainingProgram::findOrFail($query->training_program_id);
 			if ($query) {
-				$mail->send([
-					'email_type' => 'request_for_acceptance',
-					'subject'	 => 'Request for Training',
-					'to'		 => $query->email,
-					'data'       => [
-						'contact_person' => $query->contact_person,
-						'company_name' => $query->company_name,
-					]
+				$user_access = UserAccess::select('et.email')
+					->leftJoin('email_tab as et', 'et.employee_id', '=', 'user_access_tab.employee_id')
+					->where([
+						'system_id'    => config('app.system_id'),
+						'user_type_id' => 2
+					])
+					->get();
+
+				// To Administrator
+				$batch_mails->save_to_batch([
+					'email_category_id' => config('constants.admin_approval'),
+					'subject' => 'Requesting for a Training',
+					'sender' => config('mail.from.address'),
+					'recipient' => $query->email, // it should be real email of administrators
+					'title' => 'Training Request',
+					'message' => 'Greetings! '. $query->contact_person .' of <strong>'. $query->company_name .'</strong> is requesting for a <br/>
+						training program: '. $training_program->program_title .' <br/>
+						on '. $query->training_date .'
+						Please click the button to navigate directly to our system.',
+					'redirect_url' => 'http://localhost/fleet_training_request/admin/dashboard',
+					'cc' => null,
+					'attachment' => null
+				]);
+
+				// To Requestor
+				$batch_mails->save_to_batch([
+					'email_category_id' => config('constants.request_submitted'),
+					'subject' => 'Request Submitted',
+					'sender' => config('mail.from.address'),
+					'recipient' => $query->email,
+					'title' => 'Request Submitted!',
+					'message' => 'Greetings! Your <strong>request for training has been submitted.</strong> Please wait for IPC Administrator to response.<br>
+						Thank you.',
+					'redirect_url' => null,
+					'cc' => null,
+					'attachment' => null
 				]);
 			}
 
