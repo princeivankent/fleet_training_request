@@ -33,9 +33,9 @@
             <i class="fa fa-caret-right"></i>&nbsp; 
             <span>Dealers</span>
         </a></li>
-        <li id="trainor_tab"><a href="">
+        <li id="trainor_tab"><a href="{{ route('trainors') }}">
             <i class="fa fa-caret-right"></i>&nbsp; 
-            <span>Trainors (development)</span>
+            <span>Trainors</span>
         </a></li>
         <li id="approver_tab"><a href="{{ route('approvers') }}">
             <i class="fa fa-caret-right"></i>&nbsp; 

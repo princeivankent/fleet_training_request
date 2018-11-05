@@ -9,6 +9,15 @@ Route::get('/approver/update_request/{approval_status_id}/{status}', 'ApproveReq
 Route::get('/admin/dashboard_statuses', 'TrainingRequestController@dashboard_statuses');
 Route::get('/admin/approver_statuses/{training_request_id}', 'TrainingRequestController@approver_statuses');
 
+// Trainors
+Route::get('/admin/trainors/get', 'TrainorController@index');
+Route::get('/admin/trainors/get/{trainor_id}', 'TrainorController@show');
+Route::post('/admin/trainors/post', 'TrainorController@store');
+Route::put('/admin/trainors/put/{trainor_id}', 'TrainorController@update');
+Route::put('/admin/trainors/delete/{trainor_id}', 'TrainorController@delete');
+Route::put('/admin/trainors/undo_delete/{trainor_id}', 'TrainorController@undo_delete');
+Route::delete('/admin/trainors/permanent_delete/{trainor_id}', 'TrainorController@permanent_delete');
+
 // Request Approval
 Route::put('/admin/update_request/{training_request_id}', 'ApproveRequestController@update_request');
 
@@ -64,3 +73,4 @@ Route::get('admin/dealers', function() { return view('admin.dealers'); })->name(
 Route::get('admin/unit_models', function() { return view('admin.unit_models'); })->name('unit_models');
 Route::get('admin/training_programs', function() { return view('admin.training_programs'); })->name('training_programs');
 Route::get('admin/approvers', function() { return view('admin.approvers'); })->name('approvers');
+Route::get('admin/trainors', function() { return view('admin.trainors'); })->name('trainors');
