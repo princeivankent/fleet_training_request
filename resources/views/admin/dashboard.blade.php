@@ -106,7 +106,7 @@
 											<i class="fa fa-folder-open text-yellow"></i>
 											Open Request
 										</a></li>
-										<li class="text-left"><a href="#" v-on:click="getApproverStatuses(item.training_request_id)">
+										<li v-if="item.request_status == 'approved'" class="text-left"><a href="#" v-on:click="getApproverStatuses(item.training_request_id)">
 											<i class="fa fa-th-list text-primary"></i>
 											Approver Statuses
 										</a></li>
@@ -231,7 +231,6 @@
 						if (res) {
 							axios.put(`${this.base_url}/admin/update_request/${training_request_id}`, {request_status: 'approved'})
 							.then(({data}) => {
-								console.log(data);
 								if (data) {
 									this.getItems();
 									swal({

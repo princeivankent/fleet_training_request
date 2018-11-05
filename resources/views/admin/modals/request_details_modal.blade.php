@@ -107,8 +107,8 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-sm btn-flat btn-danger" v-on:click="willDeny"><i class="fa fa-times"></i> Deny</button>
-				<button type="button" class="btn btn-sm btn-flat btn-primary" v-on:click="willApprove"><i class="fa fa-check"></i> Approve</button>
+				<button type="button" class="btn btn-sm btn-flat btn-danger" v-on:click="willDeny" :disabled="training_request.request_status != 'approved' ? false : true"><i class="fa fa-times"></i> Deny</button>
+				<button type="button" class="btn btn-sm btn-flat btn-primary" v-on:click="willApprove" :disabled="training_request.request_status != 'approved' ? false : true"><i class="fa fa-check"></i> Approve</button>
 			</div>
 		</div>
 	</div>

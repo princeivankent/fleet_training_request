@@ -9,7 +9,7 @@
 	<link href='https://fonts.googleapis.com/css?family=Quicksand:300,400,700' rel="stylesheet">
 	<!-- <![endif]-->
 
-	<title>ISUZU FLEET REQUEST TRAINING SYSTEM</title>
+	<title>ISUZU E-LEARNING SYSTEM</title>
 
 	<style type="text/css">
 		body {
@@ -151,7 +151,7 @@
 								<tr>
 									<td align="center" height="70" style="height:70px;">
 										<a href="" style="display: block; border-style: none !important; border: 0 !important;">
-											<img src="<?php echo $message->embed(url('public/images/isuzu-logo-compressor.png') ); ?>" alt="image not found" width="100" border="0" style="display: block; width: 100px;">
+											<img src="<?php echo $message->embed(config('app.url') . '/public/images/isuzu-logo-compressor.png') ?>" alt="image not found" width="100" border="0" style="display: block; width: 100px;">
 										</a>
 									</td>
 								</tr>
@@ -182,7 +182,7 @@
 
 							<div style="line-height: 35px">
 
-								Request for <span style="color: #5caad2;">TRAINING</span>
+								<?php echo $content['title']; ?>
 
 							</div>
 						</td>
@@ -212,8 +212,7 @@
 								<tr>
 									<td align="center" style="color: #888888; font-size: 16px; font-family: 'Work Sans', Calibri, sans-serif; line-height: 24px;">
 										<div style="line-height: 24px">
-											Hi Mam/Sir, <strong><?php echo $data['contact_person']; ?></strong> of <strong><?php echo $data['company_name']; ?></strong> is requesting for a training. <br>
-											Please click the button to navigate directly to your system.
+											<?php echo $content['message']; ?>
 										</div>
 									</td>
 								</tr>
@@ -236,7 +235,7 @@
 								<tr>
 									<td align="center" style="color: #ffffff; font-size: 14px; font-family: 'Work Sans', Calibri, sans-serif; line-height: 26px;">
 										<div style="line-height: 26px;">
-											<a href="{{ route('dashboard') }}" style="color: #ffffff; text-decoration: none;">IPC Fleet Training System</a>
+											<a href="<?php echo config('app.url'). '/admin'; ?>" style="color: #ffffff; text-decoration: none;">IPC Centralized Database</a>
 										</div>
 									</td>
 								</tr>
@@ -264,56 +263,5 @@
 
 	</table>
 	<!-- end section -->
-
-	<!-- footer ====== -->
-	<table border="0" width="100%" cellpadding="0" cellspacing="0" bgcolor="f4f4f4">
-
-		<tr>
-			<td height="25" style="font-size: 25px; line-height: 25px;">&nbsp;</td>
-		</tr>
-
-		<tr>
-			<td align="center">
-
-				<table border="0" align="center" width="590" cellpadding="0" cellspacing="0" class="container590">
-
-					<tr>
-						<td>
-							<table border="0" align="left" cellpadding="0" cellspacing="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;"
-								class="container590">
-								<tr>
-									<td align="left" style="color: #888888; font-size: 14px; font-family: 'Work Sans', Calibri, sans-serif; line-height: 23px;"
-										class="text_color">
-										<div style="color: #333333; font-size: 14px; font-family: 'Work Sans', Calibri, sans-serif; font-weight: 600; mso-line-height-rule: exactly; line-height: 23px;">
-
-											Email us: <br/> <a href="mailto:prince-tiburcio@isuzuphil.com" style="color: #888888; font-size: 14px; font-family: 'Hind Siliguri', Calibri, Sans-serif; font-weight: 400;">prince-tiburcio@isuzuphil.com</a>
-
-										</div>
-									</td>
-								</tr>
-							</table>
-
-							<table border="0" align="left" width="5" cellpadding="0" cellspacing="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;"
-								class="container590">
-								<tr>
-									<td height="20" width="5" style="font-size: 20px; line-height: 20px;">&nbsp;</td>
-								</tr>
-							</table>
-
-						</td>
-					</tr>
-
-				</table>
-			</td>
-		</tr>
-
-		<tr>
-			<td height="25" style="font-size: 25px; line-height: 25px;">&nbsp;</td>
-		</tr>
-
-	</table>
-	<!-- end footer ====== -->
-
 </body>
-
 </html>

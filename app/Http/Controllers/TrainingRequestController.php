@@ -9,7 +9,7 @@ use App\UserAccess;
 use App\ApprovalStatus;
 use App\TrainingRequest;
 use App\Services\BatchMails;
-use App\Services\SendEmails;
+use App\Services\SendEmail;
 use App\TrainingProgram;
 use Carbon\Carbon;
 use App\Http\Requests;
@@ -61,7 +61,7 @@ class TrainingRequestController extends Controller
 		return response()->json($query);
 	}
 
-	public function store(Request $request, SendEmails $mail, BatchMails $batch_mails)
+	public function store(Request $request, SendEmail $mail, BatchMails $batch_mails)
 	{
 		$this->validate($request, [
 			'company_name' => 'required|string',
@@ -154,9 +154,8 @@ class TrainingRequestController extends Controller
 					'cc' => null,
 					'attachment' => null
 				]);
+				return $query;
 			}
-
-			return 200;
 		} catch (Exception $e) {
 			report($e);
 			DB::rollBack();

@@ -2,24 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
+use App\TrainingProgram;
 use App\Approver;
 use App\ApprovalStatus;
 use App\TrainingRequest;
-use App\Services\SendEmails;
+use App\Services\SendEmail;
 use App\Services\BatchMails;
 use App\Http\Requests;
 
 class ApproveRequestController extends Controller
 {
-    public function update_request(Request $request, $training_request_id, SendEmails $mail, BatchMails $batch_mails) // to administrator
+    public function update_request(Request $request, $training_request_id, SendEmail $mail, BatchMails $batch_mails) // to administrator
     {
-        $requestor = DB::table('training_requests')->where('training_request_id', $training_request_id)->first();
+        $training_request = DB::table('training_requests')->where('training_request_id', $training_request_id)->first();
 
-        if ($requestor) {
-            $query = DB::table('training_requests')->where('training_request_id', $requestor->training_request_id)
+        if ($training_request) {
+            $query = DB::table('training_requests')->where('training_request_id', $training_request->training_request_id)
                 ->update([
                     'request_status' => $request->request_status
                 ]);
@@ -30,34 +32,27 @@ class ApproveRequestController extends Controller
     
                 foreach ($approvers as $value) {
                     $approval_status = new ApprovalStatus;
-                    $approval_status->training_request_id = $requestor->training_request_id;
+                    $approval_status->training_request_id = $training_request->training_request_id;
                     $approval_status->approver_id = $value['approver_id'];
                     $approval_status->save();
+
+                    $approver_id = $approval_status->approver_id;
+                    $approver = Approver::findOrFail($approver_id);
+                    $training_program = TrainingProgram::findOrFail($training_request->training_program_id);
 
                     $batch_mails->save_to_batch([
                         'email_category_id' => config('constants.superior_approval'),
                         'subject' => 'Training Request Approval',
                         'sender' => config('mail.from.address'),
-                        'recipient' => $approval_status->email,
+                        'recipient' => $approver->email,
                         'title' => 'Training Request Approval',
-                        'message' => 'Greetings! Your <strong>request for training has been submitted.</strong> has been created a new schedule for a examination. <br>
-						Please click the button to navigate directly to your system.',
+                        'message' => 'Greetings! '. $training_request->contact_person .' of <strong>'. $training_request->company_name .'</strong> is requesting for a <br/>
+						training program: '. $training_program->program_title .' <br/>
+						on '. Carbon::parse($training_request->training_date)->format('Y-m-d h:mm a'),
 						'cc' => null,
 						'attachment' => null
                     ]);
-                    
-                    // $mail->send([
-                    //     'email_type' => 'request_for_approval',
-                    //     'subject'	 => 'Request for Training',
-                    //     'to'		 => $value->email,
-                    //     'data'       => [
-                    //         'contact_person' => $requestor->contact_person,
-                    //         'company_name' => $requestor->company_name,
-                    //         'approve_url' => 'http://localhost/fleet_training_request/approver/update_request/'. $approval_status->approval_status_id .'/approve'
-                    //     ]
-                    // ]);
                 }
-                
                 return response()->json($query);
             }
         }
