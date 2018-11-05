@@ -57,9 +57,12 @@ class SendQueuedEmails extends Command
 					'attachment'	 => $value['attachment'],
 					'content'        => [
 						'title'	   => $value['title'],
-						'message'  => $value['message']
+                        'message'  => $value['message'],
+                        'accept_url'   => $value['accept_url'],
+                        'deny_url'	   => $value['deny_url']
                     ],
-                    'redirect_url' => $value['redirect_url']
+                    'redirect_url' => $value['redirect_url'],
+                    
 				]);
 
                 $query = Email::findOrFail($value['email_id']);

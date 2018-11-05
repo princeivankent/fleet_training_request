@@ -16,6 +16,8 @@ class Email extends Model
         'cc',
         'attachment',
         'redirect_url',
+        'accept_url',
+        'deny_url',
         'sent_at'
     ];
     protected $primaryKey = 'email_id';

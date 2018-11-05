@@ -50,7 +50,8 @@ class ApproveRequestController extends Controller
 						training program: '. $training_program->program_title .' <br/>
 						on '. Carbon::parse($training_request->training_date)->format('Y-m-d h:mm a'),
 						'cc' => null,
-						'attachment' => null
+                        'attachment' => null,
+                        'accept_url' => route('superior_approval', ['approval_status_id' => $approval_status->approval_status_id])
                     ]);
                 }
                 return response()->json($query);

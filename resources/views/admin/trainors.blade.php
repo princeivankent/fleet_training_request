@@ -8,7 +8,7 @@
     <div v-cloak>
         <section class="content-header">
             <h1>Trainors</h1>
-            <button v-on:click="createTrainor" class="btn btn-sm btn-flat btn-default">
+            <button v-on:click="createTrainor" class="btn btn-sm btn-flat btn-default mt-3">
                 <i class="fa fa-plus-circle"></i>&nbsp;
                 ADD TRAINOR
             </button>
@@ -57,7 +57,7 @@
                                         </ul>
                                     </div>
                                 </td>
-                                <td class="text-center">@{{ trainor.lname }}, @{{ trainor.fname }} @{{ trainor.mname + '.' }}</td>
+                                <td class="text-center">@{{ trainor.lname }}, @{{ trainor.fname }} @{{ trainor.mname ? trainor.mname : '' }}</td>
                                 <td class="text-center">@{{ trainor.email }}</td>
                                 <td class="text-center">@{{ trainor.created_by }}</td>
                                 <td class="text-center">
@@ -154,6 +154,7 @@
                     return axios.post(`${this.base_url}/admin/trainors/post`, this.form)
                         .then(({data}) => {
                             this.getTrainors();
+                            $('#trainor_modal').modal('hide');
                             swal('Success!', 'Trainor Saved', 'success', {timer:4000,button:false});
                         })
                         .catch((error) => {

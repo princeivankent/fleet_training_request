@@ -65,6 +65,9 @@ Route::post('/guest/submit_request/post', 'TrainingRequestController@store');
 
 Route::get('/guest/send_fake_email', 'FakeEmailTestsController@send');
 
+// ============== OUTSIDE SYSTEM ================ //
+Route::get('superior/approve/{approval_status_id}', 'SuperiorController@approve')->name('superior_approval');
+
 // ============== Views ================ //
 Route::get('/', function() { return view('guest.home'); });
 Route::get('admin', function() { return redirect()->route('dashboard'); });

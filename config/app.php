@@ -2,6 +2,9 @@
 
 return [
 
+    // System ID in IPC Database
+    'system_id' => env('SYSTEM_ID', 48),
+
     'name' => env('APP_NAME', 'Laravel'),
     /*
     |--------------------------------------------------------------------------

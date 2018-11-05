@@ -126,24 +126,26 @@ class TrainingRequestController extends Controller
 					->get();
 
 				// To Administrator
-				$batch_mails->save_to_batch([
-					'email_category_id' => config('constants.admin_approval'),
-					'subject' => 'Requesting for a Training',
-					'sender' => config('mail.from.address'),
-					'recipient' => $query->email, // it should be real email of administrators
-					'title' => 'Training Request',
-					'message' => 'Greetings! '. $query->contact_person .' of <strong>'. $query->company_name .'</strong> is requesting for a <br/>
-						training program: '. $training_program->program_title .' <br/>
-						on '. $query->training_date .'
-						Please click the button to navigate directly to our system.',
-					'redirect_url' => 'http://localhost/fleet_training_request/admin/dashboard',
-					'cc' => null,
-					'attachment' => null
-				]);
+				foreach ($user_access as $value) {
+					$batch_mails->save_to_batch([
+						'email_category_id' => config('constants.admin_approval'),
+						'subject' => 'Requesting for a Training',
+						'sender' => config('mail.from.address'),
+						'recipient' => $value['email'],
+						'title' => 'Training Request',
+						'message' => 'Greetings! '. $query->contact_person .' of <strong>'. $query->company_name .'</strong> is requesting for a <br/>
+							training program: '. $training_program->program_title .' <br/>
+							on '. $query->training_date .'
+							Please click the button to navigate directly to our system.',
+						'redirect_url' => 'http://localhost/fleet_training_request/admin/dashboard',
+						'cc' => null,
+						'attachment' => null
+					]);
+				}
 
 				// To Requestor
 				$batch_mails->save_to_batch([
-					'email_category_id' => config('constants.request_submitted'),
+					'email_category_id' => config('constants.requestor_notification'),
 					'subject' => 'Request Submitted',
 					'sender' => config('mail.from.address'),
 					'recipient' => $query->email,
