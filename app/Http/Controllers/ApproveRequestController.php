@@ -51,7 +51,8 @@ class ApproveRequestController extends Controller
 						on '. Carbon::parse($training_request->training_date)->format('Y-m-d h:mm a'),
 						'cc' => null,
                         'attachment' => null,
-                        'accept_url' => route('superior_approval', ['approval_status_id' => $approval_status->approval_status_id])
+                        'accept_url' => route('superior_approval', ['approval_status_id' => $approval_status->approval_status_id]),
+                        'deny_url' => route('superior_disapproval', ['approval_status_id' => $approval_status->approval_status_id])
                     ]);
                 }
                 return response()->json($query);

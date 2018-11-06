@@ -61,8 +61,7 @@ class SendQueuedEmails extends Command
                         'accept_url'   => $value['accept_url'],
                         'deny_url'	   => $value['deny_url']
                     ],
-                    'redirect_url' => $value['redirect_url'],
-                    
+                    'redirect_url' => $value['redirect_url']
 				]);
 
                 $query = Email::findOrFail($value['email_id']);

@@ -1,7 +1,7 @@
 <?php
 
 // Approver email urls
-Route::get('/approver/update_request/{approval_status_id}/{status}', 'ApproveRequestController@update_approval_request');
+Route::get('approver/update_request/{approval_status_id}/{status}', 'ApproveRequestController@update_approval_request');
 
 
 // ============== ADMINISTRATOR ================ //
@@ -67,6 +67,7 @@ Route::get('/guest/send_fake_email', 'FakeEmailTestsController@send');
 
 // ============== OUTSIDE SYSTEM ================ //
 Route::get('superior/approve/{approval_status_id}', 'SuperiorController@approve')->name('superior_approval');
+Route::get('superior/disapprove/{approval_status_id}', 'SuperiorController@disapprove')->name('superior_disapproval');
 
 // ============== Views ================ //
 Route::get('/', function() { return view('guest.home'); });
@@ -77,3 +78,6 @@ Route::get('admin/unit_models', function() { return view('admin.unit_models'); }
 Route::get('admin/training_programs', function() { return view('admin.training_programs'); })->name('training_programs');
 Route::get('admin/approvers', function() { return view('admin.approvers'); })->name('approvers');
 Route::get('admin/trainors', function() { return view('admin.trainors'); })->name('trainors');
+
+// ============== Public Views ================ //
+Route::get('guest/message', function() { return view('public_pages.message'); });

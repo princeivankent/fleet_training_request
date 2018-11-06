@@ -45,9 +45,9 @@
                         <div>
                             <v-alert
                             :value="true"
-                            type="success"
+                            type="{{ $content['type'] }}"
                             >
-                            {{ $message }}
+                            {{ $content['message'] }}
                             </v-alert>
                         </div>
                     </template>
