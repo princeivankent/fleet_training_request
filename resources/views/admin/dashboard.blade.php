@@ -137,7 +137,13 @@
 							<td class="text-center">@{{ item.training_program.program_title }}</td>
 							<td class="text-center">@{{ item.training_date | dateTimeFormat }}</td>
 							<td class="text-center">
-								<div :class="`label label-${item.request_status == 'pending' ? 'warning' : 'primary'}`">
+								<div v-if="item.request_status == 'approved'" class="label label-success">
+									@{{ item.request_status }}
+								</div>
+								<div v-else-if="item.request_status == 'pending'" class="label label-warning">
+									@{{ item.request_status }}
+								</div>
+								<div v-else class="label label-danger">
 									@{{ item.request_status }}
 								</div>
 							</td>
@@ -250,10 +256,11 @@
 				},
 				willDeny(training_request_id) {
 					swal({
-						title: "Deny Request?",
-						text: "you need to specify reason for an email response",
+						title: "Disapprove Request?",
+						text: "Note: you can not undo changes after it.",
 						icon: "error",
 						dangerMode: true,
+						closeOnClickOutside: false,
 						buttons: {
 							cancel: true,
 							confirm: 'Yes please'
@@ -261,7 +268,17 @@
 					})
 					.then((data) => {
 						if (data) {
-							swal('Success', 'Request has been denied', 'info');
+							axios.put(`${this.base_url}/admin/update_request/${training_request_id}`, {request_status: 'denied'})
+							.then(({data}) => {
+								if (data) {
+									this.getItems();
+									swal('Success!', 'Request has been denied', 'success', {timer:4000,button:false});
+								}
+							})
+							.catch((error) => {
+								console.log(error.response);
+								swal('Ooops!', 'Something went wrong.', 'error', {timer:4000,button:false});
+							});
 						}
 					});
 				},
