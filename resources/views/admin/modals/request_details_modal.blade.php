@@ -8,9 +8,9 @@
 			</div>
 			<div class="modal-body">
 				<!-- FLEET CUSTOMER INFORMATION -->
-				<div class="box box-primary shadow-lg">
+				<div class="box box-solid">
 					<div class="box-header with-border">
-						<h3 class="box-title">Fleet Customer Information</h3>
+						<h3 class="box-title text-danger">Fleet Customer Information</h3>
 					</div>
 					<div class="box-body row">
 						<div class="form-group col-md-6">
@@ -60,9 +60,9 @@
 				</div>
 
 				<!-- TRAINING INFORMATION -->
-				<div class="box box-primary shadow-lg">
+				<div class="box box-solid">
 					<div class="box-header with-border">
-						<h3 class="box-title">Training Information</h3>
+						<h3 class="box-title text-danger">Training Information</h3>
 					</div>
 					<div class="box-body row">
 						<div class="form-group col-md-7">
@@ -90,9 +90,9 @@
 				</div>
 
 				<!-- TRAINING PROGRAM OFFERINGS -->
-				<div class="box box-primary shadow-lg">
+				<div class="box box-solid">
 					<div class="box-header with-border">
-						<h3 class="box-title">Training Program</h3>
+						<h3 class="box-title text-danger">Training Program</h3>
 					</div>
 					<div class="box-body row">
 						<div class="form-group col-md-7">
@@ -107,8 +107,8 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-sm btn-flat btn-danger" v-on:click="willDeny" :disabled="training_request.request_status != 'approved' ? false : true"><i class="fa fa-times"></i> Deny</button>
-				<button type="button" class="btn btn-sm btn-flat btn-primary" v-on:click="willApprove" :disabled="training_request.request_status != 'approved' ? false : true"><i class="fa fa-check"></i> Approve</button>
+				<button type="button" class="btn btn-sm btn-flat btn-danger" v-on:click="willDeny(training_request.training_request_id)" :disabled="training_request.request_status != 'approved' ? false : true"><i class="fa fa-times"></i> Deny</button>
+				<button type="button" class="btn btn-sm btn-flat btn-primary" v-on:click="willApprove(training_request.training_request_id)" :disabled="training_request.request_status != 'approved' ? false : true"><i class="fa fa-check"></i> Approve</button>
 			</div>
 		</div>
 	</div>
