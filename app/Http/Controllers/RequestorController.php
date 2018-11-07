@@ -53,7 +53,7 @@ class RequestorController extends Controller
     
                 foreach ($user_access as $value) {
                     $query = $batch_mails->save_to_batch([
-                        'email_category_id' => config('constants.superior_disapproval'),
+                        'email_category_id' => null,
                         'subject'           => 'Training Program',
                         'sender'            => config('mail.from.address'),
                         'recipient'         => $value->email,
@@ -89,7 +89,7 @@ class RequestorController extends Controller
 		}
 	}
 
-	public function cancel($training_request_id)
+	public function cancel($training_request_id, BatchMails $batch_mails)
 	{
 		$check = TrainingRequest::findOrFail($training_request_id);
 
@@ -101,6 +101,29 @@ class RequestorController extends Controller
 				]);
 	
 			if ($query) {
+				$user_access = UserAccess::select('et.email')
+                    ->leftJoin('email_tab as et', 'et.employee_id', '=', 'user_access_tab.employee_id')
+                    ->where([
+                        'system_id'    => config('app.system_id'),
+                        'user_type_id' => 2
+                    ])
+                    ->get();
+    
+                foreach ($user_access as $value) {
+                    $query = $batch_mails->save_to_batch([
+                        'email_category_id' => null,
+                        'subject'           => 'Training Program',
+                        'sender'            => config('mail.from.address'),
+                        'recipient'         => $value->email,
+                        'title'             => 'Training Program',
+                        'message'           => $check->contact_person . ' of <strong>'. $check->company_name .'</strong><br/>
+                            has been cancelled the training program.',
+                        'cc'           => null,
+                        'attachment'   => null,
+                        'redirect_url' => 'http://localhost/fleet_training_request/admin/training_requests'
+                    ]);
+                }
+
 				$content = [
 					'type'    => 'success',
 					'message' => 'Your request has been cancelled.'

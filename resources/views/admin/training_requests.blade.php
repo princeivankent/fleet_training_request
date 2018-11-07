@@ -75,7 +75,7 @@
 			<div class="box-header with-border">
 				<h3 class="box-title">Training Requests</h3>
 			</div>
-			<div class="box-body" style="overflow-x:auto;">
+			<div class="box-body">
 				<table id="training_requests" class="table table-responsive table-bordered table-hover" width="100%">
 					<thead>
 						<tr>

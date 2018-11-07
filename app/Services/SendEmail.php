@@ -21,7 +21,7 @@ class SendEmail
         ];
 
         if ($data['email_category_id'] == '2') $template = 'superior_email_template';
-        else if ($data['email_category_id'] == '5') $template = 'trainor_email';
+        else if ($data['email_category_id'] == '5') $template = 'email_template';
         else if ($data['email_category_id'] == '6') $template = 'requestor_email';
         else if ($data['email_category_id'] == '7') $template = 'default_email';
         else $template = 'default_email';
