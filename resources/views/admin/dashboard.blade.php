@@ -79,8 +79,8 @@
 			<div class="box-header with-border">
 				<h3 class="box-title">Customer's Requests</h3>
 			</div>
-			<div class="box-body">
-				<table id="training_requests" class="table table-bordered table-hover">
+			<div class="box-body" style="overflow-x:auto;">
+				<table id="training_requests" class="table table-responsive table-bordered table-hover" width="100%">
 					<thead>
 						<tr>
 							<th class="text-center text-uppercase">&nbsp;</th>
@@ -90,7 +90,8 @@
 							<th class="text-center text-uppercase">Contact Number</th>
 							<th class="text-center text-uppercase">Requesting For</th>
 							<th class="text-center text-uppercase">Training Date</th>
-							<th class="text-center text-uppercase">Status</th>
+							<th class="text-center text-uppercase">Admin</th>
+							<th class="text-center text-uppercase">Requestor</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -145,6 +146,17 @@
 								</div>
 								<div v-else class="label label-danger">
 									@{{ item.request_status }}
+								</div>
+							</td>
+							<td class="text-center">
+								<div v-if="item.requestor_confirmation == 'confirmed'" class="label label-success">
+									@{{ item.requestor_confirmation }}
+								</div>
+								<div v-else-if="item.requestor_confirmation == 'pending'" class="label label-warning">
+									waiting
+								</div>
+								<div v-else class="label label-danger">
+									@{{ item.requestor_confirmation }}
 								</div>
 							</td>
 						</tr>
