@@ -5,6 +5,9 @@ Route::get('approver/update_request/{approval_status_id}/{status}', 'ApproveRequ
 
 
 // ============== ADMINISTRATOR ================ //
+// Reschedule
+Route::put('admin/training_requests/reschedule/{training_request_id}', 'RescheduleController@reschedule');
+
 // training_requests
 Route::get('/admin/training_requests_statuses', 'TrainingRequestController@training_requests_statuses');
 Route::get('/admin/approver_statuses/{training_request_id}', 'TrainingRequestController@approver_statuses');
@@ -70,6 +73,7 @@ Route::get('superior/approve/{approval_status_id}', 'SuperiorController@approve'
 Route::get('superior/disapprove/{approval_status_id}', 'SuperiorController@disapprove')->name('superior_disapproval');
 Route::get('customer/confirm_request/{training_request_id}', 'RequestorController@confirm')->name('customer_confirmation');
 Route::get('customer/cancellation_request/{training_request_id}', 'RequestorController@cancel')->name('customer_cancellation');
+Route::get('customer/reschedule_request/{training_request_id}', 'RequestorController@reschedule')->name('customer_reschedule');
 
 // ============== Views ================ //
 Route::get('/', function() { return view('guest.home'); });

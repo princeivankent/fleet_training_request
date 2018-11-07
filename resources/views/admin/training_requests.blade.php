@@ -2,6 +2,8 @@
 
 @push('styles')
 	<link rel="stylesheet" href="{{ url('public/libraries/adminlte/dataTables.bootstrap.min.css') }}">
+	{{-- <link rel="stylesheet" href="{{ url('public/libraries/adminlte/jquery.datetimepicker.min.css') }}"> --}}
+	<link rel="stylesheet" href="{{ url('public/libraries/adminlte/bootstrap-datetimepicker.min.css') }}">
 @endpush
 
 @section('content')
@@ -99,14 +101,24 @@
 										<i class="fa fa-ellipsis-h"></i>
 									</button>
 									<ul class="dropdown-menu shadow-lg">
-										<li class="text-left"><a href="#" v-on:click="openRequest(item.training_request_id)">
-											<i class="fa fa-folder-open text-yellow"></i>
-											Open Request
-										</a></li>
-										<li v-if="item.request_status == 'approved'" class="text-left"><a href="#" v-on:click="getApproverStatuses(item.training_request_id)">
-											<i class="fa fa-th-list text-primary"></i>
-											Approver Statuses
-										</a></li>
+										<li class="text-left">
+											<a v-on:click="openRequest(item.training_request_id)">
+												<i class="fa fa-folder-open text-yellow"></i>
+												Open Request
+											</a>
+										</li>
+										<li v-if="item.request_status == 'approved'" class="text-left">
+											<a href="#" v-on:click="getApproverStatuses(item.training_request_id)">
+												<i class="fa fa-th-list text-default"></i>
+												Approver Statuses
+											</a>
+										</li>
+										<li v-if="item.requestor_confirmation == 'reschedule'" class="text-left">
+											<a v-on:click="editSchedule(item.training_request_id)">
+												<i class="fa fa-pencil text-default"></i>
+												Edit Schedule
+											</a>
+										</li>
 
 										<li v-if="item.request_status != 'denied'" role="separator" class="divider"></li>
 										<li v-if="item.request_status != 'denied' && item.request_status != 'approved'" class="dropdown-header">Your actions</li>
@@ -135,24 +147,27 @@
 							<td class="text-center">@{{ item.training_date | dateTimeFormat }}</td>
 							<td class="text-center">
 								<div v-if="item.request_status == 'approved'" class="label label-success">
-									@{{ item.request_status }}
+									APPROVED
 								</div>
 								<div v-else-if="item.request_status == 'pending'" class="label label-warning">
-									@{{ item.request_status }}
+									PENDING
 								</div>
 								<div v-else class="label label-danger">
-									@{{ item.request_status }}
+									DENIED
 								</div>
 							</td>
 							<td class="text-center">
 								<div v-if="item.requestor_confirmation == 'confirmed'" class="label label-success">
-									@{{ item.requestor_confirmation }}
+									CONFIRMED
 								</div>
 								<div v-else-if="item.requestor_confirmation == 'pending'" class="label label-warning">
-									waiting
+									WAITING
+								</div>
+								<div v-else-if="item.requestor_confirmation == 'reschedule'" class="label label-info">
+									RESCHEDULED
 								</div>
 								<div v-else class="label label-danger">
-									@{{ item.requestor_confirmation }}
+									CANCELLED
 								</div>
 							</td>
 						</tr>
@@ -163,13 +178,22 @@
 	</section>
 </div>
 @include('admin.modals.request_details_modal')
+@include('admin.modals.reschedule_modal')
 @include('admin.modals.approver_statuses')
 @endsection
 
 @push('scripts')
 	<script src="{{ url('public/libraries/adminlte/jquery.dataTables.min.js') }}"></script>
 	<script src="{{ url('public/libraries/adminlte/dataTables.bootstrap.min.js') }}"></script>
+	{{-- <script src="{{ url('public/libraries/adminlte/jquery.datetimepicker.full.min.js') }}"></script> --}}
+	<script src="{{ url('public/libraries/adminlte/bootstrap-datetimepicker.min.js') }}"></script>
 	<script>
+		$(function() {
+			// $.datetimepicker.setLocale('en');
+			// $('#datetimepicker').datetimepicker();
+			$('#datetimepicker1').datetimepicker();
+		});
+
 		new Vue({
 			el: '#app',
 			data() {
@@ -178,7 +202,8 @@
 					data_loaded: 0,
 					items: [],
 					training_request: {},
-					approval_statuses: []
+					approval_statuses: [],
+					training_request_id: 0
 				}
 			},
 			created() {
@@ -186,6 +211,31 @@
 				this.getItems();
 			},
 			methods: {
+				saveSchedule() {
+					var training_date = document.getElementById('training_date').value;
+					axios.put(`${this.base_url}/admin/training_requests/reschedule/${this.training_request_id}`, {training_date: training_date})
+					.then(({data}) => {
+						if (data) {
+							$('#reschedule_modal').modal('hide');
+							this.getItems();
+							swal('Success!', 'Training Program has been rescheduled.', 'success', {timer:4000,button:false});
+						}
+					})
+					.catch((error) => {
+						console.log(error.response);
+						swal('Ooops!', 'Something went wrong.', 'error', {timer:4000,button:false});
+					});
+				},
+				editSchedule(training_request_id) {
+					axios.get(`${this.base_url}/admin/training_requests/get/${training_request_id}`)
+					.then(({data}) => {
+						this.training_request_id = data.training_request_id;
+						$('#reschedule_modal').modal('show');
+					})
+					.catch((error) => {
+						console.log(error.response);
+					});
+				},
 				getDashboard() {
 					axios.get(`${this.base_url}/admin/training_requests_statuses`)
 					.then(({data}) => {

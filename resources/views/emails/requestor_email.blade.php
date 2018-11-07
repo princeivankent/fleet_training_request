@@ -248,7 +248,7 @@
 								<tr>
 									<td align="center" style="color: #00A65A; font-size: 14px; font-family: 'Work Sans', Calibri, sans-serif; line-height: 26px;">
 										<div style="line-height: 26px;">
-											<a href="" style="color: #ffffff; text-decoration: none;">Reschedule</a>
+											<a href="<?php echo $content['redirect_url']; ?>" style="color: #ffffff; text-decoration: none;">Reschedule</a>
 										</div>
 									</td>
 								</tr>

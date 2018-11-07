@@ -53,13 +53,14 @@ class SuperiorController extends Controller
                         'sender'            => config('mail.from.address'),
                         'recipient'         => $training_request->email,
                         'title'             => 'Training Program',
-                        'message' => 'Greetings! IPC Administrator has been approved your <strong>training request</strong>.<br/>
+                        'message'           => 'Greetings! IPC Administrator has been approved your <strong>training request</strong>.<br/>
                             Training program will be held on: '. $training_request->training_address .' <br/>
-                            at '. Carbon::parse($training_request->training_date)->format('M d, Y D - h:i A'),
-                        'cc'         => null,
-                        'attachment' => null,
-                        'accept_url' => route('customer_confirmation', ['training_request_id' => $training_request->training_request_id]),
-                        'deny_url'   => route('customer_cancellation', ['training_request_id' => $training_request->training_request_id])
+                            at       '. Carbon::parse($training_request->training_date)->format('M d, Y D - h: i A'),
+                        'cc'           => null,
+                        'attachment'   => null,
+                        'accept_url'   => route('customer_confirmation', ['training_request_id' => $training_request->training_request_id]),
+                        'deny_url'     => route('customer_cancellation', ['training_request_id' => $training_request->training_request_id]),
+                        'redirect_url' => route('customer_reschedule', ['training_request_id' => $training_request->training_request_id])
                     ]); 
                 }
 

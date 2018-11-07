@@ -50,16 +50,17 @@ class SendQueuedEmails extends Command
                 $bar->setProgressCharacter('|');
 				$mail = $this->mail->send([
 					'email_category_id' => $value['email_category_id'],
-					'subject'	     => $value['subject'],
-					'sender'	     => $value['sender'],
-					'recipient'	     => $value['recipient'],
-					'cc'	         => $value['cc'],
-					'attachment'	 => $value['attachment'],
-					'content'        => [
-						'title'	   => $value['title'],
-                        'message'  => $value['message'],
-                        'accept_url'   => $value['accept_url'],
-                        'deny_url'	   => $value['deny_url']
+					'subject'           => $value['subject'],
+					'sender'            => $value['sender'],
+					'recipient'         => $value['recipient'],
+					'cc'                => $value['cc'],
+					'attachment'        => $value['attachment'],
+					'content'           => [
+						'title'        => $value['title'],
+						'message'      => $value['message'],
+						'accept_url'   => $value['accept_url'],
+						'deny_url'     => $value['deny_url'],
+						'redirect_url' => $value['redirect_url']
                     ],
                     'redirect_url' => $value['redirect_url']
 				]);
