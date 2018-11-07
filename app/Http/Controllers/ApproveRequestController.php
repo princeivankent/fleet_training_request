@@ -48,7 +48,7 @@ class ApproveRequestController extends Controller
                         'title' => 'Training Request Approval',
                         'message' => 'Greetings! '. $training_request->contact_person .' of <strong>'. $training_request->company_name .'</strong> is requesting for a <br/>
 						training program: '. $training_program->program_title .' <br/>
-						on '. Carbon::parse($training_request->training_date)->format('Y-m-d h:mm a'),
+						on '. Carbon::parse($training_request->training_date)->format('M d, Y D - h:i A'),
 						'cc' => null,
                         'attachment' => null,
                         'accept_url' => route('superior_approval', ['approval_status_id' => $approval_status->approval_status_id]),
