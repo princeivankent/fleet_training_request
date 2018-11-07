@@ -49,17 +49,17 @@ class SuperiorController extends Controller
                     // To Requestor
                     $batch_mails->save_to_batch([
                         'email_category_id' => config('constants.requestor_notification'),
-                        'subject' => 'Training Program',
-                        'sender' => config('mail.from.address'),
-                        'recipient' => $training_request->email,
-                        'title' => 'Training Program',
+                        'subject'           => 'Training Program',
+                        'sender'            => config('mail.from.address'),
+                        'recipient'         => $training_request->email,
+                        'title'             => 'Training Program',
                         'message' => 'Greetings! IPC Administrator has been approved your <strong>training request</strong>.<br/>
                             Training program will be held on: '. $training_request->training_address .' <br/>
-                            at '. Carbon::parse($training_request->training_date)->format('Y-m-d h:m a'),
-                        'cc' => null,
+                            at '. Carbon::parse($training_request->training_date)->format('M d, Y D - h:i A'),
+                        'cc'         => null,
                         'attachment' => null,
                         'accept_url' => route('customer_confirmation', ['training_request_id' => $training_request->training_request_id]),
-                        'deny_url' => route('customer_cancellation', ['training_request_id' => $training_request->training_request_id])
+                        'deny_url'   => route('customer_cancellation', ['training_request_id' => $training_request->training_request_id])
                     ]); 
                 }
 
@@ -120,14 +120,14 @@ class SuperiorController extends Controller
                 foreach ($user_access as $value) {
                     $query = $batch_mails->save_to_batch([
                         'email_category_id' => config('constants.superior_disapproval'),
-                        'subject' => 'Training Program',
-                        'sender' => config('mail.from.address'),
-                        'recipient' => $value->email,
-                        'title' => 'Training Program',
-                        'message' => 'Sorry! The request has been <strong>disapproved</strong> by one of your approver '. $approval->approver->approver_name .'.<br/>
+                        'subject'           => 'Training Program',
+                        'sender'            => config('mail.from.address'),
+                        'recipient'         => $value->email,
+                        'title'             => 'Training Program',
+                        'message'           => 'Sorry! The request has been <strong>disapproved</strong> by one of your approver '. $approval->approver->approver_name .'.<br/>
                             The training program will not be granted. Thank you.',
-                        'cc' => null,
-                        'attachment' => null,
+                        'cc'           => null,
+                        'attachment'   => null,
                         'redirect_url' => 'http://localhost/fleet_training_request/admin/dashboard'
                     ]);
                 }
