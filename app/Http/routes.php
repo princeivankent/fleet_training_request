@@ -5,8 +5,8 @@ Route::get('approver/update_request/{approval_status_id}/{status}', 'ApproveRequ
 
 
 // ============== ADMINISTRATOR ================ //
-// Dashboard
-Route::get('/admin/dashboard_statuses', 'TrainingRequestController@dashboard_statuses');
+// training_requests
+Route::get('/admin/training_requests_statuses', 'TrainingRequestController@training_requests_statuses');
 Route::get('/admin/approver_statuses/{training_request_id}', 'TrainingRequestController@approver_statuses');
 
 // Trainors
@@ -73,8 +73,8 @@ Route::get('customer/cancellation_request/{training_request_id}', 'RequestorCont
 
 // ============== Views ================ //
 Route::get('/', function() { return view('guest.home'); });
-Route::get('admin', function() { return redirect()->route('dashboard'); });
-Route::get('admin/dashboard', function() { return view('admin.dashboard'); })->name('dashboard');
+Route::get('admin', function() { return redirect()->route('training_requests'); });
+Route::get('admin/training_requests', function() { return view('admin.training_requests'); })->name('training_requests');
 Route::get('admin/dealers', function() { return view('admin.dealers'); })->name('dealers');
 Route::get('admin/unit_models', function() { return view('admin.unit_models'); })->name('unit_models');
 Route::get('admin/training_programs', function() { return view('admin.training_programs'); })->name('training_programs');

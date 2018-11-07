@@ -16,7 +16,7 @@ use App\Http\Requests;
 
 class TrainingRequestController extends Controller
 {	
-	public function dashboard_statuses()
+	public function training_requests_statuses()
 	{
 		return response()->json([
 			'all_requests' => TrainingRequest::count(),
@@ -137,7 +137,7 @@ class TrainingRequestController extends Controller
 							training program: '. $training_program->program_title .' <br/>
 							on '. $query->training_date .'
 							Please click the button to navigate directly to our system.',
-						'redirect_url' => 'http://localhost/fleet_training_request/admin/dashboard',
+						'redirect_url' => 'http://localhost/fleet_training_request/admin/training_requests',
 						'cc' => null,
 						'attachment' => null
 					]);

@@ -128,7 +128,7 @@ class SuperiorController extends Controller
                             The training program will not be granted. Thank you.',
                         'cc'           => null,
                         'attachment'   => null,
-                        'redirect_url' => 'http://localhost/fleet_training_request/admin/dashboard'
+                        'redirect_url' => 'http://localhost/fleet_training_request/admin/training_requests'
                     ]);
                 }
                 

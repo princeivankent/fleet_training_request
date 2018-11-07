@@ -22,10 +22,10 @@
     </form>
     
     <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">DASHBOARD</li>
-        <li id="dashboard_tab"><a href="{{ route('dashboard') }}">
+        <li class="header">training_requests</li>
+        <li id="training_requests_tab"><a href="{{ route('training_requests') }}">
             <i class="fa fa-dashboard"></i>
-            <span>Dashboard</span>
+            <span>Training Requests</span>
         </a></li>
 
         <li class="header">PEOPLE</li>

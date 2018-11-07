@@ -6,17 +6,13 @@
 
 @section('content')
 <div v-cloak>
-	<section class="content-header">
-		<h1>Administrator's Dashboard</h1>
-	</section>
-	
 	<section class="content container-fluid">
 		<div class="row">
 			<div class="col-lg-3 col-xs-6">
 				<!-- small box -->
 				<div class="small-box bg-aqua shadow">
 					<div class="inner">
-						<h3>@{{ dashboard.all_requests }}</h3>
+						<h3>@{{ training_requests.all_requests }}</h3>
 	
 						<p>Total Requests</p>
 					</div>
@@ -33,7 +29,7 @@
 				<div class="small-box bg-green shadow">
 					<div class="inner">
 						{{-- <h3>53<sup style="font-size: 20px">%</sup></h3> --}}
-						<h3>@{{ dashboard.approved_requests }}</h3>
+						<h3>@{{ training_requests.approved_requests }}</h3>
 	
 						<p>Approved Requests</p>
 					</div>
@@ -48,7 +44,7 @@
 				<!-- small box -->
 				<div class="small-box bg-yellow shadow">
 					<div class="inner">
-						<h3>@{{ dashboard.pending_requests }}</h3>
+						<h3>@{{ training_requests.pending_requests }}</h3>
 	
 						<p>Pending Requests</p>
 					</div>
@@ -63,7 +59,7 @@
 				<!-- small box -->
 				<div class="small-box bg-red shadow">
 					<div class="inner">
-						<h3>@{{ dashboard.denied_requests }}</h3>
+						<h3>@{{ training_requests.denied_requests }}</h3>
 	
 						<p>Denied Requests</p>
 					</div>
@@ -77,7 +73,7 @@
 	
 		<div class="box box-primary shadow-lg">
 			<div class="box-header with-border">
-				<h3 class="box-title">Customer's Requests</h3>
+				<h3 class="box-title">Training Requests</h3>
 			</div>
 			<div class="box-body" style="overflow-x:auto;">
 				<table id="training_requests" class="table table-responsive table-bordered table-hover" width="100%">
@@ -178,7 +174,7 @@
 			el: '#app',
 			data() {
 				return {
-					dashboard: {},
+					training_requests: {},
 					data_loaded: 0,
 					items: [],
 					training_request: {},
@@ -190,11 +186,10 @@
 				this.getItems();
 			},
 			methods: {
-				// Dashboard
 				getDashboard() {
-					axios.get(`${this.base_url}/admin/dashboard_statuses`)
+					axios.get(`${this.base_url}/admin/training_requests_statuses`)
 					.then(({data}) => {
-						this.dashboard = data;
+						this.training_requests = data;
 					})
 					.catch((error) => {
 						console.log(error.response);
@@ -296,6 +291,6 @@
 				},
 			}
 		})
-		document.querySelector('#dashboard_tab').setAttribute('class', 'active');
+		document.querySelector('#training_requests_tab').setAttribute('class', 'active');
 	</script>
 @endpush

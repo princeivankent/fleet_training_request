@@ -62,7 +62,7 @@ class RequestorController extends Controller
                             has been confirmed the training program.',
                         'cc'           => null,
                         'attachment'   => null,
-                        'redirect_url' => 'http://localhost/fleet_training_request/admin/dashboard'
+                        'redirect_url' => 'http://localhost/fleet_training_request/admin/training_requests'
                     ]);
                 }
 
