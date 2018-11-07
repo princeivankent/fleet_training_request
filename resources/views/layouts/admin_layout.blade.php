@@ -24,7 +24,13 @@
 	<link rel="stylesheet" href="{{ url('public/css/bootstrap_prototype.css') }}">
     
 	<!-- Google Font -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+	
+	<style>
+		.swal-button--confirm {
+			background-color: #F44336;
+		}
+	</style>
 
 	@stack('styles')
 </head>

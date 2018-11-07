@@ -18,7 +18,7 @@
 					<div class="inner">
 						<h3>@{{ dashboard.all_requests }}</h3>
 	
-						<p>All Requests</p>
+						<p>Total Requests</p>
 					</div>
 					<div class="icon">
 						<i class="ion ion-android-list"></i>
@@ -111,19 +111,19 @@
 											Approver Statuses
 										</a></li>
 
-										<li role="separator" class="divider"></li>
-										<li class="dropdown-header">Your actions</li>
+										<li v-if="item.request_status != 'denied'" role="separator" class="divider"></li>
+										<li v-if="item.request_status != 'denied' && item.request_status != 'approved'" class="dropdown-header">Your actions</li>
 										<li v-if="item.request_status == 'approved'" class="text-center">
 											<div class="label label-success" style="pading: 8px;">
 												<i class="fa fa-check-circle"></i> &nbsp;
 												already approved
 											</div>
 										</li>
-										<li v-if="item.request_status != 'approved'" class="text-left"><a href="#" v-on:click="willApprove(item.training_request_id)">
+										<li v-if="item.request_status != 'denied' && item.request_status != 'approved'" class="text-left"><a href="#" v-on:click="willApprove(item.training_request_id)">
 											<i class="fa fa-check text-success"></i>&nbsp;
 											Approve
 										</a></li>
-										<li v-if="item.request_status != 'approved'" class="text-left"><a href="#" v-on:click="willDeny(item.training_request_id)">
+										<li v-if="item.request_status != 'denied' && item.request_status != 'approved'" class="text-left"><a href="#" v-on:click="willDeny(item.training_request_id)">
 											<i class="fa fa-times text-danger"></i>
 											Disapprove</a>
 										</li>

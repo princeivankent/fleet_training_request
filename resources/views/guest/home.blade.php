@@ -377,7 +377,10 @@
 										timer: 4000
 									})
 									.then((res) => {
-										if (res) this.step(5);
+										if (res) {
+											this.step(1);
+											this.form = {};
+										}
 									});
 							})
 							.catch((error) => {

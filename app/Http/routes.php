@@ -68,6 +68,8 @@ Route::get('/guest/send_fake_email', 'FakeEmailTestsController@send');
 // ============== OUTSIDE SYSTEM ================ //
 Route::get('superior/approve/{approval_status_id}', 'SuperiorController@approve')->name('superior_approval');
 Route::get('superior/disapprove/{approval_status_id}', 'SuperiorController@disapprove')->name('superior_disapproval');
+Route::get('customer/confirm_request/{training_request_id}', 'RequestorController@confirm')->name('customer_confirmation');
+Route::get('customer/cancellation_request/{training_request_id}', 'RequestorController@cancel')->name('customer_cancellation');
 
 // ============== Views ================ //
 Route::get('/', function() { return view('guest.home'); });
