@@ -114,16 +114,16 @@
 				},
 				getItems() {
 					return axios.get(`${this.base_url}/admin/training_programs/get`)
-					.then(({data}) => {
-						this.items = data;
-							
-						if (this.items.length > 0) {
-							return this.dataTable();
-						}
-					})
-					.catch((error) => {
-						console.log(error.response);
-					});
+						.then(({data}) => {
+							this.items = data;
+								
+							if (this.items.length > 0) {
+								return this.dataTable();
+							}
+						})
+						.catch((error) => {
+							console.log(error.response);
+						});
 				},
 				getItem(training_program_id) {
 					axios.get(`${this.base_url}/admin/training_programs/show/${training_program_id}`)
@@ -140,15 +140,15 @@
 
 					this.form.features = this.features;
 					return axios.post(`${this.base_url}/admin/training_programs/store`, this.form)
-					.then(({data}) => {
-						this.getItems();
-						this.resetForm();
-						toastr.success('Successfully added!');
-					})
-					.catch((error) => {
-						this.errors = error.response.data;
-						console.log(error.response);
-					});
+						.then(({data}) => {
+							this.getItems();
+							this.resetForm();
+							toastr.success('Successfully added!');
+						})
+						.catch((error) => {
+							this.errors = error.response.data;
+							console.log(error.response);
+						});
 				},
 				updateItem() {
 					this.form.program_feature_ids = this.program_feature_ids;
@@ -263,7 +263,6 @@
 					axios.get(`${this.base_url}/admin/gallery/get_images/${this.training_program_id}`)
 					.then(({data}) => {
 						this.images = data.images;
-
 						if (this.images.length > 0) {
 							setTimeout(() => {
 								var viewer = new Viewer(document.getElementById('images'));

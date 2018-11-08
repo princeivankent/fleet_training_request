@@ -143,7 +143,8 @@
 					images: '',
 					selected_unit: 0,
 					didNotReadYet: true,
-					disabled_dates: []
+					disabled_dates: [],
+					special_trainings: []
 				}
 			},
 			props: {
@@ -161,7 +162,7 @@
 					} else if (this.e1 == 4) {
 						this.fetchUnitModels();
 					} else if (this.e1 == 5) {
-
+						this.getSpecialTrainings();
 					}
 				}
 			},
@@ -411,6 +412,15 @@
 				},
 				dateTyped(value) {
 					this.form.training_date = null;
+				},
+				getSpecialTrainings: function() {
+					axios.get(`${this.base_url}/guest/special_trainings/get`)
+					.then(({data}) => {
+						this.special_trainings = data;
+					})
+					.catch((error) => {
+						console.log(error.response);
+					});
 				}
 			}
 		})

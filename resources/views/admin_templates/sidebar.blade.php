@@ -25,7 +25,7 @@
         <li class="header">REQUESTS</li>
         <li id="training_requests_tab"><a href="{{ route('training_requests') }}">
             <i class="fa fa-dashboard"></i>
-            <span>Training Requests</span>
+            <span>Requests Overview</span>
         </a></li>
 
         <li class="header">PEOPLE</li>
@@ -47,9 +47,9 @@
             <i class="fa fa-caret-right"></i>&nbsp; 
             <span>Training Programs</span>
         </a></li>
-        <li id="special_offer_tab"><a href="">
+        <li id="special_training_tab"><a href="{{ route('special_trainings') }}">
             <i class="fa fa-caret-right"></i>&nbsp; 
-            <span>Special Offers (development)</span>
+            <span>Special Training Programs</span>
         </a></li>
 
         <li class="header">VEHICLES</li>

@@ -5,6 +5,16 @@ Route::get('approver/update_request/{approval_status_id}/{status}', 'ApproveRequ
 
 
 // ============== ADMINISTRATOR ================ //
+// Special Offers
+Route::get('admin/special_trainings/get', 'SpecialTrainingController@index');
+Route::get('admin/special_trainings/get/{special_training_id}', 'SpecialTrainingController@show');
+Route::post('admin/special_trainings/post', 'SpecialTrainingController@store');
+Route::put('admin/special_trainings/put/{special_training_id}', 'SpecialTrainingController@update');
+Route::delete('admin/special_trainings/delete/{special_training_id}', 'SpecialTrainingController@delete');
+Route::get('admin/special_training_images/get/{special_training_id}', 'SpecialTrainingController@get_images');
+Route::post('admin/special_training_images/post', 'SpecialTrainingController@store_image');
+Route::delete('admin/special_training_images/delete/{special_training_image_id}', 'SpecialTrainingController@delete_image');
+
 // Disabling Dates
 Route::get('admin/schedules/get', 'ScheduleController@index');
 Route::get('admin/schedules/get/{schedule_id}', 'ScheduleController@show');
@@ -73,6 +83,7 @@ Route::get('/guest/training_programs/get', 'TrainingProgramController@index');
 Route::get('/guest/dealers/get', 'DealerController@index');
 Route::post('/guest/submit_request/post', 'TrainingRequestController@store');
 Route::get('guest/schedules/get', 'ScheduleController@index');
+Route::get('guest/special_trainings/get', 'SpecialTrainingController@index');
 
 Route::get('/guest/send_fake_email', 'FakeEmailTestsController@send');
 
@@ -93,6 +104,7 @@ Route::get('admin/training_programs', function() { return view('admin.training_p
 Route::get('admin/approvers', function() { return view('admin.approvers'); })->name('approvers');
 Route::get('admin/trainors', function() { return view('admin.trainors'); })->name('trainors');
 Route::get('admin/schedules', function() { return view('admin.schedules'); })->name('schedules');
+Route::get('admin/special_trainings', function() { return view('admin.special_trainings'); })->name('special_trainings');
 
 // ============== Public Views ================ //
 Route::get('guest/message', function() { return view('public_pages.message'); });

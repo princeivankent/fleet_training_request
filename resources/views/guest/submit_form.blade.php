@@ -39,93 +39,28 @@
 </div>
 
 <div class="form-row">
-	<div class="col-md-4">
+	<div 
+	v-for="(item, index) in special_trainings" v-bind:key="item.special_training_id"
+	class="col-md-4">
 		<div class="card">
-			<h6 class="card-header">Isuzu Eco-drive Challenge</h6>
+			<h6 class="card-header">@{{ item.program_title }}</h6>
 			<div class="card-body">
 				<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
 				<ol class="carousel-indicators">
-					<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-					<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-					<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+					<li 
+					v-for="(item, index) in item.special_training_images" 
+					v-bind:key="index" 
+					data-target="#carouselExampleIndicators" :data-slide-to="index" :class="index == 0 ? 'active' : ''"></li>
 				</ol>
 				<div class="carousel-inner">
-					<div class="carousel-item active">
-					<img class="d-block w-100" src="{{ url('public/images/sample3.jpg') }}" height="300" alt="First slide">
-					</div>
-					<div class="carousel-item">
-					<img class="d-block w-100" src="{{ url('public/images/sample2.jpg') }}" height="300" alt="Second slide">
-					</div>
-					<div class="carousel-item">
-					<img class="d-block w-100" src="{{ url('public/images/sample1.jpg') }}" height="300" alt="Third slide">
+					<div 
+					v-for="(item, index) in item.special_training_images" 
+					v-bind:key="item.special_training_image_id"
+					:class="`carousel-item ${index == 0 ? 'active' : ''}`"
+					>
+						<img class="d-block w-100" :src="`{{url('public/images/photo_gallery')}}/${item.image}`" height="300" alt="First slide">
 					</div>
 				</div>
-				<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-					<span class="sr-only">Previous</span>
-				</a>
-				<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-					<span class="carousel-control-next-icon" aria-hidden="true"></span>
-					<span class="sr-only">Next</span>
-				</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="col-md-4">
-		<div class="card">
-			<h6 class="card-header">Isuzu Heavy Duty Truck Training</h6>
-			<div class="card-body">
-				<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-				<ol class="carousel-indicators">
-					<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-					<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-					<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-				</ol>
-				<div class="carousel-inner">
-					<div class="carousel-item active">
-					<img class="d-block w-100" src="{{ url('public/images/sample3.jpg') }}" height="300" alt="First slide">
-					</div>
-					<div class="carousel-item">
-					<img class="d-block w-100" src="{{ url('public/images/sample2.jpg') }}" height="300" alt="Second slide">
-					</div>
-					<div class="carousel-item">
-					<img class="d-block w-100" src="{{ url('public/images/sample1.jpg') }}" height="300" alt="Third slide">
-					</div>
-				</div>
-				<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-					<span class="sr-only">Previous</span>
-				</a>
-				<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-					<span class="carousel-control-next-icon" aria-hidden="true"></span>
-					<span class="sr-only">Next</span>
-				</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="col-md-4">
-		<div class="card">
-			<h6 class="card-header">C&E Comprehensive Technical Trainings</h6>
-			<div class="card-body">
-				<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-					<ol class="carousel-indicators">
-						<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-						<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-						<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-					</ol>
-					<div class="carousel-inner">
-						<div class="carousel-item active">
-						<img class="d-block w-100" src="{{ url('public/images/sample3.jpg') }}" height="300" alt="First slide">
-						</div>
-						<div class="carousel-item">
-						<img class="d-block w-100" src="{{ url('public/images/sample2.jpg') }}" height="300" alt="Second slide">
-						</div>
-						<div class="carousel-item">
-						<img class="d-block w-100" src="{{ url('public/images/sample1.jpg') }}" height="300" alt="Third slide">
-						</div>
-					</div>
 					<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
 						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 						<span class="sr-only">Previous</span>
