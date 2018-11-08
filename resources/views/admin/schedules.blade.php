@@ -40,7 +40,7 @@
                                             <li v-for="(item, index) in disabled_dates" 
                                             v-bind:key="index"
                                             class="list-group-item text-center">
-                                                <strong>@{{ item.date }}</strong> <span class="text-danger">|</span> Marked by: @{{ item.created_by }}
+                                                <strong>@{{ item.date | dateFormat }}</strong> <span class="text-danger">|</span> Marked by: @{{ item.created_by }}
                                                 <button v-on:click="removeDate(item.schedule_id, index)"
                                                 class="btn btn-xs btn-danger pull-right">
                                                     <i class="fa fa-times"></i>
@@ -116,15 +116,17 @@
                         closeOnClickOutside: false
                     })
                     .then((res) => {
-                        this.disabled_dates.splice(index, 1);
-                        axios.delete(`${this.base_url}/admin/schedules/delete/${schedule_id}`)
-                        .then(() => {
-                            this.getMarkedDates();
-                        })
-                        .catch((error) => {
-                            console.log(error.response);
-                            swal('Ooops!', 'Something went wrong.', 'error', {timer:4000,button:false});
-                        });
+                        if (res) {
+                            this.disabled_dates.splice(index, 1);
+                            axios.delete(`${this.base_url}/admin/schedules/delete/${schedule_id}`)
+                            .then(() => {
+                                this.getMarkedDates();
+                            })
+                            .catch((error) => {
+                                console.log(error.response);
+                                swal('Ooops!', 'Something went wrong.', 'error', {timer:4000,button:false});
+                            });
+                        }
                     });
                 }
 			}

@@ -11,7 +11,7 @@
 								Request Training Date
 								<span class="text-danger">*</span>
 							</label>
-							<input v-on:blur="getDate" v-model="form.training_date" type="text" class="form-control" id="training-date">
+							<input v-on:blur="getDate" v-model="form.training_date" type="text" class="form-control" id="training-date" v-on:keyup="dateTyped">
 						</div>
 					</div>
 					<div class="col-md-6">

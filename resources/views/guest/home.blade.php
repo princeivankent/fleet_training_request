@@ -408,6 +408,9 @@
 					.catch((error) => {
 						console.log(error);
 					});
+				},
+				dateTyped(value) {
+					this.form.training_date = null;
 				}
 			}
 		})
