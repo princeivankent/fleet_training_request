@@ -7,11 +7,17 @@
 @section('content')
     <div v-cloak>
         <section class="content-header">
-            <h1>Trainors</h1>
-            <button v-on:click="createTrainor" class="btn btn-sm btn-flat btn-default mt-3">
-                <i class="fa fa-plus-circle"></i>&nbsp;
-                ADD TRAINOR
-            </button>
+            <h1>
+                Trainors
+            </h1>
+            <ol class="breadcrumb">
+                <li>
+                    <a v-on:click="createTrainor" class="btn btn-sm btn-flat btn-default" style="margin-top: -8px;">
+                        <i class="fa fa-plus-circle"></i>&nbsp;
+                        ADD TRAINOR
+                    </a>
+                </li>
+            </ol>
         </section>
     
         <section class="content container-fluid">

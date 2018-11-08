@@ -57,5 +57,11 @@
             <i class="fa fa-caret-right"></i>&nbsp; 
             <span>Unit Models</span>
         </a></li>
+
+        <li class="header">SCHEDULES</li>
+        <li id="schedule_tab"><a href="{{ route('schedules') }}">
+            <i class="fa fa-caret-right"></i>&nbsp; 
+            <span>Marked Dates</span>
+        </a></li>
     </ul>
 </section>

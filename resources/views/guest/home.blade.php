@@ -103,17 +103,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>
 	<script src="{{ url('public/libraries/js/viewer.min.js') }}"></script>
 	<script>
-		$(function () {
-			$('#training-date').datetimepicker({
-				focusOnShow: true,
-				disabledDates: [
-					'2018-10-08', '2018-10-10'
-				]
-			});
-		});
-	</script>
-	<script>
-		new Vue({
+		var app = new Vue({
 			el: '#app',
 			data() {
 				return {
@@ -152,7 +142,8 @@
 					training_programs: [],
 					images: '',
 					selected_unit: 0,
-					didNotReadYet: true
+					didNotReadYet: true,
+					disabled_dates: []
 				}
 			},
 			props: {
@@ -164,7 +155,7 @@
 						this.fetchDealers();
 						this.fetchUnitModels();
 					} else if (this.e1 == 2) {
-
+						this.getDisabledDates();
 					} else if (this.e1 == 3) {
 						this.fetchTrainingPrograms();
 					} else if (this.e1 == 4) {
@@ -376,11 +367,9 @@
 										button: false,
 										timer: 4000
 									})
-									.then((res) => {
-										if (res) {
-											this.step(1);
-											this.form = {};
-										}
+									.then(() => {
+										this.step(1);
+										this.form = {};
 									});
 							})
 							.catch((error) => {
@@ -399,6 +388,26 @@
 				},
 				getDate() {
 					this.form.training_date = document.getElementById('training-date').value;
+				},
+				getDisabledDates() {
+					axios.get(`${this.base_url}/guest/schedules/get`)
+					.then(({data}) => {
+						var disabled_dates = [];
+						data.forEach(element => {
+							disabled_dates.push(element.date);
+						});
+						
+						$(function () {
+							$('#training-date').datetimepicker({
+								focusOnShow: true,
+								disabledDates: disabled_dates
+							});
+						});
+
+					})
+					.catch((error) => {
+						console.log(error);
+					});
 				}
 			}
 		})

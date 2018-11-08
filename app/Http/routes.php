@@ -5,6 +5,13 @@ Route::get('approver/update_request/{approval_status_id}/{status}', 'ApproveRequ
 
 
 // ============== ADMINISTRATOR ================ //
+// Disabling Dates
+Route::get('admin/schedules/get', 'ScheduleController@index');
+Route::get('admin/schedules/get/{schedule_id}', 'ScheduleController@show');
+Route::post('admin/schedules/store', 'ScheduleController@store');
+Route::put('admin/schedules/update/{schedule_id}', 'ScheduleController@update');
+Route::delete('admin/schedules/delete/{schedule_id}', 'ScheduleController@delete');
+
 // Reschedule
 Route::put('admin/training_requests/reschedule/{training_request_id}', 'RescheduleController@reschedule');
 
@@ -65,6 +72,7 @@ Route::get('/guest/unit_models/get', 'UnitModelController@index');
 Route::get('/guest/training_programs/get', 'TrainingProgramController@index');
 Route::get('/guest/dealers/get', 'DealerController@index');
 Route::post('/guest/submit_request/post', 'TrainingRequestController@store');
+Route::get('guest/schedules/get', 'ScheduleController@index');
 
 Route::get('/guest/send_fake_email', 'FakeEmailTestsController@send');
 
@@ -84,6 +92,7 @@ Route::get('admin/unit_models', function() { return view('admin.unit_models'); }
 Route::get('admin/training_programs', function() { return view('admin.training_programs'); })->name('training_programs');
 Route::get('admin/approvers', function() { return view('admin.approvers'); })->name('approvers');
 Route::get('admin/trainors', function() { return view('admin.trainors'); })->name('trainors');
+Route::get('admin/schedules', function() { return view('admin.schedules'); })->name('schedules');
 
 // ============== Public Views ================ //
 Route::get('guest/message', function() { return view('public_pages.message'); });
