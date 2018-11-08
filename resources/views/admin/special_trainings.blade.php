@@ -108,6 +108,13 @@
                     .then(({data}) => {
                         $('#special_training_images').modal('show');
                         this.special_training_images = data;
+
+                        if (this.special_training_images.length > 0) {
+							setTimeout(() => {
+								var viewer = new Viewer(document.getElementById('images'));
+								viewer.update();
+							});
+						}
                     })
                     .catch((error) => {
                         console.log(error.response);
@@ -137,6 +144,12 @@
                             this.openImages(this.special_training_id);
                             swal('Alright!', 'Image has been successfully uploaded.', 'success', {timer:4000,button:false});
                             $('#image').val('');
+                            if (this.special_training_images.length > 0) {
+                                setTimeout(() => {
+                                    var viewer = new Viewer(document.getElementById('images'));
+                                    viewer.update();
+                                });
+                            }
                         })
                         .catch((error) => {
                             this.errors = error.response.data;
@@ -162,6 +175,13 @@
                                     if (data) {
                                         this.openImages(this.special_training_id);
                                         swal('Alright!', 'Image has been deleted.', 'success', {timer:4000,button:false});
+
+                                        if (this.special_training_images.length > 0) {
+                                            setTimeout(() => {
+                                                var viewer = new Viewer(document.getElementById('images'));
+                                                viewer.update();
+                                            });
+                                        }
                                     }
                                 })
                                 .catch((error) => {
