@@ -108,3 +108,6 @@ Route::get('admin/special_trainings', function() { return view('admin.special_tr
 
 // ============== Public Views ================ //
 Route::get('guest/message', function() { return view('public_pages.message'); });
+
+// ============== Login ================ //
+Route::get('admin/login', 'SessionLoginController@login');
