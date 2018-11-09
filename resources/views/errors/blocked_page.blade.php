@@ -35,15 +35,13 @@
 			<v-toolbar-title>
 				<img src="{{ url('public/images/isuzu-logo-compressor.png') }}" alt="image not found" style="height: 35px;">
 			</v-toolbar-title>
-			<v-spacer></v-spacer>
-			<v-toolbar-items>
-				<v-btn flat color="white">Fleet Training Request System</v-btn>
-			</v-toolbar-items>
 		</v-toolbar>
 		
 		<v-content dark>
 			<v-container>
-				@yield('content')
+				<template>
+                    
+                </template>
 			</v-container>
 		</v-content>
 

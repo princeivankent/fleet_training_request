@@ -19,7 +19,7 @@ class SessionLoginController extends Controller
 
         session($credentials);
 
-        if (Session::has(
+        if (Session()->has(
             [
                 'section', 
                 'full_name', 
@@ -27,9 +27,11 @@ class SessionLoginController extends Controller
                 'employee_id'
             ]
         )) {
-            Request::session()->regenerate();
-            // return response()->view('hello', $data);
-            return response()->json($request->session()->all());
+            Session()->regenerate();
+            return redirect()->route('training_requests');
+        }
+        else {
+            return response()->json('Sorry, you are not allowed to access this application.');
         }
     }
 }
