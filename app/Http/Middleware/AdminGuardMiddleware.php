@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\UserAccess;
 use Closure;
 
 class AdminGuardMiddleware
@@ -15,9 +16,17 @@ class AdminGuardMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (!$request->session()->has('full_name')) 
-            return redirect()->away('http://ecommerce5/ipc_central/main_home.php');
+        $user_access = UserAccess::select('et.*')
+            ->leftJoin('email_tab as et', 'et.employee_id', '=', 'user_access_tab.employee_id')
+            ->where([
+                'system_id'      => config('app.system_id'),
+                'user_type_id'   => 2,
+                'et.employee_id' => $request->session()->get('employee_id')
+            ])
+            ->exists();
 
+        if (!$user_access) return redirect()->away('http://ecommerce5/ipc_central/main_home.php');
+        
         return $next($request);
     }
 }
