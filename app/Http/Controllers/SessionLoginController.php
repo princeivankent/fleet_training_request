@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\UserAccess;
 use App\Http\Requests;
 
 class SessionLoginController extends Controller
@@ -16,6 +17,22 @@ class SessionLoginController extends Controller
             'full_name' => base64_decode(urldecode($full_name)),
             'section' => base64_decode(urldecode($section))
         ];
+
+        return $this->check_access($credentials);
+    }
+
+    public function check_access($credentials)
+    {
+        $user_access = UserAccess::select('et.*')
+            ->leftJoin('email_tab as et', 'et.employee_id', '=', 'user_access_tab.employee_id')
+            ->where([
+                'system_id'      => config('app.system_id'),
+                'user_type_id'   => 2,
+                'et.employee_id' => $credentials['employee_id']
+            ])
+            ->exists();
+
+        if (!$user_access) return redirect()->away('http://ecommerce5/ipc_central/main_home.php');
 
         session($credentials);
 
@@ -31,7 +48,7 @@ class SessionLoginController extends Controller
             return redirect()->route('training_requests');
         }
         else {
-            return response()->json('Sorry, you are not allowed to access this application.');
+            return redirect()->away('http://ecommerce5/ipc_central/main_home.php');
         }
     }
 }
