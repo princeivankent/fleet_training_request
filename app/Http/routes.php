@@ -110,4 +110,4 @@ Route::get('admin/special_trainings', function() { return view('admin.special_tr
 Route::get('guest/message', function() { return view('public_pages.message'); });
 
 // ============== Login ================ //
-Route::get('admin/login', 'SessionLoginController@login');
+Route::get('admin/login/{employee_id}/{employee_no}/{full_name}/{section}', 'SessionLoginController@login');
