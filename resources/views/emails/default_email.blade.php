@@ -151,7 +151,7 @@
 								<tr>
 									<td align="center" height="70" style="height:70px;">
 										<a href="" style="display: block; border-style: none !important; border: 0 !important;">
-											<img src="<?php echo $message->embed(config('app.url') . '/public/images/isuzu-logo-compressor.png') ?>" alt="image not found" width="100" border="0" style="display: block; width: 100px;">
+											<img src="<?php echo $message->embed(config('app.pub_url') . '/public/images/isuzu-logo-compressor.png') ?>" alt="image not found" width="100" border="0" style="display: block; width: 100px;">
 										</a>
 									</td>
 								</tr>
@@ -235,7 +235,7 @@
 								<tr>
 									<td align="center" style="color: #ffffff; font-size: 14px; font-family: 'Work Sans', Calibri, sans-serif; line-height: 26px;">
 										<div style="line-height: 26px;">
-											<a href="<?php echo config('app.url'). '/admin'; ?>" style="color: #ffffff; text-decoration: none;">IPC Centralized Database</a>
+											<a href="<?php echo config('app.pub_url'). '/admin'; ?>" style="color: #ffffff; text-decoration: none;">IPC Centralized Database</a>
 										</div>
 									</td>
 								</tr>

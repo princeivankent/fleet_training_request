@@ -44,6 +44,7 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost/fleet_training_request'),
+    'pub_url' => env('PUB_URL', 'http://localhost/fleet_training_request'),
 
     /*
     |--------------------------------------------------------------------------
