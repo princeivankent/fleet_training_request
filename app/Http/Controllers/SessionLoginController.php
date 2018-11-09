@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Session;
 use App\UserAccess;
 use App\Http\Requests;
 
@@ -50,5 +51,11 @@ class SessionLoginController extends Controller
         else {
             return redirect()->away('http://ecommerce5/ipc_central/main_home.php');
         }
+    }
+
+    public function logout()
+    {
+        Session::flush();
+        return redirect()->away('http://ecommerce5/ipc_central/php_processors/proc_logout.php');
     }
 }

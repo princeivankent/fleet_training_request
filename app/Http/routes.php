@@ -21,6 +21,7 @@ Route::get('customer/cancellation_request/{training_request_id}', 'RequestorCont
 Route::get('customer/reschedule_request/{training_request_id}', 'RequestorController@reschedule')->name('customer_reschedule');
 
 // ============== Public Views ================ //
+Route::get('/', function() { return view('guest.home'); });
 Route::get('guest/message', function() { return view('public_pages.message'); });
 
 // ============== Login ================ //
@@ -31,6 +32,10 @@ Route::get('/blocked_page', function() { return view('errors.blocked_page'); });
 
 Route::group(['middleware' => ['admin_guard']], function () {
     // ============== ADMINISTRATOR ================ //
+    
+    // Logout
+    Route::get('admin/logout', 'SessionLoginController@logout');
+
     // Special Offers
     Route::get('admin/special_trainings/get', 'SpecialTrainingController@index');
     Route::get('admin/special_trainings/get/{special_training_id}', 'SpecialTrainingController@show');
@@ -104,7 +109,6 @@ Route::group(['middleware' => ['admin_guard']], function () {
     Route::delete('/admin/training_programs/delete/{training_program_id}', 'TrainingProgramController@delete');
     
     // ============== Views ================ //
-    Route::get('/', function() { return view('guest.home'); });
     Route::get('admin', function() { return redirect()->route('training_requests'); });
     Route::get('admin/training_requests', function() { return view('admin.training_requests'); })->name('training_requests');
     Route::get('admin/dealers', function() { return view('admin.dealers'); })->name('dealers');

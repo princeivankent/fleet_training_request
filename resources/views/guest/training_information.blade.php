@@ -28,7 +28,7 @@
 							data-style="btn-info"
 							data-width="100%"
 							data-size="6">
-								<option value="Flee Customer">Fleet Customer</option>
+								<option value="Fleet Customer">Fleet Customer</option>
 								<option value="IPC">IPC</option>
 							</select>
 						</div>

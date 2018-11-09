@@ -5,7 +5,7 @@
         </div>
 
         <div class="pull-left info">
-            <p>Administrator</p>
+            <p >{{ Session::get('full_name') }}</p>
             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
     </div>

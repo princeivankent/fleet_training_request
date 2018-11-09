@@ -1,4 +1,4 @@
 <div class="pull-right hidden-xs">
-    Anything you want
+    Fleet Training Request System
 </div>
-<strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
+<strong>Copyright &copy; 2018 <a href="#">Isuzu Philippines Corporation</a>.</strong> All rights reserved.

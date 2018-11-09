@@ -120,7 +120,7 @@
                     <!-- The user image in the navbar-->
                     <img src="{{ url('public/images/avatar5.png') }}" class="user-image" alt="User Image">
                     <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                    <span class="hidden-xs">Administrator</span>
+                    <span class="hidden-xs">{{ Session::get('full_name') }}</span>
                 </a>
 
                 <ul class="dropdown-menu">
@@ -130,8 +130,8 @@
                         <img src="{{ url('public/images/avatar5.png') }}" class="img-circle" alt="User Image">
 
                         <p>
-                            Administrator
-                            <small>Isuzu Philippines Corporation</small>
+                            {{ Session::get('full_name') }}
+                            <small>Administrator</small>
                         </p>
                     </li>
 
@@ -153,10 +153,20 @@
                     <!-- Menu Footer-->
                     <li class="user-footer">
                         <div class="pull-left">
-                        <a href="#" class="btn btn-default btn-flat">Profile</a>
+                            <a href="http://ecommerce5/ipc_central/main_home.php" 
+                            class="btn btn-default btn-sm btn-flat"
+                            >
+                            <i class="fa fa-home"></i>&nbsp;
+                            IPC Home
+                            </a>
                         </div>
                         <div class="pull-right">
-                        <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                            <div class="pull-right">
+                                <a href="{{ url('admin/logout') }}" 
+                                class="btn btn-default btn-sm btn-flat">
+                                <i class="fa fa-sign-out"></i>&nbsp;
+                                Sign out</a>
+                            </div>
                         </div>
                     </li>
                 </ul>
