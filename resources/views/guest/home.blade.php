@@ -304,7 +304,7 @@
 						}
 					})
 					.catch((error) => {
-						console.log(error.response);
+						console.log(error);
 					});
 				},
 				trainingProgramPicked(training_program_id) {
@@ -371,6 +371,11 @@
 									.then(() => {
 										this.step(1);
 										this.form = {};
+										this.step1 = true;
+										this.step2 = false;
+										this.step3 = false;
+										this.step4 = false;
+										this.step5 = false;
 									});
 							})
 							.catch((error) => {

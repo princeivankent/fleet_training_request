@@ -137,6 +137,7 @@ class TrainingProgramController extends Controller
 
 	public function get_images($training_program_id)
 	{
-		return response()->json(TrainingProgram::where('training_program_id', $training_program_id)->with('images')->first());
+		return response()
+			->json(TrainingProgram::where('training_program_id', $training_program_id)->with('images')->first());
 	}
 }

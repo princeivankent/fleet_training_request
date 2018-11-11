@@ -91,8 +91,8 @@ class TrainingRequestController extends Controller
 				$dealer = DB::table('dealers')->where('dealer_id', $dealer_id)->first();
 				DB::table('customer_dealers')->insert([
 					'training_request_id' => $training_request_id,
-					'dealer' => $dealer->dealer,
-					'branch' => $dealer->branch
+					'dealer'              => $dealer->dealer,
+					'branch'              => $dealer->branch
 				]);
 			}
 
@@ -100,8 +100,8 @@ class TrainingRequestController extends Controller
 			foreach ($input['training_participants'] as $value) {
 				DB::table('customer_participants')->insert([
 					'training_request_id' => $training_request_id,
-					'participant' => $value['participant'],
-					'quantity' => $value['quantity']
+					'participant'         => $value['participant'],
+					'quantity'            => $value['quantity']
 				]);
 			}
 
@@ -109,7 +109,7 @@ class TrainingRequestController extends Controller
 			foreach ($input['unit_models'] as $model) {
 				DB::table('customer_models')->insert([
 					'training_request_id' => $training_request_id,
-					'model' => $model
+					'model'               => $model
 				]);
 			}
 
@@ -129,32 +129,32 @@ class TrainingRequestController extends Controller
 				foreach ($user_access as $value) {
 					$batch_mails->save_to_batch([
 						'email_category_id' => config('constants.admin_approval'),
-						'subject' => 'Requesting for a Training',
-						'sender' => config('mail.from.address'),
-						'recipient' => $value['email'],
-						'title' => 'Training Request',
-						'message' => 'Greetings! '. $query->contact_person .' of <strong>'. $query->company_name .'</strong> is requesting for a <br/>
+						'subject'           => 'Requesting for a Training',
+						'sender'            => config('mail.from.address'),
+						'recipient'         => $value['email'],
+						'title'             => 'Training Request',
+						'message'           => 'Greetings! '. $query->contact_person .' of <strong>'. $query->company_name .'</strong> is requesting for a <br/>
 							training program: '. $training_program->program_title .' <br/>
 							on '. $query->training_date .'
 							Please click the button to navigate directly to our system.',
 						'redirect_url' => 'http://localhost/fleet_training_request/admin/training_requests',
-						'cc' => null,
-						'attachment' => null
+						'cc'           => null,
+						'attachment'   => null
 					]);
 				}
 
 				// To Requestor
 				$batch_mails->save_to_batch([
-					'email_category_id' => config('constants.requestor_notification'),
-					'subject' => 'Request Submitted',
-					'sender' => config('mail.from.address'),
-					'recipient' => $query->email,
-					'title' => 'Request Submitted!',
-					'message' => 'Greetings! Your <strong>request for training has been submitted.</strong> Please wait for IPC Administrator to response.<br>
+					'email_category_id' => config('constants.default_notification'),
+					'subject'           => 'Request Submitted',
+					'sender'            => config('mail.from.address'),
+					'recipient'         => $query->email,
+					'title'             => 'Request Submitted!',
+					'message'           => 'Greetings! Your <strong>request for training has been submitted.</strong> Please wait for IPC Administrator to response.<br>
 						Thank you.',
 					'redirect_url' => null,
-					'cc' => null,
-					'attachment' => null
+					'cc'           => null,
+					'attachment'   => null
 				]);
 				return $query;
 			}
