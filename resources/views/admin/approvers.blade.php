@@ -7,19 +7,23 @@
 @section('content')
 <div v-cloak>
 	<section class="content-header">
-		<h1>Approvers</h1>
+		<h1>
+			List of Approvers
+		</h1>
+		<ol class="breadcrumb">
+			<li>
+				<button
+				v-on:click="createItem"
+				class="btn btn-sm btn-flat btn-default pull-right" style="margin-top: -8px;">
+					<i class="fa fa-plus-circle"></i>
+					ADD APPROVER
+				</button>
+			</li>
+		</ol>
 	</section>
 
 	<section class="content container-fluid">
 		<div class="box box-default shadow-lg">
-			<div class="box-header with-border">
-				<button
-				v-on:click="createItem"
-				class="btn btn-sm btn-flat btn-default pull-right">
-					<i class="fa fa-plus-circle"></i>
-					ADD APPROVER
-				</button>
-			</div>
 			<div class="box-body">
 				<table id="approver_table" class="table table-bordered table-hover">
 					<thead>
