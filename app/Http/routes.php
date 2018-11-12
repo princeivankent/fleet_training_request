@@ -4,6 +4,7 @@
 Route::get('approver/update_request/{approval_status_id}/{status}', 'ApproveRequestController@update_approval_request');
 
 // ============== GUEST ================ //
+Route::get('guest/gallery/get_images/{training_program_id}', 'TrainingProgramController@get_images');
 Route::get('/guest/unit_models/get', 'UnitModelController@index');
 Route::get('/guest/training_programs/get', 'TrainingProgramController@index');
 Route::get('/guest/dealers/get', 'DealerController@index');

@@ -291,7 +291,7 @@
 					});
 				},
 				openGallery(training_program_id) {
-					axios.get(`${this.base_url}/admin/gallery/get_images/${training_program_id}`)
+					axios.get(`${this.base_url}/guest/gallery/get_images/${training_program_id}`)
 					.then(({data}) => {
 						this.images = data.images;
 						this.photo_gallery = true;

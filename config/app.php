@@ -42,9 +42,8 @@ return [
     | your application so that it is used when running Artisan tasks.
     |
     */
-
-    'url' => env('APP_URL', 'http://localhost/fleet_training_request'),
-    'pub_url' => env('PUB_URL', 'http://localhost/fleet_training_request'),
+    'url' => 'http://' . $_SERVER['HTTP_HOST'] . '/fleet_training_request',
+    'pub_url' => 'http://' . $_SERVER['HTTP_HOST'] . '/fleet_training_request',
 
     /*
     |--------------------------------------------------------------------------
