@@ -26,25 +26,6 @@ class RequestorController extends Controller
 				]);
 	
 			if ($query) {
-				// batch an email for administrator and trainors
-				$trainors = Trainor::where([
-					'deleted_at', '=', NULL
-				])->get();
-				foreach ($trainors as $value) {
-					$batch_mails->save_to_batch([
-						'email_category_id' => config('constants.trainor_notification'),
-						'subject'           => 'Training Program',
-						'sender'            => config('mail.from.address'),
-						'recipient'         => $value->email,
-						'title'             => 'Training Program',
-						'message'           => 'There will be a Training Program: <strong>'. $check->training_program->program_title .'</strong>.<br/>
-							that will be held on: '. Carbon::parse($check->training_date)->format('M d, Y D - h:i A').'<br/>
-							at: '. $check->training_address,
-						'cc'         => null,
-						'attachment' => null
-					]);
-				}
-
 				$user_access = UserAccess::select('et.email')
                     ->leftJoin('email_tab as et', 'et.employee_id', '=', 'user_access_tab.employee_id')
                     ->where([
