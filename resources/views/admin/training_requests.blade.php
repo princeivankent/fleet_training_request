@@ -142,7 +142,7 @@
 							<td class="text-center">@{{ item.company_name }}</td>
 							<td class="text-center">@{{ item.contact_person }}</td>
 							<td class="text-center">@{{ item.email }}</td>
-							<td class="text-center">@{{ item.contact_person }}</td>
+							<td class="text-center">@{{ item.contact_number }}</td>
 							<td class="text-center">@{{ item.training_program.program_title }}</td>
 							<td class="text-center">@{{ item.training_date | dateTimeFormat }}</td>
 							<td class="text-center">

@@ -26,7 +26,7 @@ class ApproverController extends Controller
         $query->approver_name = $request->approver_name;
         $query->email = $request->email;
         $query->position = $request->position;
-        $query->created_by = '(By dafault) Miguel Sanggalang';
+        $query->created_by = $request->session()->get('full_name');
         $query->save();
         
         return response()->json($query);

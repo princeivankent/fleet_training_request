@@ -27,7 +27,9 @@ class RequestorController extends Controller
 	
 			if ($query) {
 				// batch an email for administrator and trainors
-				$trainors = Trainor::all();
+				$trainors = Trainor::where([
+					'deleted_at', '=', NULL
+				])->get();
 				foreach ($trainors as $value) {
 					$batch_mails->save_to_batch([
 						'email_category_id' => config('constants.trainor_notification'),
