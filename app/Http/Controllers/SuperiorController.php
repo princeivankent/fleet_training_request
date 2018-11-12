@@ -73,7 +73,7 @@ class SuperiorController extends Controller
             else {
                 $content = [
                     'type' => 'info',
-                    'message' => 'Ooops! Your request has been already approved.'
+                    'message' => 'This request has been already approved.'
                 ];
                 return response()->view('public_pages.message', compact('content'));
             }
@@ -81,7 +81,7 @@ class SuperiorController extends Controller
         else {
             $content = [
                 'type' => 'info',
-                'message' => 'Ooops! Your request has been already approved.'
+                'message' => 'This request has been already approved.'
             ];
             return response()->view('public_pages.message', compact('content'));
         }
@@ -142,7 +142,7 @@ class SuperiorController extends Controller
             else {
                 $content = [
                     'type' => 'info',
-                    'message' => 'Ooops! Your request has been already disapproved.'
+                    'message' => 'This request has been already disapproved.'
                 ];
                 return response()->view('public_pages.message', compact('content'));
             }
@@ -150,7 +150,7 @@ class SuperiorController extends Controller
         else {
             $content = [
                 'type' => 'info',
-                'message' => 'Ooops! Your request has been already disapproved.'
+                'message' => 'This request has been already disapproved.'
             ];
             return response()->view('public_pages.message', compact('content'));
         }

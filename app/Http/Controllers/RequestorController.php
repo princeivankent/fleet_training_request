@@ -77,7 +77,7 @@ class RequestorController extends Controller
 			else {
 				$content = [
 					'type'    => 'info',
-					'message' => 'Ooops! Your request has been already confirmed.'
+					'message' => 'This request has been already confirmed.'
 				];
 				return response()->view('public_pages.message', compact('content'));
 			}
