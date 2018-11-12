@@ -56,4 +56,9 @@ class TrainingRequest extends Model
     {
         return $this->hasMany('App\CustomerParticipant', 'training_request_id', 'training_request_id');
     }
+
+    public function trainor_designations()
+    {
+        return $this->hasMany('App\TrainorDesignation', 'training_request_id', 'training_request_id');
+    }
 }
