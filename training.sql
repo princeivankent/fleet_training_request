@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 08, 2018 at 09:02 AM
+-- Generation Time: Nov 12, 2018 at 09:31 AM
 -- Server version: 5.7.21
 -- PHP Version: 7.2.4
 
@@ -376,7 +376,7 @@ CREATE TABLE IF NOT EXISTS `special_trainings` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`special_training_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `special_trainings`
@@ -507,6 +507,25 @@ INSERT INTO `trainors` (`trainor_id`, `fname`, `mname`, `lname`, `email`, `creat
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `trainor_designations`
+--
+
+DROP TABLE IF EXISTS `trainor_designations`;
+CREATE TABLE IF NOT EXISTS `trainor_designations` (
+  `trainor_designation_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `training_request_id` int(10) UNSIGNED NOT NULL,
+  `trainor_id` int(10) UNSIGNED NOT NULL,
+  `assigned_by` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`trainor_designation_id`),
+  KEY `trainor_id` (`trainor_id`),
+  KEY `td.training_request_id` (`training_request_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `unit_models`
 --
 
@@ -613,6 +632,13 @@ ALTER TABLE `special_training_images`
 ALTER TABLE `training_requests`
   ADD CONSTRAINT `r.training_program_id` FOREIGN KEY (`training_program_id`) REFERENCES `training_programs` (`training_program_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `unit_model_id` FOREIGN KEY (`unit_model_id`) REFERENCES `unit_models` (`unit_model_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `trainor_designations`
+--
+ALTER TABLE `trainor_designations`
+  ADD CONSTRAINT `td.training_request_id` FOREIGN KEY (`training_request_id`) REFERENCES `training_requests` (`training_request_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `trainor_id` FOREIGN KEY (`trainor_id`) REFERENCES `trainors` (`trainor_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
