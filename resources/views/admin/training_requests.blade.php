@@ -319,6 +319,7 @@
 										if (data) {
 											this.getItems();
 											this.getDashboard();
+											$('#designated_trainor_modal').modal('hide');
 											swal({
 												title: "Alright!",
 												text: "Request has been approved",
