@@ -266,16 +266,16 @@
 				},
 				getItems() {
 					return axios.get(`${this.base_url}/admin/training_requests/get`)
-					.then(({data}) => {
-						this.items = data;
-						
-						setTimeout(() => {
-							$('#training_requests').DataTable();
+						.then(({data}) => {
+							this.items = data;
+							
+							setTimeout(() => {
+								$('#training_requests').DataTable();
+							});
+						})
+						.catch((error) => {
+							console.log(error.response)
 						});
-					})
-					.catch((error) => {
-						console.log(error.response)
-					});
 				},
 				openRequest(training_request_id) {
 					axios.get(`${this.base_url}/admin/training_requests/get/${training_request_id}`)
@@ -318,6 +318,7 @@
 									.then(({data}) => {
 										if (data) {
 											this.getItems();
+											this.getDashboard();
 											swal({
 												title: "Alright!",
 												text: "Request has been approved",
@@ -357,6 +358,7 @@
 							.then(({data}) => {
 								if (data) {
 									this.getItems();
+									this.getDashboard();
 									swal('Success!', 'Request has been denied', 'success', {timer:4000,button:false});
 								}
 							})
@@ -367,10 +369,20 @@
 						}
 					});
 				},
+				getRequest: function(training_request_id) {
+					axios.get(`${this.base_url}/admin/training_requests/get/${training_request_id}`)
+					.then(({data}) => {
+						this.training_request = data;
+					})
+					.catch((error) => {
+						console.log(error.response);
+					});
+				},
 				showDesignatedTrainors: function(training_request_id) {
 					axios.get(`${this.base_url}/admin/designated_trainors/assigned_trainors/${training_request_id}`)
 					.then(({data}) => {
 						this.training_request_id = training_request_id;
+						this.getRequest(training_request_id);
 						this.designated_trainors = data;
 						$('#request_details_modal').modal('hide');
 						$('#designated_trainor_modal').modal('show');

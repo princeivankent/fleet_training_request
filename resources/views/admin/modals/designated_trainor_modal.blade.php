@@ -40,8 +40,8 @@
             <div class="modal-footer">
                 <button 
                 class="btn btn-sm btn-success" 
-                v-on:click="willApprove">
-                {{-- :disabled="training_request.request_status == 'pending' ? false : true"> --}}
+                v-on:click="willApprove"
+                :disabled="training_request.request_status == 'pending' ? false : true">
                     <i class="fa fa-check-circle"></i>&nbsp;
                     Approve Request
                 </button>

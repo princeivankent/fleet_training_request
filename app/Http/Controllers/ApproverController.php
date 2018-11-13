@@ -46,6 +46,7 @@ class ApproverController extends Controller
         
         $query = Approver::findOrFail($approver_id);
         $query->approver_name = $request->approver_name;
+        $query->email = $request->email;
         $query->position = $request->position;
         $query->save();
         
