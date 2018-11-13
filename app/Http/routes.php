@@ -31,11 +31,16 @@ Route::get('admin/login/{employee_id}/{employee_no}/{full_name}/{section}', 'Ses
 // ============== Error ================ //
 Route::get('/blocked_page', function() { return view('errors.blocked_page'); });
 
+// ============== ADMINISTRATOR ================ //
 Route::group(['middleware' => ['admin_guard']], function () {
-    // ============== ADMINISTRATOR ================ //
     
     // Logout
     Route::get('admin/logout', 'SessionLoginController@logout');
+
+    // Designated Trainors
+    Route::get('admin/designated_trainors/assigned_trainors/{training_request_id}', 'DesignatedTrainorController@assigned_trainors');
+    Route::post('admin/designated_trainors/assign_trainor', 'DesignatedTrainorController@assign_trainor');
+    Route::post('admin/designated_trainors/remove_trainor', 'DesignatedTrainorController@remove_trainor');
 
     // Special Offers
     Route::get('admin/special_trainings/get', 'SpecialTrainingController@index');

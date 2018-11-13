@@ -371,7 +371,7 @@
 									.then(() => {
 										this.step(1);
 										this.form = {};
-										this.step1 = true;
+										this.step1 = false;
 										this.step2 = false;
 										this.step3 = false;
 										this.step4 = false;

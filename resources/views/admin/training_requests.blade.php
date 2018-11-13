@@ -119,6 +119,12 @@
 												Edit Schedule
 											</a>
 										</li>
+										<li class="text-left">
+											<a v-on:click="showDesignatedTrainors(item.training_request_id)">
+												<i class="fa fa-users text-default"></i>
+												Trainors
+											</a>
+										</li>
 
 										<li v-if="item.request_status != 'denied'" role="separator" class="divider"></li>
 										<li v-if="item.request_status != 'denied' && item.request_status != 'approved'" class="dropdown-header">Your actions</li>
@@ -128,7 +134,7 @@
 												already approved
 											</div>
 										</li>
-										<li v-if="item.request_status != 'denied' && item.request_status != 'approved'" class="text-left"><a href="#" v-on:click="willApprove(item.training_request_id)">
+										<li v-if="item.request_status != 'denied' && item.request_status != 'approved'" class="text-left"><a href="#" v-on:click="showDesignatedTrainors(item.training_request_id)">
 											<i class="fa fa-check text-success"></i>&nbsp;
 											Approve
 										</a></li>
@@ -180,6 +186,7 @@
 @include('admin.modals.request_details_modal')
 @include('admin.modals.reschedule_modal')
 @include('admin.modals.approver_statuses')
+@include('admin.modals.designated_trainor_modal')
 @endsection
 
 @push('scripts')
@@ -203,7 +210,9 @@
 					items: [],
 					training_request: {},
 					approval_statuses: [],
-					training_request_id: 0
+					training_request_id: 0,
+					designated_trainors: [],
+					toggledButton: false
 				}
 			},
 			created() {
@@ -279,36 +288,55 @@
 						console.log(error.response);
 					});
 				},
-				willApprove(training_request_id) {
-					swal({
-						title: "Accept Request?",
-						text: "Once approved, it will automatically send email to next approver",
-						icon: "warning",
-						closeOnClickOutside: false,
-						buttons: {
-							cancel: true,
-							confirm: 'Approve'
-						},
-					})
-					.then((res) => {
-						if (res) {
-							axios.put(`${this.base_url}/admin/update_request/${training_request_id}`, {request_status: 'approved'})
-							.then(({data}) => {
-								if (data) {
-									this.getItems();
-									swal({
-										title: "Alright!",
-										text: "Request has been approved",
-										icon: "success",
-										button: false,
-										timer: 4000,
-									})
-								}
+				willApprove() {
+					axios.get(`${this.base_url}/admin/designated_trainors/assigned_trainors/${this.training_request_id}`)
+					.then(({data}) => {
+						var canProceed = false;
+						data.forEach(element => {
+							if (element.designated_trainors.length > 0) {
+								canProceed = true;
+							}
+						});
+
+						if (!canProceed) {
+							return swal('Sorry!', 'Please, Choose atleast (1) Trainor', 'error', {timer:4000,button:false});
+						}
+						else {
+							swal({
+								title: "Accept Request?",
+								text: "Once approved, it will automatically send email to next approver",
+								icon: "warning",
+								closeOnClickOutside: false,
+								buttons: {
+									cancel: true,
+									confirm: 'Approve'
+								},
 							})
-							.catch((error) => {
-								console.log(error.response);
+							.then((res) => {
+								if (res) {
+									axios.put(`${this.base_url}/admin/update_request/${this.training_request_id}`, {request_status: 'approved'})
+									.then(({data}) => {
+										if (data) {
+											this.getItems();
+											swal({
+												title: "Alright!",
+												text: "Request has been approved",
+												icon: "success",
+												button: false,
+												timer: 4000,
+											})
+										}
+									})
+									.catch((error) => {
+										console.log(error.response);
+									});
+								}
 							});
 						}
+					})
+					.catch((error) => {
+						console.log(error.response);
+						swal('Ooops!', 'Something went wrong.', 'error', {timer:4000,button:false});
 					});
 				},
 				willDeny(training_request_id) {
@@ -339,6 +367,79 @@
 						}
 					});
 				},
+				showDesignatedTrainors: function(training_request_id) {
+					axios.get(`${this.base_url}/admin/designated_trainors/assigned_trainors/${training_request_id}`)
+					.then(({data}) => {
+						this.training_request_id = training_request_id;
+						this.designated_trainors = data;
+						$('#request_details_modal').modal('hide');
+						$('#designated_trainor_modal').modal('show');
+					})
+					.catch((error) => {
+						console.log(error.response);
+						swal('Ooops!', 'Something went wrong.', 'error', {timer:4000,button:false});
+					});
+				},
+				includeTrainor: function(trainor_id) {
+					axios.post(
+						`${this.base_url}/admin/designated_trainors/assign_trainor`, 
+						{
+							training_request_id: this.training_request_id,
+							trainor_id: trainor_id
+						}
+					)
+					.then(({data}) => {
+						if (data) {
+							axios.get(`${this.base_url}/admin/designated_trainors/assigned_trainors/${this.training_request_id}`)
+							.then(({data}) => {
+								this.designated_trainors = data;
+							})
+							.catch((error) => {
+								console.log(error.response);
+								swal('Ooops!', 'Something went wrong.', 'error', {timer:4000,button:false});
+							});
+						}
+					})
+					.catch((error) => {
+						console.log(error.response);
+					});
+				},
+				excludeTrainor: function(trainor_id) {
+					swal({
+						title: "Remove Trainor?",
+						text: "",
+						icon: "warning",
+						buttons: {
+							cancel: true,
+							confirm: 'Proceed'
+						},
+						closeOnClickOutside: false
+					})
+					.then((res) => {
+						if (res) {
+							axios.post(`${this.base_url}/admin/designated_trainors/remove_trainor`,
+							{
+								training_request_id: this.training_request_id,
+								trainor_id: trainor_id
+							})
+							.then(({data}) => {
+								if (data) {
+									axios.get(`${this.base_url}/admin/designated_trainors/assigned_trainors/${this.training_request_id}`)
+									.then(({data}) => {
+										this.designated_trainors = data;
+									})
+									.catch((error) => {
+										console.log(error.response);
+										swal('Ooops!', 'Something went wrong.', 'error', {timer:4000,button:false});
+									});
+								}
+							})
+							.catch((error) => {
+								console.log(error.response);
+							});
+						}
+					});
+				}
 			}
 		})
 		document.querySelector('#training_requests_tab').setAttribute('class', 'active');

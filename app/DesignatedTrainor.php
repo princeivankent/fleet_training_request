@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TrainorDesignation extends Model
+class DesignatedTrainor extends Model
 {
     protected $fillable = ['training_request_id','trainor_id','assigned_by'];
     protected $primaryKey = 'trainor_designation_id';

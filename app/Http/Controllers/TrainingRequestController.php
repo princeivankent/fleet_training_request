@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
+use App\Trainor;
 use App\UserAccess;
 use App\ApprovalStatus;
 use App\TrainingRequest;
@@ -40,7 +41,8 @@ class TrainingRequestController extends Controller
 		return response()->json(
 			TrainingRequest::with([
 				'training_program',
-				'unit_model'
+				'unit_model',
+				'trainor_designations.trainor'
 			])
 			->get()
 		);
@@ -135,7 +137,7 @@ class TrainingRequestController extends Controller
 						'title'             => 'Training Request',
 						'message'           => 'Greetings! '. $query->contact_person .' of <strong>'. $query->company_name .'</strong> is requesting for a <br/>
 							training program: '. $training_program->program_title .' <br/>
-							on '. $query->training_date .'
+							on '. Carbon::parse($query->training_date)->format('M d, Y D - h:i A') .'
 							Please click the button to navigate directly to our system.',
 						'redirect_url' => 'http://localhost/fleet_training_request/admin/training_requests',
 						'cc'           => null,

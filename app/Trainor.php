@@ -10,8 +10,8 @@ class Trainor extends Model
     protected $primaryKey = 'trainor_id';
     public $timestamps = false;
 
-    public function trainor_designations()
+    public function designated_trainors()
     {
-        return $this->hasMany('App\TrainorDesignation', 'trainor_id', 'trainor_id');
+        return $this->hasMany('App\DesignatedTrainor', 'trainor_id', 'trainor_id');
     }
 }

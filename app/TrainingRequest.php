@@ -59,6 +59,6 @@ class TrainingRequest extends Model
 
     public function trainor_designations()
     {
-        return $this->hasMany('App\TrainorDesignation', 'training_request_id', 'training_request_id');
+        return $this->hasMany('App\DesignatedTrainor', 'training_request_id', 'training_request_id');
     }
 }
