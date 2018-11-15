@@ -256,8 +256,8 @@
 						this.dialog = false;
 					}
 				},
-				others() {
-					this.dialog = true;
+				others(v) {
+					if (v.target.value == 'others') return this.dialog = true;
 				},
 				fetchUnitModels() {
 					axios.get(`${this.base_url}/guest/unit_models/get`)

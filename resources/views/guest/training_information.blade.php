@@ -75,12 +75,13 @@
 										<td class="text-center">
 											<select 
 											v-model="participants.participant"
+											v-on:change="others"
 											class="custom-select text-center" >
 												<option selected></option>
 												<option value="Driver">Driver</option>
 												<option value="Mechanic">Mechanic</option>
 												<option value="Fleet Head">Fleet Head</option>
-												<option v-on:click="others">Others</option>
+												<option value="others">Others</option>
 											</select>
 										</td>
 										<td class="text-center">
