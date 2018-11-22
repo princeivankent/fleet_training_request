@@ -37,6 +37,9 @@ Route::group(['middleware' => ['admin_guard']], function () {
     // Logout
     Route::get('admin/logout', 'SessionLoginController@logout');
 
+    // Calendar
+    Route::get('admin/calendar', 'CalendarController@events')->name('calendar');
+
     // Designated Trainors
     Route::get('admin/designated_trainors/assigned_trainors/{training_request_id}', 'DesignatedTrainorController@assigned_trainors');
     Route::post('admin/designated_trainors/assign_trainor', 'DesignatedTrainorController@assign_trainor');

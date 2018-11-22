@@ -63,5 +63,9 @@
             <i class="fa fa-caret-right"></i>&nbsp; 
             <span>Marked Dates</span>
         </a></li>
+        <li id="calendar_tab"><a href="{{ route('calendar') }}">
+            <i class="fa fa-calendar"></i>&nbsp; 
+            <span>Calendar</span>
+        </a></li>
     </ul>
 </section>
