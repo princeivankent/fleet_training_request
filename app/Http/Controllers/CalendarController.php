@@ -19,12 +19,12 @@ class CalendarController extends Controller
 
 	public function events()
 	{
-		return Schedule::with('training_request')->get();
+		return Schedule::with('training_request.training_program')->get();
 	}
 
 	public function event($schedule_id)
 	{
-		return Schedule::with('training_request')
+		return Schedule::with('training_request.training_program')
 			->where('schedule_id', $schedule_id)
 			->first();
 	}
@@ -40,7 +40,8 @@ class CalendarController extends Controller
 		$query = new Schedule([
 			'start_date' => $request->start_date,
 			'end_date'   => $request->end_date,
-			'reason'     => $request->reason
+			'reason'     => $request->reason,
+			'created_by' => $request->session()->get('full_name')
 		]);
 
 		$query->save();

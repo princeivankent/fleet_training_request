@@ -65,6 +65,11 @@
                 this.getEvents();
             },
             methods: {
+                reason: function(training_request) {
+                    if (training_request) {
+                        return training_request.training_program.program.program_title;
+                    }
+                },
                 getEvents: function() {
                     axios.get(`${this.base_url}/admin/calendar/events`)
                     .then(({data}) => {
@@ -72,9 +77,15 @@
                         data.forEach(element => {
                             events.push({
                                 schedule_id: element.schedule_id,
-                                title      : element.reason,
+                                title      : 
+                                    element.training_request != null ? 
+                                    element.training_request.training_program.program_title + ' | ' +  element.training_request.company_name :
+                                    element.reason,
                                 start      : element.start_date,
-                                end        : element.end_date
+                                end        : element.end_date,
+                                color: element.training_request != null ? 
+                                    '#00A65A' :
+                                    '#3A87AD'
                             });
                         });
 
@@ -102,6 +113,10 @@
                     this.isEdit = 1;
                     axios.get(`${this.base_url}/admin/calendar/events/${schedule_id}`)
                     .then(({data}) => {
+                        data.reason = data.training_request != null ?
+                                     data.training_request.training_program.program_title + ' for ' + data.training_request.company_name  :
+                                     data.reason;
+
                         this.form = data;
                         $('#scheduler_modal').modal('show');
                     })
@@ -126,8 +141,8 @@
                 },
                 deleteSchedule: function(schedule_id) {
                     swal({
-                        title: "Do you want to delete this Schedule?",
-                        text: "",
+                        title: "Warning!",
+                        text: "Do you want to delete this schedule?",
                         icon: "warning",
                         buttons: {
                             cancel: true,
@@ -173,7 +188,7 @@
 
                         // Edit
                         eventDrop: function(event, delta, revertFunc) {
-                            // alert(event.title + " was dropped on " + event.start.format() + ' to ' +  event.end.format());
+                            alert(event.title + " was dropped on " + event.start.format() + ' to ' +  event.end.format());
 
                             // if (!confirm("Are you sure about this change?")) {
                             //     revertFunc();
