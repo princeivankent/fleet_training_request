@@ -2,6 +2,11 @@
 
 @push('styles')
     <link rel="stylesheet" href="{{ url('public/libraries/full-calendar/fullcalendar.min.css') }}">
+    <style>
+        .btn {
+            border: none;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -47,6 +52,7 @@
             el: '#app',
             data() {
                 return {
+                    isEdit: 0,
                     events: [],
                     form: {
                         start_date: '',
@@ -89,8 +95,20 @@
                         end_date: '',
                         reason: null
                     }
-
+                    this.isEdit = 0;
                     $('#scheduler_modal').modal('show');
+                },
+                viewSchedule: function(schedule_id) {
+                    this.isEdit = 1;
+                    axios.get(`${this.base_url}/admin/calendar/events/${schedule_id}`)
+                    .then(({data}) => {
+                        this.form = data;
+                        $('#scheduler_modal').modal('show');
+                    })
+                    .catch((error) => {
+                        console.log(error.response);
+                        swal('Ooops!', 'Something went wrong.', 'error', {timer:4000,button:false});
+                    });
                 },
                 saveSchedule: function() {
                     axios.post(`${this.base_url}/admin/calendar/events/post`, this.form)
@@ -106,6 +124,35 @@
                         swal('Ooops!', 'Something went wrong.', 'error', {timer:4000,button:false});
                     });
                 },
+                deleteSchedule: function(schedule_id) {
+                    swal({
+                        title: "Do you want to delete this Schedule?",
+                        text: "",
+                        icon: "warning",
+                        buttons: {
+                            cancel: true,
+                            confirm: 'Proceed'
+                        },
+                        closeOnClickOutside: false
+                    })
+                    .then((res) => {
+                        if (res) {
+                            axios.delete(`${this.base_url}/admin/calendar/events/${schedule_id}`)
+                            .then(({data}) => {
+                                if (data) {
+                                    this.form = {};
+                                    $('#scheduler_modal').modal('hide');
+                                    this.getEvents();
+                                    swal('Success!', 'Schedule has been deleted.', 'success', {timer:4000,button:false});
+                                }
+                            })
+                            .catch((error) => {
+                                console.log(error.response);
+                                swal('Ooops!', 'Something went wrong.', 'error', {timer:4000,button:false});
+                            });
+                        }
+                    });
+                },
                 displayEvents: function() {
                     $('#calendar').fullCalendar({
                         navLinks: true,
@@ -117,7 +164,8 @@
                         },
                         events: this.events,
                         eventClick: function(event) {
-                            // console.log(event.end.clone().add(2, 'days'));
+                            // alert(event.title + " was dropped on " + event.start.format() + ' to ' +  event.end.format());
+                            vm.viewSchedule(event.schedule_id);
                         },
                         dayClick: function(date, jsEvent, view) {
                             vm.createSchedule(date.format()); // pass the date
@@ -125,7 +173,7 @@
 
                         // Edit
                         eventDrop: function(event, delta, revertFunc) {
-                            alert(event.title + " was dropped on " + event.start.format() + ' to ' +  event.end.format());
+                            // alert(event.title + " was dropped on " + event.start.format() + ' to ' +  event.end.format());
 
                             // if (!confirm("Are you sure about this change?")) {
                             //     revertFunc();

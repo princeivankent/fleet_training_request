@@ -5,8 +5,8 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">
-                    <i class="fa fa-plus"></i>&nbsp;
-                    Create Schedule
+                    <span v-if="isEdit">Update Schedule</span>
+                    <span v-else>Create Schedule</span>
                 </h4>
             </div>
             <div class="modal-body">
@@ -49,8 +49,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-flat btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-                <button v-on:click="saveSchedule" type="button" class="btn btn-sm btn-flat btn-success"><i class="fa fa-check"></i> Save changes</button>
+                <button v-if="isEdit" v-on:click="deleteSchedule(form.schedule_id)" type="button" class="btn btn-flat btn-danger"><i class="fa fa-trash"></i>&nbsp; Delete</button>
+                <button v-on:click="saveSchedule" type="button" class="btn btn-flat btn-success"><i class="fa fa-check"></i>&nbsp; Save Schedule</button>
             </div>
         </div>
     </div>

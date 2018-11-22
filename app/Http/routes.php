@@ -39,7 +39,9 @@ Route::group(['middleware' => ['admin_guard']], function () {
 
     // Calendar
     Route::get('admin/calendar/events', 'CalendarController@events');
+    Route::get('admin/calendar/events/{schedule_id}', 'CalendarController@event');
     Route::post('admin/calendar/events/post', 'CalendarController@save_event');
+    Route::delete('admin/calendar/events/{schedule_id}', 'CalendarController@delete_event');
 
     // Designated Trainors
     Route::get('admin/designated_trainors/assigned_trainors/{training_request_id}', 'DesignatedTrainorController@assigned_trainors');

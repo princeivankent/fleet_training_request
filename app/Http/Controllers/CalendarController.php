@@ -22,6 +22,13 @@ class CalendarController extends Controller
 		return Schedule::with('training_request')->get();
 	}
 
+	public function event($schedule_id)
+	{
+		return Schedule::with('training_request')
+			->where('schedule_id', $schedule_id)
+			->first();
+	}
+
 	public function save_event(Request $request)
 	{
 		$this->validate($request, [
@@ -39,6 +46,11 @@ class CalendarController extends Controller
 		$query->save();
 
 		return response()->json($query);
+	}
+
+	public function delete_event($schedule_id)
+	{
+		return response()->json(Schedule::findOrFail($schedule_id)->delete());
 	}
 
     // public function events()
