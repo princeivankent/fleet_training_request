@@ -6,58 +6,65 @@ use Carbon\Carbon;
 use MaddHatter\LaravelFullcalendar\Calendar;
 use Illuminate\Http\Request;
 
+use App\Schedule;
 use App\Http\Requests;
 
 class CalendarController extends Controller
 {
-    public function events()
-    {
-        return view('admin.calendar');
-    }
-
-    public function get_events()
+	public function event_title($params)
 	{
-		$data = $this->getModuleSchedules($this->getDealerId());
-		$events = [];
-		foreach ($data as $key => $value) {
-			$end = Carbon::parse($value['end_date'])->addDays(1);
-			$now = Carbon::now();
-
-			$events[] = \Calendar::event(
-				'PDF: ' . $value['module_schedule']['module']['module'], //event title
-				true, //full day event?
-				Carbon::parse($value['start_date'])->format('y-m-d'), //start time (you can also use Carbon instead of DateTime)
-				Carbon::parse($value['end_date'])->addDays(1)->format('y-m-d'), //end time (you can also use Carbon instead of DateTime)
-				$key, //optionally, you can specify an event ID
-				[
-					'color' => $end > $now ? '#7CB342' : '#E53935'
-				]
-			);
-		}
-
-		$exam_schedules = $this->getExamSchedules($this->getDealerId());
-		foreach ($exam_schedules as $key => $value) {
-			$end = Carbon::parse($value['end_date'])->addDays(1);
-			$now = Carbon::now();
-
-			$events[] = \Calendar::event(
-				'EXAM: ' . $value['exam_schedule']['module']['module'], //event title
-				true, //full day event?
-				Carbon::parse($value['start_date'])->format('y-m-d'), //start time (you can also use Carbon instead of DateTime)
-				Carbon::parse($value['end_date'])->addDays(1)->format('y-m-d'), //end time (you can also use Carbon instead of DateTime)
-				$key, //optionally, you can specify an event ID
-				[
-					'color' => $end > $now ? '#29B6F6' : '#E53935'
-				]
-			);
-		}
-
-		$calendar = \Calendar::addEvents($events)
-			->setOptions([
-				'navLinks' => true,
-				// 'editable' => true,
-			]);
-
-		return view('trainor.calendar', compact('calendar'));
+		if (isset($params['training_request_id'])) return 'Training Program';
+		return $params['reason'];
 	}
+
+	public function events()
+	{
+		return Schedule::with('training_request')->get();
+	}
+
+	public function save_event(Request $request)
+	{
+		$this->validate($request, [
+			'start_date' => 'required|date',
+			'end_date'   => 'required|date',
+			'reason'     => 'required|string'
+		]);
+
+		$query = new Schedule([
+			'start_date' => $request->start_date,
+			'end_date'   => $request->end_date,
+			'reason'     => $request->reason
+		]);
+
+		$query->save();
+
+		return response()->json($query);
+	}
+
+    // public function events()
+    // {
+	// 	$data = Schedule::all();
+	// 	$events = [];
+	// 	foreach ($data as $key => $value) {
+	// 		$events[] = \Calendar::event(
+	// 			$this->event_title([
+	// 				'training_request_id' => $value['training_request_id'],
+	// 				'reason'              => $value['reason']
+	// 			]), //event title
+	// 			true, //full day event?
+	// 			Carbon::parse($value['start_date'])->toDateString(), //start time (you can also use Carbon instead of DateTime)
+	// 			Carbon::parse($value['end_date'])->toDateString(), //end time (you can also use Carbon instead of DateTime)
+	// 			$value['schedule_id'], //optionally, you can specify an event ID
+	// 			['#7CB342'] // Color
+	// 		);
+	// 	}
+
+	// 	$calendar = \Calendar::addEvents($events)
+	// 		->setOptions([
+	// 			'navLinks' => true,
+	// 			// 'editable' => true,
+	// 		]);
+
+    //     return view('admin.calendar', compact('calendar'));
+    // }
 }

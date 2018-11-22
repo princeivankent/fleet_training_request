@@ -38,7 +38,8 @@ Route::group(['middleware' => ['admin_guard']], function () {
     Route::get('admin/logout', 'SessionLoginController@logout');
 
     // Calendar
-    Route::get('admin/calendar', 'CalendarController@events')->name('calendar');
+    Route::get('admin/calendar/events', 'CalendarController@events');
+    Route::post('admin/calendar/events/post', 'CalendarController@save_event');
 
     // Designated Trainors
     Route::get('admin/designated_trainors/assigned_trainors/{training_request_id}', 'DesignatedTrainorController@assigned_trainors');
@@ -127,4 +128,5 @@ Route::group(['middleware' => ['admin_guard']], function () {
     Route::get('admin/trainors', function() { return view('admin.trainors'); })->name('trainors');
     Route::get('admin/schedules', function() { return view('admin.schedules'); })->name('schedules');
     Route::get('admin/special_trainings', function() { return view('admin.special_trainings'); })->name('special_trainings');
+    Route::get('admin/calendar', function() { return view('admin.calendar'); })->name('calendar');
 });

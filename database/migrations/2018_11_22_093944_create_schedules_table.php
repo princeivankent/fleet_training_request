@@ -18,10 +18,11 @@ class CreateSchedulesTable extends Migration
             $table->collation = 'utf8_unicode_ci';
 
             $table->increments('schedule_id');
-            $table->date('date');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->text('reason');
             $table->string('created_by', 100);
-            $table->unsignedInteger('training_schedule_id');
+            $table->unsignedInteger('training_request_id')->nullable();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });
@@ -34,6 +35,6 @@ class CreateSchedulesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('schedules');
+        Schema::drop('schedules');
     }
 }
