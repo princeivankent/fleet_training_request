@@ -10,7 +10,7 @@ let mix = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
-mix.setResourceRoot('/laravel5.2/public/');
+mix.setResourceRoot('/fleet_training_request/public/');
 mix.js('resources/assets/js/admin.js', 'public/js/admin.js').sourceMaps().version();
 mix.js('resources/assets/js/client.js', 'public/js/client.js').sourceMaps().version();
 
