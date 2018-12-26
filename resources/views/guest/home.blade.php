@@ -167,7 +167,7 @@
 				}
 			},
 			created() {
-				this.e1 = 2;
+				this.e1 = 1;
 				this.fetchUnitModels();
 				this.fetchDealers();
 			},
