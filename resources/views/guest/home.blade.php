@@ -167,7 +167,7 @@
 				}
 			},
 			created() {
-				this.e1 = 1;
+				this.e1 = 2;
 				this.fetchUnitModels();
 				this.fetchDealers();
 			},
@@ -398,15 +398,17 @@
 				getDisabledDates() {
 					axios.get(`${this.base_url}/guest/schedules/get`)
 					.then(({data}) => {
-						var disabled_dates = [];
-						data.forEach(element => {
-							disabled_dates.push(element.start_date);
+						var dates = [];
+						var disabled_dates = data.map(function (date) {
+							date.date_range.forEach(element => {
+								dates.push(element)
+							});
 						});
-						
+
 						$(function () {
 							$('#training-date').datetimepicker({
 								focusOnShow: true,
-								disabledDates: disabled_dates
+								disabledDates: dates
 							});
 						});
 					})
