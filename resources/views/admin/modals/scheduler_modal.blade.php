@@ -10,14 +10,13 @@
                 </h4>
             </div>
             <div class="modal-body">
-                <form v-on:keyup.enter="">
-                <form v-on:keyup.enter="">
+                <form v-on:keyup.enter="saveSchedule">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Start Date</label>
                                 <div class='input-group'>
-                                    <input type='date' class="form-control" v-model="form.start_date">
+                                    <input type="date" class="form-control" id="start_date" v-model="form.start_date">
                                     <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>

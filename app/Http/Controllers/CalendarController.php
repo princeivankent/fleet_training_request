@@ -49,6 +49,24 @@ class CalendarController extends Controller
 		return response()->json($query);
 	}
 
+	public function update_event(Request $request, $schedule_id)
+	{
+		$this->validate($request, [
+			'start_date' => 'required|date',
+			'end_date'   => 'required|date',
+			'reason'     => 'required|string'
+		]);
+
+		$query = Schedule::findOrFail($schedule_id)
+			->update([
+				'start_date' => $request->start_date,
+				'end_date'   => $request->end_date,
+				'reason'     => $request->reason
+			]);
+
+		return response()->json($query);
+	}
+
 	public function delete_event($schedule_id)
 	{
 		return response()->json(Schedule::findOrFail($schedule_id)->delete());

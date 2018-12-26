@@ -43,9 +43,16 @@ class ScheduleController extends Controller
 
     public function update(Request $request, $schedule_id)
     {
+        $this->validate($request, [
+            'start_date'          => 'required|date',
+            'end_date'            => 'required|date',
+            'reason'              => 'string|nullable'
+        ]);
+
         $query = Schedule::findOrFail($schedule_id);
-        $query->date = $request->date;
-        $query->reason = $request->reason;
+        $query->start_date          = Carbon::parse($request->date)->format('Y-m-d');
+        $query->end_date            = Carbon::parse($request->date)->format('Y-m-d');
+        $query->reason              = $request->reason;
         $query->save();
         
         return response()->json($query);

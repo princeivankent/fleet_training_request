@@ -40,7 +40,8 @@ Route::group(['middleware' => ['admin_guard']], function () {
     // Calendar
     Route::get('admin/calendar/events', 'CalendarController@events');
     Route::get('admin/calendar/events/{schedule_id}', 'CalendarController@event');
-    Route::post('admin/calendar/events/post', 'CalendarController@save_event');
+    Route::post('admin/calendar/events', 'CalendarController@save_event');
+    Route::put('admin/calendar/events/{schedule_id}', 'CalendarController@update_event');
     Route::delete('admin/calendar/events/{schedule_id}', 'CalendarController@delete_event');
 
     // Designated Trainors

@@ -82,13 +82,14 @@
                                     element.training_request.training_program.program_title + ' | ' +  element.training_request.company_name :
                                     element.reason,
                                 start      : element.start_date,
-                                end        : element.end_date,
+                                end        : element.end_date + ' 23:59:59',
                                 color: element.training_request != null ? 
                                     '#00A65A' :
-                                    '#3A87AD'
+                                    '#3A87AD',
+                                allDay: false
                             });
                         });
-
+                        
                         this.events = events;
 
                         $('#calendar').fullCalendar('destroy');
@@ -124,18 +125,32 @@
                     });
                 },
                 saveSchedule: function() {
-                    axios.post(`${this.base_url}/admin/calendar/events/post`, this.form)
-                    .then(({data}) => {
-                        if (data) {
-                            this.form = {};
-                            this.getEvents();
-                            swal('Success!', 'New Schedule has been created.', 'success', {timer:4000,button:false});
-                        }
-                    })
-                    .catch((error) => {
-                        console.log(error.response);
-                        swal('Ooops!', 'Something went wrong.', 'error', {timer:4000,button:false});
-                    });
+                    if (this.isEdit == 1) {
+                        return axios.put(`${this.base_url}/admin/calendar/events/${this.form.schedule_id}`, this.form)
+                            .then(({data}) => {
+                                $('#scheduler_modal').modal('hide');
+                                this.form = {};
+                                this.getEvents();
+                                swal('Success!', 'Schedule has been updated.', 'success', {timer:4000,button:false});
+                            })
+                            .catch((error) => {
+                                console.log(error.response);
+                                swal('Ooops!', 'Something went wrong.', 'error', {timer:4000,button:false});
+                            });
+                    }
+
+                    return axios.post(`${this.base_url}/admin/calendar/events`, this.form)
+                        .then(({data}) => {
+                            if (data) {
+                                this.form = {};
+                                this.getEvents();
+                                swal('Success!', 'New Schedule has been created.', 'success', {timer:4000,button:false});
+                            }
+                        })
+                        .catch((error) => {
+                            console.log(error.response);
+                            swal('Ooops!', 'Something went wrong.', 'error', {timer:4000,button:false});
+                        });
                 },
                 deleteSchedule: function(schedule_id) {
                     swal({
@@ -168,6 +183,8 @@
                 },
                 displayEvents: function() {
                     $('#calendar').fullCalendar({
+                        displayEventTime: false,
+                        allDayDefault: true,
                         navLinks: true,
                         editable: true,
                         header: { 
