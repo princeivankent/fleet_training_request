@@ -167,7 +167,7 @@
 				}
 			},
 			created() {
-				this.e1 = 1;
+				this.e1 = 2;
 				this.fetchUnitModels();
 				this.fetchDealers();
 			},
@@ -400,7 +400,7 @@
 					.then(({data}) => {
 						var disabled_dates = [];
 						data.forEach(element => {
-							disabled_dates.push(element.date);
+							disabled_dates.push(element.start_date);
 						});
 						
 						$(function () {
@@ -409,7 +409,6 @@
 								disabledDates: disabled_dates
 							});
 						});
-
 					})
 					.catch((error) => {
 						console.log(error);

@@ -23,14 +23,19 @@ class ScheduleController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'date' => 'required|date',
-            'created_by' => 'required|string'
+            'start_date'          => 'required|date',
+            'end_date'            => 'required|date',
+            'reason'              => 'string|nullable',
+            'training_request_id' => 'nullable|exists:training_requests,training_request_id',
+            'created_by'          => 'required|string'
         ]);
 
-        $query = new Schedule;
-        $query->date = Carbon::parse($request->date)->format('Y-m-d');
-        $query->reason = $request->reason;
-        $query->created_by = $request->created_by;
+        $query                      = new Schedule;
+        $query->start_date          = Carbon::parse($request->date)->format('Y-m-d');
+        $query->end_date            = Carbon::parse($request->date)->format('Y-m-d');
+        $query->reason              = $request->reason;
+        $query->training_request_id = $request->training_request_id;
+        $query->created_by          = $request->created_by;
         $query->save();
         
         return response()->json($query);

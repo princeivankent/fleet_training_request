@@ -91,10 +91,8 @@
 
                         this.events = events;
 
-                        if (this.events.length > 0) {
-                            $('#calendar').fullCalendar('destroy');
-                            return this.displayEvents();
-                        }
+                        $('#calendar').fullCalendar('destroy');
+                        return this.displayEvents();
                     })
                     .catch((error) => {
                         console.log(error.response);
