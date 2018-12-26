@@ -12,7 +12,22 @@ class ScheduleController extends Controller
 {
     public function index()
     {
-        return Schedule::all();
+        $query = Schedule::all();
+
+        foreach ($query as $key => $value) {
+			$query[$key]['startDate'] = new Carbon($value->start_date);
+			$query[$key]['endDate']   = new Carbon($value->end_date);
+
+			$all_dates = [];
+			while ($query[$key]['startDate']->lte($query[$key]['endDate'])){
+				$all_dates[] = $query[$key]['startDate']->toDateString();
+				$query[$key]['startDate']->addDay();
+			}
+
+			$query[$key]['date_range'] = $all_dates;
+		}
+
+		return response()->json($query);
     }
 
     public function show($schedule_id)
