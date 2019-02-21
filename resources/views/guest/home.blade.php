@@ -41,20 +41,50 @@
 <template>
 	<v-stepper non-linear v-model="e1">
 		<v-stepper-header>
-			<v-stepper-step :editable="step1" :complete="e1 > 1" step="1" color="red" edit-icon="$vuetify.icons.complete">I. Customer Information</v-stepper-step>
+			<v-stepper-step :editable="step1" :complete="e1 > 1" step="1" color="red" edit-icon="$vuetify.icons.complete">Who are you</v-stepper-step>
 			<v-divider></v-divider>
-			<v-stepper-step :editable="step2" :complete="e1 > 2" step="2" color="red" edit-icon="$vuetify.icons.complete">II. Training Information</v-stepper-step>
+			<v-stepper-step :editable="step2" :complete="e1 > 2" step="2" color="red" edit-icon="$vuetify.icons.complete">Dealer</v-stepper-step>
 			<v-divider></v-divider>
-			<v-stepper-step :editable="step3" :complete="e1 > 3" step="3" color="red" edit-icon="$vuetify.icons.complete">Program Offerings</v-stepper-step>
+			<v-stepper-step :editable="step3" :complete="e1 > 3" step="3" color="red" edit-icon="$vuetify.icons.complete">Customer</v-stepper-step>
 			<v-divider></v-divider>
-			<v-stepper-step :editable="step4" :complete="e1 > 4" step="4" color="red" edit-icon="$vuetify.icons.complete">Isuzu Models</v-stepper-step>
+			<v-stepper-step :editable="step4" :complete="e1 > 4" step="4" color="red" edit-icon="$vuetify.icons.complete">Training</v-stepper-step>
 			<v-divider></v-divider>
-			<v-stepper-step :editable="step5" :complete="e1 > 5" step="5" color="red" edit-icon="$vuetify.icons.complete">Submit</v-stepper-step>
+			<v-stepper-step :editable="step5" :complete="e1 > 5" step="5" color="red" edit-icon="$vuetify.icons.complete">Programs</v-stepper-step>
+			<v-divider></v-divider>
+			<v-stepper-step :editable="step6" :complete="e1 > 6" step="6" color="red" edit-icon="$vuetify.icons.complete">Isuzu Models</v-stepper-step>
+			<v-divider></v-divider>
+			<v-stepper-step :editable="step7" :complete="e1 > 7" step="7" color="red" edit-icon="$vuetify.icons.complete">Submit</v-stepper-step>
 		</v-stepper-header>
 	
 		<v-stepper-items>
 			<v-stepper-content step="1">
-				@include('guest.customer_information')
+				@include('guest.customer-forms.initial-form')
+				{{-- <v-layout justify-end row>
+					<v-btn
+					color="red darken-1"
+					v-on:click="checkFirstForm"
+					dark
+					>
+					<v-icon small>ion ion-android-checkmark-circle</v-icon>&nbsp;
+					Continue
+					</v-btn>
+				</v-layout> --}}
+			</v-stepper-content>
+			<v-stepper-content step="2">
+				@include('guest.customer-forms.dealer-form')
+				{{-- <v-layout justify-end row>
+					<v-btn
+					color="red darken-1"
+					v-on:click="checkFirstForm"
+					dark
+					>
+					<v-icon small>ion ion-android-checkmark-circle</v-icon>&nbsp;
+					Continue
+					</v-btn>
+				</v-layout> --}}
+			</v-stepper-content>
+			<v-stepper-content step="3">
+				@include('guest.customer-forms.customer-form')
 				<v-layout justify-end row>
 					<v-btn
 					color="red darken-1"
@@ -67,8 +97,8 @@
 				</v-layout>
 			</v-stepper-content>
 		
-			<v-stepper-content step="2">
-				@include('guest.training_information')
+			<v-stepper-content step="4">
+				@include('guest.customer-forms.training-form')
 				<v-layout justify-end row>
 					<v-btn
 					color="red darken-1"
@@ -82,16 +112,16 @@
 		
 			</v-stepper-content>
 		
-			<v-stepper-content step="3">
-				@include('guest.programs_offering')
-			</v-stepper-content>
-
-			<v-stepper-content step="4">
-				@include('guest.isuzu_models')
-			</v-stepper-content>
-
 			<v-stepper-content step="5">
-				@include('guest.submit_form')
+				@include('guest.customer-forms.program-form')
+			</v-stepper-content>
+
+			<v-stepper-content step="6">
+				@include('guest.customer-forms.isuzu-model-form')
+			</v-stepper-content>
+
+			<v-stepper-content step="7">
+				@include('guest.customer-forms.submit-form')
 			</v-stepper-content>
 		</v-stepper-items>
 	</v-stepper>
@@ -112,12 +142,15 @@
 					photo_gallery: false,
 					drawer: true,
 					participants: {},
-					//
+					
+					// make all false except on step1
 					step1: true,
-					step2: false,
-					step3: false,
-					step4: false,
-					step5: false,
+					step2: true,
+					step3: true,
+					step4: true,
+					step5: true,
+					step6: true,
+					step7: true,
 					// Form
 					form: {
 						company_name: '',

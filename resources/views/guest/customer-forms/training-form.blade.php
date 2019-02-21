@@ -105,4 +105,4 @@
 	</div>
 </div>
 
-@include('guest.participants_dialog')
+@include('guest.dialogs.participants')
