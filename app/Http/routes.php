@@ -22,7 +22,8 @@ Route::get('customer/cancellation_request/{training_request_id}', 'RequestorCont
 Route::get('customer/reschedule_request/{training_request_id}', 'RequestorController@reschedule')->name('customer_reschedule');
 
 // ============== Public Views ================ //
-Route::get('/', function() { return view('guest.home'); });
+// Route::get('/', function() { return view('guest.home'); });
+Route::get('/', function() { return view('layouts.guest_layout'); });
 Route::get('guest/message', function() { return view('public_pages.message'); });
 
 // ============== Login ================ //
