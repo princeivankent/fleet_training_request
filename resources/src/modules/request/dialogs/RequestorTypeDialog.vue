@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-dialog
-      v-model="hasNotPickedYet"
+      :value="hasNotPickedYet"
       width="500"
       persistent
     >
@@ -54,12 +54,12 @@ import { mapGetters, mapState } from 'vuex'
 export default {
   name: 'requestor-dialog',
   computed: {
-    ...mapState('request', [
-      'requestorType'
+    ...mapGetters('request', [
+      'getRequestor'
     ]),
 
     hasNotPickedYet() {
-      return this.requestorType === '' ? 1 : 0 
+      return this.getRequestor === '' ? 1 : 0 
     }
   },
   methods: {

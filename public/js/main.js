@@ -1991,7 +1991,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _dialogs_RequestorTypeDialog__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dialogs/RequestorTypeDialog */ "./resources/src/modules/request/dialogs/RequestorTypeDialog.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _dialogs_RequestorTypeDialog__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dialogs/RequestorTypeDialog */ "./resources/src/modules/request/dialogs/RequestorTypeDialog.vue");
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 //
@@ -2057,17 +2060,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'home',
   components: {
-    RequestorTypeDialog: _dialogs_RequestorTypeDialog__WEBPACK_IMPORTED_MODULE_0__["default"]
+    RequestorTypeDialog: _dialogs_RequestorTypeDialog__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     var _form;
 
     return {
-      page: 0,
+      page: 1,
       dialog: false,
       photo_gallery: false,
       drawer: true,
@@ -2097,7 +2106,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       disabled_dates: [],
       special_trainings: []
     };
-  }
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('request', ['getFormSteppers']))
 });
 
 /***/ }),
@@ -2169,9 +2179,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'requestor-dialog',
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('request', ['requestorType']), {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('request', ['getRequestor']), {
     hasNotPickedYet: function hasNotPickedYet() {
-      return this.requestorType === '' ? 1 : 0;
+      return this.getRequestor === '' ? 1 : 0;
     }
   }),
   methods: {
@@ -38096,185 +38106,108 @@ var render = function() {
     [
       _c("RequestorTypeDialog"),
       _vm._v(" "),
-      _c(
-        "v-stepper",
-        {
-          attrs: { "non-linear": "" },
-          model: {
-            value: _vm.page,
-            callback: function($$v) {
-              _vm.page = $$v
+      this.$store.state.request.requestorType
+        ? _c(
+            "v-stepper",
+            {
+              attrs: { "non-linear": "" },
+              model: {
+                value: _vm.page,
+                callback: function($$v) {
+                  _vm.page = $$v
+                },
+                expression: "page"
+              }
             },
-            expression: "page"
-          }
-        },
-        [
-          _c(
-            "v-stepper-header",
             [
               _c(
-                "v-stepper-step",
-                {
-                  attrs: {
-                    editable: _vm.step1,
-                    complete: _vm.page > 1,
-                    step: "1",
-                    color: "red",
-                    "edit-icon": "$vuetify.icons.complete"
-                  }
-                },
-                [_vm._v("Dealer")]
+                "v-stepper-header",
+                _vm._l(_vm.getFormSteppers, function(step, index) {
+                  return _c(
+                    "v-stepper-step",
+                    {
+                      key: index,
+                      attrs: {
+                        editable: _vm.step1,
+                        complete: _vm.page > step.step,
+                        step: "" + step.step,
+                        color: "red",
+                        "edit-icon": "$vuetify.icons.complete"
+                      }
+                    },
+                    [_vm._v("\n      " + _vm._s(step.step_name) + "\n      ")]
+                  )
+                }),
+                1
               ),
               _vm._v(" "),
-              _c("v-divider"),
-              _vm._v(" "),
               _c(
-                "v-stepper-step",
-                {
-                  attrs: {
-                    editable: _vm.step2,
-                    complete: _vm.page > 2,
-                    step: "2",
-                    color: "red",
-                    "edit-icon": "$vuetify.icons.complete"
-                  }
-                },
-                [_vm._v("Customer")]
-              ),
-              _vm._v(" "),
-              _c("v-divider"),
-              _vm._v(" "),
-              _c(
-                "v-stepper-step",
-                {
-                  attrs: {
-                    editable: _vm.step3,
-                    complete: _vm.page > 3,
-                    step: "3",
-                    color: "red",
-                    "edit-icon": "$vuetify.icons.complete"
-                  }
-                },
-                [_vm._v("Training")]
-              ),
-              _vm._v(" "),
-              _c("v-divider"),
-              _vm._v(" "),
-              _c(
-                "v-stepper-step",
-                {
-                  attrs: {
-                    editable: _vm.step4,
-                    complete: _vm.page > 4,
-                    step: "4",
-                    color: "red",
-                    "edit-icon": "$vuetify.icons.complete"
-                  }
-                },
-                [_vm._v("Programs")]
-              ),
-              _vm._v(" "),
-              _c("v-divider"),
-              _vm._v(" "),
-              _c(
-                "v-stepper-step",
-                {
-                  attrs: {
-                    editable: _vm.step5,
-                    complete: _vm.page > 5,
-                    step: "5",
-                    color: "red",
-                    "edit-icon": "$vuetify.icons.complete"
-                  }
-                },
-                [_vm._v("Isuzu Models")]
-              ),
-              _vm._v(" "),
-              _c("v-divider"),
-              _vm._v(" "),
-              _c(
-                "v-stepper-step",
-                {
-                  attrs: {
-                    editable: _vm.step6,
-                    complete: _vm.page > 6,
-                    step: "6",
-                    color: "red",
-                    "edit-icon": "$vuetify.icons.complete"
-                  }
-                },
-                [_vm._v("Submit")]
+                "v-stepper-items",
+                [
+                  _c(
+                    "v-stepper-content",
+                    { attrs: { step: "1" } },
+                    [
+                      _c(
+                        "v-layout",
+                        { attrs: { "justify-end": "", row: "" } },
+                        [
+                          _c(
+                            "v-btn",
+                            { attrs: { color: "red darken-1", dark: "" } },
+                            [
+                              _c("v-icon", { attrs: { small: "" } }, [
+                                _vm._v("fa fa-check")
+                              ]),
+                              _vm._v(" \n          Continue\n          ")
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-stepper-content",
+                    { attrs: { step: "2" } },
+                    [
+                      _c(
+                        "v-layout",
+                        { attrs: { "justify-end": "", row: "" } },
+                        [
+                          _c(
+                            "v-btn",
+                            { attrs: { color: "red darken-1", dark: "" } },
+                            [
+                              _c("v-icon", { attrs: { small: "" } }, [
+                                _vm._v("fa fa-check")
+                              ]),
+                              _vm._v(" \n          Continue\n          ")
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("v-stepper-content", { attrs: { step: "3" } }),
+                  _vm._v(" "),
+                  _c("v-stepper-content", { attrs: { step: "4" } }),
+                  _vm._v(" "),
+                  _c("v-stepper-content", { attrs: { step: "5" } })
+                ],
+                1
               )
             ],
             1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-stepper-items",
-            [
-              _c(
-                "v-stepper-content",
-                { attrs: { step: "1" } },
-                [
-                  _c(
-                    "v-layout",
-                    { attrs: { "justify-end": "", row: "" } },
-                    [
-                      _c(
-                        "v-btn",
-                        { attrs: { color: "red darken-1", dark: "" } },
-                        [
-                          _c("v-icon", { attrs: { small: "" } }, [
-                            _vm._v("fa fa-check")
-                          ]),
-                          _vm._v(" \n          Continue\n          ")
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-stepper-content",
-                { attrs: { step: "2" } },
-                [
-                  _c(
-                    "v-layout",
-                    { attrs: { "justify-end": "", row: "" } },
-                    [
-                      _c(
-                        "v-btn",
-                        { attrs: { color: "red darken-1", dark: "" } },
-                        [
-                          _c("v-icon", { attrs: { small: "" } }, [
-                            _vm._v("fa fa-check")
-                          ]),
-                          _vm._v(" \n          Continue\n          ")
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c("v-stepper-content", { attrs: { step: "3" } }),
-              _vm._v(" "),
-              _c("v-stepper-content", { attrs: { step: "4" } }),
-              _vm._v(" "),
-              _c("v-stepper-content", { attrs: { step: "5" } })
-            ],
-            1
           )
-        ],
-        1
-      )
+        : _vm._e()
     ],
     1
   )
@@ -38306,16 +38239,7 @@ var render = function() {
     [
       _c(
         "v-dialog",
-        {
-          attrs: { width: "500", persistent: "" },
-          model: {
-            value: _vm.hasNotPickedYet,
-            callback: function($$v) {
-              _vm.hasNotPickedYet = $$v
-            },
-            expression: "hasNotPickedYet"
-          }
-        },
+        { attrs: { value: _vm.hasNotPickedYet, width: "500", persistent: "" } },
         [
           _c(
             "v-card",
@@ -77923,17 +77847,80 @@ __webpack_require__.r(__webpack_exports__);
 var request = {
   namespaced: true,
   state: {
-    requestorType: ''
+    requestorType: '',
+    form_steppers: []
   },
-  getters: {},
+  getters: {
+    getRequestor: function getRequestor(state) {
+      return state.requestorType;
+    },
+    getFormSteppers: function getFormSteppers(state) {
+      return state.form_steppers;
+    }
+  },
   mutations: {
     requestorType: function requestorType(state, requestor) {
       state.requestorType = requestor;
+    },
+    dealerFormState: function dealerFormState(state) {
+      state.form_steppers = [{
+        step: 1,
+        step_name: 'Dealer'
+      }, {
+        step: 2,
+        step_name: 'Customer'
+      }, {
+        step: 3,
+        step_name: 'Training'
+      }, {
+        step: 4,
+        step_name: 'Programs'
+      }, {
+        step: 5,
+        step_name: 'Isuzu Models'
+      }, {
+        step: 6,
+        step_name: 'Submit'
+      }];
+    },
+    customerFormState: function customerFormState(state) {
+      state.form_steppers = [{
+        step: 1,
+        step_name: 'Customer'
+      }, {
+        step: 2,
+        step_name: 'Training'
+      }, {
+        step: 3,
+        step_name: 'Programs'
+      }, {
+        step: 4,
+        step_name: 'Isuzu Models'
+      }, {
+        step: 5,
+        step_name: 'Submit'
+      }];
     }
   },
   actions: {
-    requestorType: function requestorType(context, requestor) {
-      context.commit('requestorType', requestor);
+    requestorType: function requestorType(_ref, requestor) {
+      var commit = _ref.commit;
+
+      if (requestor == 'customer') {
+        commit('customerFormState');
+      } else {
+        commit('dealerFormState');
+      }
+
+      commit('requestorType', requestor);
+    },
+    setDealerFormState: function setDealerFormState(_ref2) {
+      var commit = _ref2.commit;
+      commit('dealerFormState');
+    },
+    setCustomerFormState: function setCustomerFormState(_ref3) {
+      var commit = _ref3.commit;
+      commit('customerFormState');
     }
   }
 };
