@@ -17,5 +17,3 @@ export default {
   components: {Header,Home}
 }
 </script>
-
-<style lang="scss" src="./styles/App.scss"></style>

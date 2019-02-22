@@ -1,15 +1,10 @@
 let mix = require('laravel-mix');
 
-mix.setResourceRoot('/fleet_training_request/public/');
-
-mix.js('resources/assets/js/admin.js', 'public/js/admin.js')
+mix.setResourceRoot('/fleet_training_request/public/')
+.js('resources/assets/js/admin.js', 'public/js/admin.js')
 .js('resources/assets/js/client.js', 'public/js/client.js')
 .js('resources/src/main.js', 'public/js/main.js')
-.sourceMaps()
-.version()
-.browserSync({
-  proxy: 'http://localhost/fleet_training_request/'
-})
+.browserSync('http://localhost/fleet_training_request/')
 .disableNotifications();
 
 /**

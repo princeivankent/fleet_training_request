@@ -1,0 +1,71 @@
+<template>
+  <div>
+    <v-dialog
+      v-model="hasNotPickedYet"
+      width="500"
+      persistent
+    >
+      <v-card>
+        <v-card-title
+          class="headline grey lighten-2"
+          primary-title
+        >
+          Requestor Type
+        </v-card-title>
+
+        <v-card-text>
+          <v-container>
+            <v-layout 
+            align-center
+            wrap>
+              <v-flex xs6 class="text-xs-center">
+                <v-avatar size="100">
+                  <img
+                    src="../../../assets/images/customer.jpg"
+                    alt="image"
+                  >
+                </v-avatar>
+              </v-flex>
+              <v-flex xs6 class="text-xs-center">
+                <v-avatar size="100">
+                  <img
+                    src="../../../assets/images/dealer.png"
+                    alt="image"
+                  >
+                </v-avatar>
+              </v-flex>
+              <v-flex xs6 class="text-xs-center">
+                <v-btn color="success" @click="changeRequestorType('customer')">Customer</v-btn>
+              </v-flex>
+              <v-flex xs6 class="text-xs-center">
+                <v-btn color="success" @click="changeRequestorType('dealer')">Dealer</v-btn>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
+  </div>
+</template>
+
+<script>
+import { mapGetters, mapState } from 'vuex'
+
+export default {
+  name: 'requestor-dialog',
+  computed: {
+    ...mapState('request', [
+      'requestorType'
+    ]),
+
+    hasNotPickedYet() {
+      return this.requestorType === '' ? 1 : 0 
+    }
+  },
+  methods: {
+    changeRequestorType(requestor) {
+      this.$store.dispatch('request/requestorType', requestor);
+    }
+  }
+}
+</script>

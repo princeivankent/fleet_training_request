@@ -1,5 +1,7 @@
 <template>
   <div>
+    <RequestorTypeDialog />
+
     <v-stepper non-linear v-model="page">
       <v-stepper-header>
         <v-stepper-step :editable="step1" :complete="page > 1" step="1" color="red" edit-icon="$vuetify.icons.complete">Dealer</v-stepper-step>
@@ -14,12 +16,59 @@
         <v-divider></v-divider>
         <v-stepper-step :editable="step6" :complete="page > 6" step="6" color="red" edit-icon="$vuetify.icons.complete">Submit</v-stepper-step>
       </v-stepper-header>
+
+      <v-stepper-items>
+        <v-stepper-content step="1">
+          <!-- @include('guest.customer_information') -->
+          <v-layout justify-end row>
+            <v-btn
+            color="red darken-1"
+            dark
+            >
+            <v-icon small>fa fa-check</v-icon>&nbsp;
+            Continue
+            </v-btn>
+          </v-layout>
+        </v-stepper-content>
+      
+        <v-stepper-content step="2">
+          <!-- @include('guest.training_information') -->
+          <v-layout justify-end row>
+            <v-btn
+            color="red darken-1"
+            dark
+            >
+            <v-icon small>fa fa-check</v-icon>&nbsp;
+            Continue
+            </v-btn>
+          </v-layout>
+      
+        </v-stepper-content>
+      
+        <v-stepper-content step="3">
+          <!-- @include('guest.programs_offering') -->
+        </v-stepper-content>
+
+        <v-stepper-content step="4">
+          <!-- @include('guest.isuzu_models') -->
+        </v-stepper-content>
+
+        <v-stepper-content step="5">
+          <!-- @include('guest.submit_form') -->
+        </v-stepper-content>
+      </v-stepper-items>
     </v-stepper>
   </div>
 </template>
 
 <script>
+import RequestorTypeDialog from './dialogs/RequestorTypeDialog'
+
 export default {
+  name: 'home',
+  components: {
+    RequestorTypeDialog
+  },
   data() {
     return {
       page: 0,
@@ -61,9 +110,29 @@ export default {
       selected_unit: 0,
       didNotReadYet: true,
       disabled_dates: [],
-      special_trainings: []
+      special_trainings: [],
     }
   }
 }
 </script>
 
+<style scoped>
+.raleway {
+  color: #636b6f;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 600;
+}
+.menu {
+  width:170px; 
+  text-align:center; 
+  float:left; 
+  position:relative
+}
+.menu_label {
+  color:#FFFFFF; 
+  float:left; 
+  position:absolute; 
+  top:20px; 
+  left:150px;
+} 
+</style>

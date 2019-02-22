@@ -9,16 +9,15 @@
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<title>{{ config('app.name', 'Laravel') }}</title>
 	<link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons' rel="stylesheet">
-	<link rel="stylesheet" href="{{ url('public/libraries/css/bootstrap-datetimepicker.min.css') }}">
-	<link rel="stylesheet" href="{{ url('public/css/styles.css') }}">
+	{{-- <link rel="stylesheet" href="{{ url('public/libraries/css/bootstrap-datetimepicker.min.css') }}"> --}}
+	{{-- <link rel="stylesheet" href="{{ url('public/css/styles.css') }}"> --}}
 	@stack('styles')
 </head>
 <body>
 	<div id="app"></div>
-
 	<script src="{{ url('public/js/main.js') }}"></script>
-	<script src="{{ url('public/libraries/js/moment.js') }}"></script>
-	<script src="{{ url('public/libraries/js/bootstrap-datetimepicker.min.js') }}"></script>
+	{{-- <script src="{{ url('public/libraries/js/moment.js') }}"></script> --}}
+	{{-- <script src="{{ url('public/libraries/js/bootstrap-datetimepicker.min.js') }}"></script> --}}
 	@stack('scripts')
 </body>
 </html>
