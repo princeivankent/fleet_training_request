@@ -27,9 +27,9 @@
               </v-flex>
 
               <v-flex md4>
-                <!-- <label for="selling_dealer">Selling Dealer</label>
+                <label for="selling_dealer">Selling Dealer</label>
+                  <!-- v-model="form.selling_dealer" -->
                 <v-select
-                  v-model="form.selling_dealer"
                   :items="dealers"
                   item-text="dealer"
                         item-value="dealer_id"
@@ -52,7 +52,7 @@
                     class="grey--text caption"
                   >(+@{{ form.selling_dealer.length - 1 }} others)</span>
                   </template>
-                </v-select> -->
+                </v-select>
               </v-flex>
 
             </v-layout>

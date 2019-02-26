@@ -2286,8 +2286,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return this.getRequestor === '' ? 1 : 0;
     }
   }),
-  created: function created() {
-    this.changeRequestorType('dealer'); //--> for dev
+  created: function created() {// this.changeRequestorType('dealer') //--> for dev
   },
   methods: {
     changeRequestorType: function changeRequestorType(requestor) {
@@ -3754,6 +3753,8 @@ var render = function() {
                     "v-stepper-content",
                     { attrs: { step: "2" } },
                     [
+                      _c("h1", [_vm._v("Omy")]),
+                      _vm._v(" "),
                       _c(
                         "v-layout",
                         { attrs: { "justify-end": "", row: "" } },
@@ -3863,7 +3864,72 @@ var render = function() {
                             1
                           ),
                           _vm._v(" "),
-                          _c("v-flex", { attrs: { md4: "" } })
+                          _c(
+                            "v-flex",
+                            { attrs: { md4: "" } },
+                            [
+                              _c(
+                                "label",
+                                { attrs: { for: "selling_dealer" } },
+                                [_vm._v("Selling Dealer")]
+                              ),
+                              _vm._v(" "),
+                              _c("v-select", {
+                                attrs: {
+                                  items: _vm.dealers,
+                                  "item-text": "dealer",
+                                  "item-value": "dealer_id",
+                                  chips: "",
+                                  label: "Selling Dealers",
+                                  "deletable-chips": "",
+                                  multiple: "",
+                                  solo: "",
+                                  "single-line": ""
+                                },
+                                scopedSlots: _vm._u([
+                                  {
+                                    key: "selection",
+                                    fn: function(ref) {
+                                      var item = ref.item
+                                      var index = ref.index
+                                      return [
+                                        index === 0
+                                          ? _c("v-chip", [
+                                              _c("span", [
+                                                _vm._v(
+                                                  "@" + _vm._s(item.dealer)
+                                                )
+                                              ])
+                                            ])
+                                          : _vm._e(),
+                                        _vm._v(" "),
+                                        index === 1
+                                          ? _c(
+                                              "span",
+                                              {
+                                                staticClass:
+                                                  "grey--text caption"
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "(+@" +
+                                                    _vm._s(
+                                                      _vm.form.selling_dealer
+                                                        .length - 1
+                                                    ) +
+                                                    " others)"
+                                                )
+                                              ]
+                                            )
+                                          : _vm._e()
+                                      ]
+                                    }
+                                  }
+                                ])
+                              })
+                            ],
+                            1
+                          )
                         ],
                         1
                       )
@@ -43562,11 +43628,23 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+var _form;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var request = {
   namespaced: true,
   state: {
     requestorType: '',
-    form_steppers: []
+    form_steppers: [],
+    form: (_form = {
+      company_name: '',
+      office_address: '',
+      contact_person: '',
+      email: '',
+      contact_number: '',
+      position: ''
+    }, _defineProperty(_form, "contact_number", ''), _defineProperty(_form, "training_date", ''), _defineProperty(_form, "training_venue", []), _defineProperty(_form, "training_address", ''), _defineProperty(_form, "training_program_id", 0), _defineProperty(_form, "unit_model_id", 0), _defineProperty(_form, "selling_dealer", []), _defineProperty(_form, "unit_models", []), _defineProperty(_form, "training_participants", []), _form)
   },
   getters: {
     getRequestor: function getRequestor(state) {
@@ -43577,10 +43655,10 @@ var request = {
     }
   },
   mutations: {
-    requestorType: function requestorType(state, requestor) {
+    SET_REQUESTOR: function SET_REQUESTOR(state, requestor) {
       state.requestorType = requestor;
     },
-    dealerFormState: function dealerFormState(state) {
+    SET_DEALER_STATE: function SET_DEALER_STATE(state) {
       state.form_steppers = [{
         step: 1,
         step_name: 'Dealer'
@@ -43601,7 +43679,7 @@ var request = {
         step_name: 'Submit'
       }];
     },
-    customerFormState: function customerFormState(state) {
+    SET_CUSTOMER_STATE: function SET_CUSTOMER_STATE(state) {
       state.form_steppers = [{
         step: 1,
         step_name: 'Customer'
@@ -43618,6 +43696,9 @@ var request = {
         step: 5,
         step_name: 'Submit'
       }];
+    },
+    ADD_FORM_DATA: function ADD_FORM_DATA(state, payload) {
+      Vue.set(state.form, payload.property, payload.value);
     }
   },
   actions: {
@@ -43625,20 +43706,23 @@ var request = {
       var commit = _ref.commit;
 
       if (requestor == 'customer') {
-        commit('customerFormState');
+        commit('SET_CUSTOMER_STATE');
       } else {
-        commit('dealerFormState');
+        commit('SET_DEALER_STATE');
       }
 
-      commit('requestorType', requestor);
+      commit('SET_REQUESTOR', requestor);
     },
     setDealerFormState: function setDealerFormState(_ref2) {
       var commit = _ref2.commit;
-      commit('dealerFormState');
+      commit('SET_DEALER_STATE');
     },
     setCustomerFormState: function setCustomerFormState(_ref3) {
       var commit = _ref3.commit;
-      commit('customerFormState');
+      commit('SET_CUSTOMER_STATE');
+    },
+    addFormData: function addFormData(_ref4) {
+      var commit = _ref4.commit;
     }
   }
 };

@@ -2,7 +2,25 @@ const request = {
   namespaced: true,
   state: {
     requestorType: '',
-    form_steppers: []
+    form_steppers: [],
+    form: {
+      company_name: '',
+      office_address: '',
+      contact_person: '',
+      email: '',
+      contact_number: '',
+      position: '',
+      contact_number: '',
+      training_date: '',
+      training_venue: [],
+      training_address: '',
+      training_program_id: 0,
+      unit_model_id: 0,
+
+      selling_dealer: [],
+      unit_models: [],
+      training_participants: []
+    }
   },
   getters: {
     getRequestor(state) {
@@ -13,10 +31,10 @@ const request = {
     }
   },
   mutations: {
-    requestorType(state, requestor) {
+    SET_REQUESTOR (state, requestor) {
       state.requestorType = requestor
     },
-    dealerFormState(state) {
+    SET_DEALER_STATE (state) {
       state.form_steppers = [
         {step: 1, step_name: 'Dealer'},
         {step: 2, step_name: 'Customer'},
@@ -26,7 +44,7 @@ const request = {
         {step: 6, step_name: 'Submit'}
       ]
     },
-    customerFormState(state) {
+    SET_CUSTOMER_STATE (state) {
       state.form_steppers = [
         {step: 1, step_name: 'Customer'},
         {step: 2, step_name: 'Training'},
@@ -35,24 +53,30 @@ const request = {
         {step: 5, step_name: 'Submit'}
       ]
     },
+    ADD_FORM_DATA (state, payload) {
+      Vue.set(state.form, payload.property, payload.value)
+    }
   },
   actions: {
-    requestorType({commit}, requestor) {
+    requestorType ({commit}, requestor) {
       if (requestor == 'customer') {
-        commit('customerFormState')
+        commit('SET_CUSTOMER_STATE')
       } 
       else {
-        commit('dealerFormState')
+        commit('SET_DEALER_STATE')
       }
 
-      commit('requestorType', requestor)
+      commit('SET_REQUESTOR', requestor)
     },
-    setDealerFormState({commit}) {
-      commit('dealerFormState')
+    setDealerFormState ({commit}) {
+      commit('SET_DEALER_STATE')
     },
-    setCustomerFormState({commit}) {
-      commit('customerFormState')
+    setCustomerFormState ({commit}) {
+      commit('SET_CUSTOMER_STATE')
     },
+    addFormData ({commit}) {
+
+    }
   }
 }
 

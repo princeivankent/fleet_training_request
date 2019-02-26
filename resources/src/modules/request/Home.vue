@@ -28,7 +28,7 @@
         </v-stepper-content>
       
         <v-stepper-content step="2">
-          <!-- @include('guest.training_information') -->
+          <h1>Omy</h1>
           <v-layout justify-end row>
             <v-btn
             color="red darken-1"
