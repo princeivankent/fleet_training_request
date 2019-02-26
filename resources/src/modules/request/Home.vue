@@ -7,17 +7,27 @@
     non-linear
     >
       <v-stepper-header>
-        <v-stepper-step 
-        v-for="(step, index) in getFormSteppers" 
-        :key="index"
-        :editable="step1" 
-        :complete="page > step.step" 
-        :step="`${index+1}`" 
-        edit-icon="$vuetify.icons.complete"
-        color="red" 
+        <template
+        v-for="(step, index) in getFormSteppers"
         >
-          {{ step.step_name }}
-        </v-stepper-step>
+          <v-stepper-step 
+          :key="step.step"
+          :editable="step1" 
+          :complete="page > step.step" 
+          :step="`${index+1}`" 
+          edit-icon="$vuetify.icons.complete"
+          color="red" 
+          >
+            {{ step.step_name }}
+          </v-stepper-step>
+
+          <v-divider
+            v-if="!index+1"
+            :key="`div-${index+1}`"
+            vertical
+            inset
+          ></v-divider>
+        </template>
       </v-stepper-header>
 
       <v-stepper-items>
@@ -29,7 +39,6 @@
           <component :is="step.component"></component>
         </v-stepper-content>
       </v-stepper-items>
-
     </v-stepper>
   </div>
 </template>

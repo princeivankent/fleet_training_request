@@ -2039,6 +2039,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3693,23 +3702,40 @@ var render = function() {
             [
               _c(
                 "v-stepper-header",
-                _vm._l(_vm.getFormSteppers, function(step, index) {
-                  return _c(
-                    "v-stepper-step",
-                    {
-                      key: index,
-                      attrs: {
-                        editable: _vm.step1,
-                        complete: _vm.page > step.step,
-                        step: "" + (index + 1),
-                        "edit-icon": "$vuetify.icons.complete",
-                        color: "red"
-                      }
-                    },
-                    [_vm._v("\n        " + _vm._s(step.step_name) + "\n      ")]
-                  )
-                }),
-                1
+                [
+                  _vm._l(_vm.getFormSteppers, function(step, index) {
+                    return [
+                      _c(
+                        "v-stepper-step",
+                        {
+                          key: step.step,
+                          attrs: {
+                            editable: _vm.step1,
+                            complete: _vm.page > step.step,
+                            step: "" + (index + 1),
+                            "edit-icon": "$vuetify.icons.complete",
+                            color: "red"
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n          " +
+                              _vm._s(step.step_name) +
+                              "\n        "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      !index + 1
+                        ? _c("v-divider", {
+                            key: "div-" + (index + 1),
+                            attrs: { vertical: "", inset: "" }
+                          })
+                        : _vm._e()
+                    ]
+                  })
+                ],
+                2
               ),
               _vm._v(" "),
               _c(
@@ -4481,11 +4507,8 @@ var render = function() {
             [
               _c(
                 "v-card-title",
-                {
-                  staticClass: "headline grey lighten-2",
-                  attrs: { "primary-title": "" }
-                },
-                [_vm._v("\n        Requestor Type\n      ")]
+                { staticClass: "headline", attrs: { "primary-title": "" } },
+                [_vm._v("\n        What type of requestor are you?\n      ")]
               ),
               _vm._v(" "),
               _c(
