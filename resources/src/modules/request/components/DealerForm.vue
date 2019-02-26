@@ -2,65 +2,82 @@
   <v-layout>
     <v-flex>
       <v-card>
-        <v-card-title primary-title>
-          <div>
-            <h3 class="headline mb-0">Requesting Isuzu Dealer</h3>
-          </div>
-        </v-card-title>
-
         <v-form>
-          <v-container>
-            <v-layout align-center>
-
-              <v-flex xs12 md4>
-                <label>Isuzu Dealership Name</label>
+          <v-container fluid>
+            <v-layout justify-center row wrap>
+              <v-flex xs6 sm6>
                 <v-text-field
-                  solo
+                label="Isuzu Dealership Name"
+                v-model="dealership_name"
+                @input="$v.dealership_name.$touch()"
+                @blur="$v.dealership_name.$touch()"
+                :error-messages="validation('dealership_name', 'Dealership Name')"
+                outline
+                required
                 ></v-text-field>
               </v-flex>
-
-              <v-flex md4>
-                <label>Name of requester</label>
-                <v-text-field
-                  solo
-                ></v-text-field>
-              </v-flex>
-
-              <v-flex md4>
-                <label for="selling_dealer">Selling Dealer</label>
-                  <!-- v-model="form.selling_dealer" -->
-                <v-select
-                  :items="dealers"
-                  item-text="dealer"
-                        item-value="dealer_id"
-                  chips
-                  label="Selling Dealers"
-                  deletable-chips
-                  multiple
-                  solo
-                  single-line
-                >
-                  <template
-                  slot="selection"
-                  slot-scope="{ item, index }"
-                  >
-                  <v-chip v-if="index === 0">
-                    <span>@{{ item.dealer }}</span>
-                  </v-chip>
-                  <span
-                    v-if="index === 1"
-                    class="grey--text caption"
-                  >(+@{{ form.selling_dealer.length - 1 }} others)</span>
-                  </template>
-                </v-select>
-              </v-flex>
-
             </v-layout>
+
+            <v-layout justify-center row wrap>
+              <v-flex xs6 sm3>
+                <v-text-field
+                label="Name of requester"
+                v-model="requestor_name"
+                @input="$v.requestor_name.$touch()"
+                @blur="$v.requestor_name.$touch()"
+                :error-messages="validation('requestor_name', 'Requestor Name')"
+                outline
+                required
+                ></v-text-field>
+              </v-flex>
+
+              <v-flex xs12 sm3>
+                <v-text-field
+                label="Position"
+                v-model="position"
+                @input="$v.position.$touch()"
+                @blur="$v.position.$touch()"
+                :error-messages="validation('position')"
+                outline
+                required
+                ></v-text-field>
+              </v-flex>
+            </v-layout>
+
+            <v-layout justify-center row wrap>
+              <v-flex xs6 sm3>
+                <v-text-field
+                label="Email Address"
+                v-model="email"
+                @input="$v.email.$touch()"
+                @blur="$v.email.$touch()"
+                :error-messages="validation('email')"
+                outline
+                required
+                ></v-text-field>
+              </v-flex>
+
+              <v-flex xs12 sm3>
+                <v-text-field
+                label="Contact Number"
+                v-model="contact"
+                @input="$v.contact.$touch()"
+                @blur="$v.contact.$touch()"
+                :error-messages="validation('contact')"
+                outline
+                required
+                ></v-text-field>
+              </v-flex>
+            </v-layout>
+
           </v-container>
         </v-form>
 
         <v-layout justify-end row>
-            <v-btn color="red darken-1" flat dark>
+            <v-btn color="red darken-1" 
+            flat dark
+            @click="proceed"
+            >
               Proceed &nbsp;
               <v-icon small>fa fa-arrow-circle-right</v-icon>
             </v-btn>
@@ -71,28 +88,51 @@
 </template>
 
 <script>
+import { validationMixin } from 'vuelidate'
+import { required, minLength, between } from 'vuelidate/lib/validators'
+
 export default {
   name: 'DealerForm',
+  mixins: [validationMixin],
+  validations: {
+    dealership_name: { required },
+    requestor_name: { required },
+    position: { required },
+    email: { required },
+    contact: { required },
+  },
   data() {
     return {
-      dealers: []
+      dealership_name: '',
+      requestor_name: '',
+      position: '',
+      email: '',
+      contact: ''
     }
   },
-  mounted() {
-    this.fetchDealers()
-  },
   methods: {
-    fetchDealers () {
-      axios.get(`http://localhost/fleet_training_request/api/guest/dealers/get`)
-      .then(({data}) => {
-        data.forEach(element => {
-          element.dealer = element.dealer + ' | ' + element.branch
-        });
-        this.dealers = data
-      })
-      .catch((error) => {
-        console.log(error.response)
-      })
+    validation (field, name) {
+      const errors = []
+      if (!this.$v[field].$dirty) return errors
+      !this.$v[field].required && errors.push(`${name ? name : field} is required.`)
+      return errors
+    },
+    proceed () {
+      this.$v.contact.$touch()
+
+      if (this.$v.$anyError) {
+        return alert('you must complete the form')
+      }
+
+      const data = {
+        dealership_name: this.dealership_name,
+        requestor_name: this.requestor_name,
+        position: this.position,
+        email: this.email,
+        contact: this.contact
+      }
+      
+      this.$store.dispatch('request/addDealerData', data)
     }
   }
 }

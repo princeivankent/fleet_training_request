@@ -16,18 +16,27 @@ const request = {
       training_address: '',
       training_program_id: 0,
       unit_model_id: 0,
-
       selling_dealer: [],
       unit_models: [],
-      training_participants: []
+      training_participants: [],
+      dealer_info: {
+        dealership_name: '',
+        requestor_name: '',
+        position: '',
+        email: '',
+        contact: ''
+      }
     }
   },
   getters: {
-    getRequestor(state) {
+    getRequestor (state) {
       return state.requestorType
     },
-    getFormSteppers(state) {
+    getFormSteppers (state) {
       return state.form_steppers
+    },
+    requestFormState (state) {
+      return state.form
     }
   },
   mutations: {
@@ -54,7 +63,10 @@ const request = {
       ]
     },
     ADD_FORM_DATA (state, payload) {
-      Vue.set(state.form, payload.property, payload.value)
+      state.form = Object.assign({}, state.form, payload)
+    },
+    ADD_DEALER_DATA (state, payload) {
+      state.form.dealer_info = Object.assign({}, state.form.dealer_info, payload)
     }
   },
   actions: {
@@ -74,6 +86,12 @@ const request = {
     setCustomerFormState ({commit}) {
       commit('SET_CUSTOMER_STATE')
     },
+    addFormData ({commit}, payload) {
+      commit('ADD_FORM_DATA', payload)
+    },
+    addDealerData ({commit}, payload) {
+      commit('ADD_DEALER_DATA', payload)
+    }
   }
 }
 
