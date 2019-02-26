@@ -113,16 +113,14 @@ export default {
   methods: {
     validation (field, name) {
       const errors = []
-      if (!this.$v[field].$dirty) return errors
+      if (!this.$v[field].$dirty) 
+        return errors
+
       !this.$v[field].required && errors.push(`${name ? name : field} is required.`)
 
-      if (field === 'email') {
         !this.$v.email.email && errors.push('Invalid Email')
-      }
 
-      if (field === 'contact') {
         !this.$v.contact.integer && errors.push('Invalid Contact Number')
-      }
 
       return errors
     },

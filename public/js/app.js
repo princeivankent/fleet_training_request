@@ -2425,15 +2425,8 @@ __webpack_require__.r(__webpack_exports__);
       var errors = [];
       if (!this.$v[field].$dirty) return errors;
       !this.$v[field].required && errors.push("".concat(name ? name : field, " is required."));
-
-      if (field === 'email') {
-        !this.$v.email.email && errors.push('Invalid Email');
-      }
-
-      if (field === 'contact') {
-        !this.$v.contact.integer && errors.push('Invalid Contact Number');
-      }
-
+      !this.$v.email.email && errors.push('Invalid Email');
+      !this.$v.contact.integer && errors.push('Invalid Contact Number');
       return errors;
     },
     proceed: function proceed() {
