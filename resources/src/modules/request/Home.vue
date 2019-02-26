@@ -1,58 +1,35 @@
 <template>
   <div>
     <RequestorTypeDialog />
-
-    <v-stepper v-if="this.$store.state.request.requestorType" non-linear v-model="page">
+    <v-stepper 
+    v-if="this.$store.state.request.requestorType" 
+    v-model="page" 
+    non-linear
+    >
       <v-stepper-header>
         <v-stepper-step 
-        v-for="(step, index) in getFormSteppers" :key="index"
-        :editable="step1" :complete="page > step.step" :step="`${step.step}`" 
-        color="red" edit-icon="$vuetify.icons.complete">
-        {{ step.step_name }}
+        v-for="(step, index) in getFormSteppers" 
+        :key="index"
+        :editable="step1" 
+        :complete="page > step.step" 
+        :step="`${index+1}`" 
+        edit-icon="$vuetify.icons.complete"
+        color="red" 
+        >
+          {{ step.step_name }}
         </v-stepper-step>
-          <!-- <v-divider></v-divider> -->
       </v-stepper-header>
 
       <v-stepper-items>
-        <v-stepper-content step="1">
-          <DealerForm />
-          <v-layout justify-end row>
-            <v-btn
-            color="red darken-1"
-            dark
-            >
-            <v-icon small>fa fa-check</v-icon>&nbsp;
-            Continue
-            </v-btn>
-          </v-layout>
-        </v-stepper-content>
-      
-        <v-stepper-content step="2">
-          <h1>Omy</h1>
-          <v-layout justify-end row>
-            <v-btn
-            color="red darken-1"
-            dark
-            >
-            <v-icon small>fa fa-check</v-icon>&nbsp;
-            Continue
-            </v-btn>
-          </v-layout>
-      
-        </v-stepper-content>
-      
-        <v-stepper-content step="3">
-          <!-- @include('guest.programs_offering') -->
-        </v-stepper-content>
-
-        <v-stepper-content step="4">
-          <!-- @include('guest.isuzu_models') -->
-        </v-stepper-content>
-
-        <v-stepper-content step="5">
-          <!-- @include('guest.submit_form') -->
+        <v-stepper-content
+        v-for="(step, index) in getFormSteppers" 
+        :key="index" 
+        :step="step.step"
+        >
+          <component :is="step.component"></component>
         </v-stepper-content>
       </v-stepper-items>
+
     </v-stepper>
   </div>
 </template>
@@ -61,11 +38,22 @@
 import { mapGetters, mapState } from 'vuex'
 import RequestorTypeDialog from './dialogs/RequestorTypeDialog'
 import DealerForm from './components/DealerForm'
+import CustomerForm from './components/CustomerForm'
+import TrainingForm from './components/TrainingForm'
+import ProgramForm from './components/ProgramForm'
+import IsuzuModelForm from './components/IsuzuModelForm'
+import SubmitForm from './components/SubmitForm'
 
 export default {
   name: 'home',
   components: {
-    RequestorTypeDialog, DealerForm
+    RequestorTypeDialog, 
+    DealerForm, 
+    CustomerForm, 
+    TrainingForm, 
+    ProgramForm, 
+    IsuzuModelForm, 
+    SubmitForm
   },
   data() {
     return {
@@ -77,11 +65,11 @@ export default {
 
       // make all false except on step1
       step1: true,
-      step2: true,
-      step3: true,
-      step4: true,
-      step5: true,
-      step6: true,
+      step2: false,
+      step3: false,
+      step4: false,
+      step5: false,
+      step6: false,
       
       // Form
       form: {
@@ -114,8 +102,8 @@ export default {
   },
   computed: {
     ...mapGetters('request', [
-      'getFormSteppers'
-    ]),
+      'getFormSteppers', 'getRequestor'
+    ])
   }
 }
 </script>

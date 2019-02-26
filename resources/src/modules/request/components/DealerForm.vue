@@ -4,7 +4,7 @@
       <v-card>
         <v-card-title primary-title>
           <div>
-            <h3 class="headline mb-0">Part A. Requesting Isuzu Dealer</h3>
+            <h3 class="headline mb-0">Requesting Isuzu Dealer</h3>
           </div>
         </v-card-title>
 
@@ -59,10 +59,12 @@
           </v-container>
         </v-form>
 
-        <v-card-actions>
-          <v-btn flat color="orange">Share</v-btn>
-          <v-btn flat color="orange">Explore</v-btn>
-        </v-card-actions>
+        <v-layout justify-end row>
+            <v-btn color="red darken-1" flat dark>
+              Proceed &nbsp;
+              <v-icon small>fa fa-arrow-circle-right</v-icon>
+            </v-btn>
+        </v-layout>
       </v-card>
     </v-flex>
   </v-layout>

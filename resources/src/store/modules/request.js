@@ -36,21 +36,21 @@ const request = {
     },
     SET_DEALER_STATE (state) {
       state.form_steppers = [
-        {step: 1, step_name: 'Dealer'},
-        {step: 2, step_name: 'Customer'},
-        {step: 3, step_name: 'Training'},
-        {step: 4, step_name: 'Programs'},
-        {step: 5, step_name: 'Isuzu Models'},
-        {step: 6, step_name: 'Submit'}
+        {step: 1, step_name: 'Dealer', component: 'DealerForm'},
+        {step: 2, step_name: 'Customer', component: 'CustomerForm'},
+        {step: 3, step_name: 'Training', component: 'TrainingForm'},
+        {step: 4, step_name: 'Programs', component: 'ProgramForm'},
+        {step: 5, step_name: 'Isuzu Models', component: 'IsuzuModelForm'},
+        {step: 6, step_name: 'Submit', component: 'SubmitForm'}
       ]
     },
     SET_CUSTOMER_STATE (state) {
       state.form_steppers = [
-        {step: 1, step_name: 'Customer'},
-        {step: 2, step_name: 'Training'},
-        {step: 3, step_name: 'Programs'},
-        {step: 4, step_name: 'Isuzu Models'},
-        {step: 5, step_name: 'Submit'}
+        {step: 1, step_name: 'Customer', component: 'CustomerForm'},
+        {step: 2, step_name: 'Training', component: 'TrainingForm'},
+        {step: 3, step_name: 'Programs', component: 'ProgramForm'},
+        {step: 4, step_name: 'Isuzu Models', component: 'IsuzuModelForm'},
+        {step: 5, step_name: 'Submit', component: 'SubmitForm'}
       ]
     },
     ADD_FORM_DATA (state, payload) {
@@ -74,9 +74,6 @@ const request = {
     setCustomerFormState ({commit}) {
       commit('SET_CUSTOMER_STATE')
     },
-    addFormData ({commit}) {
-
-    }
   }
 }
 
