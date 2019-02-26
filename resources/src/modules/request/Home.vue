@@ -11,20 +11,11 @@
         {{ step.step_name }}
         </v-stepper-step>
           <!-- <v-divider></v-divider> -->
-        <!-- <v-stepper-step :editable="step2" :complete="page > 2" step="2" color="red" edit-icon="$vuetify.icons.complete">Customer</v-stepper-step>
-          <v-divider></v-divider>
-        <v-stepper-step :editable="step3" :complete="page > 3" step="3" color="red" edit-icon="$vuetify.icons.complete">Training</v-stepper-step>
-          <v-divider></v-divider>
-        <v-stepper-step :editable="step4" :complete="page > 4" step="4" color="red" edit-icon="$vuetify.icons.complete">Programs</v-stepper-step>
-          <v-divider></v-divider>
-        <v-stepper-step :editable="step5" :complete="page > 5" step="5" color="red" edit-icon="$vuetify.icons.complete">Isuzu Models</v-stepper-step>
-          <v-divider></v-divider>
-        <v-stepper-step :editable="step6" :complete="page > 6" step="6" color="red" edit-icon="$vuetify.icons.complete">Submit</v-stepper-step> -->
       </v-stepper-header>
 
       <v-stepper-items>
         <v-stepper-content step="1">
-          <!-- @include('guest.customer_information') -->
+          <DealerForm />
           <v-layout justify-end row>
             <v-btn
             color="red darken-1"
@@ -69,11 +60,12 @@
 <script>
 import { mapGetters, mapState } from 'vuex'
 import RequestorTypeDialog from './dialogs/RequestorTypeDialog'
+import DealerForm from './components/DealerForm'
 
 export default {
   name: 'home',
   components: {
-    RequestorTypeDialog
+    RequestorTypeDialog, DealerForm
   },
   data() {
     return {

@@ -57,14 +57,16 @@ export default {
     ...mapGetters('request', [
       'getRequestor'
     ]),
-
     hasNotPickedYet() {
       return this.getRequestor === '' ? 1 : 0 
     }
   },
+  created() {
+    this.changeRequestorType('dealer') //--> for dev
+  },
   methods: {
     changeRequestorType(requestor) {
-      this.$store.dispatch('request/requestorType', requestor);
+      this.$store.dispatch('request/requestorType', requestor)
     }
   }
 }
