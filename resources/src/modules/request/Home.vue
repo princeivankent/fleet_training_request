@@ -80,25 +80,6 @@ export default {
       step5: false,
       step6: false,
       
-      // Form
-      form: {
-        company_name: '',
-        office_address: '',
-        contact_person: '',
-        email: '',
-        contact_number: '',
-        position: '',
-        contact_number: '',
-        training_date: '',
-        training_venue: [],
-        training_address: '',
-        training_program_id: 0,
-        unit_model_id: 0,
-
-        selling_dealer: [],
-        unit_models: [],
-        training_participants: []
-      },
       unit_models: [],
       dealers: [],
       training_programs: [],

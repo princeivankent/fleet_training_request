@@ -72,7 +72,6 @@
 
           </v-container>
         </v-form>
-
         <v-layout justify-end row>
             <v-btn color="red darken-1" 
             flat dark
@@ -89,7 +88,8 @@
 
 <script>
 import { validationMixin } from 'vuelidate'
-import { required, minLength, between } from 'vuelidate/lib/validators'
+import { required, minLength, between, email, integer } from 'vuelidate/lib/validators'
+import { mapGetters, mapState } from 'vuex'
 
 export default {
   name: 'DealerForm',
@@ -98,8 +98,8 @@ export default {
     dealership_name: { required },
     requestor_name: { required },
     position: { required },
-    email: { required },
-    contact: { required },
+    email: { required, email },
+    contact: { required, integer },
   },
   data() {
     return {
@@ -115,10 +115,19 @@ export default {
       const errors = []
       if (!this.$v[field].$dirty) return errors
       !this.$v[field].required && errors.push(`${name ? name : field} is required.`)
+
+      if (field === 'email') {
+        !this.$v.email.email && errors.push('Invalid Email')
+      }
+
+      if (field === 'contact') {
+        !this.$v.contact.integer && errors.push('Invalid Contact Number')
+      }
+
       return errors
     },
     proceed () {
-      this.$v.contact.$touch()
+      this.$v.$touch()
 
       if (this.$v.$anyError) {
         return alert('you must complete the form')
@@ -131,7 +140,7 @@ export default {
         email: this.email,
         contact: this.contact
       }
-      
+
       this.$store.dispatch('request/addDealerData', data)
     }
   }

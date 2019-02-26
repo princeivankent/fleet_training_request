@@ -6,6 +6,20 @@
           <v-container fluid>
             <v-layout justify-center row wrap>
               <v-flex xs6 sm6>
+                <v-text-field
+                label="Company Name"
+                v-model="company_name"
+                @input="$v.company_name.$touch()"
+                @blur="$v.company_name.$touch()"
+                :error-messages="validation('company_name', 'Company Name')"
+                outline
+                required
+                ></v-text-field>
+              </v-flex>
+            </v-layout>
+
+            <v-layout justify-center row wrap>
+              <v-flex xs6 sm6>
                 <!-- <v-text-field
                 label="Isuzu Dealership Name"
                 v-model="selling_dealer"
@@ -87,42 +101,45 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required, minLength, between } from 'vuelidate/lib/validators'
-import { mapGetters } from 'vuex'
 
 export default {
   name: 'CustomerForm',
   mixins: [validationMixin],
   validations: {
-    selling_dealer: {
-      required,
-      minLength: minLength(4)
-    },
-    age: {
-      between: between(20, 30)
-    }
+    company_name: { required },
+    office_address: { required },
+    contact_person: { required },
+    email: { required },
+    position: { required },
+    selling_dealer: { required },
+    unit_models: { required }
   },
   data() {
     return {
       dealers: [],
-      selling_dealer: []
+      selling_dealer: [],
+      unit_models: [],
+      
+      company_name: '',
+      office_address: '',
+      contact_person: '',
+      email: '',
+      contact_number: '',
+      position: '',
+      selling_dealer: [],
+      unit_model_id: 0,
     }
-  },
-  computed: {
-    ...mapGetters('request', [
-      'requestFormState'
-    ]),
-
-    nameErrors () {
-      const errors = []
-      if (!this.$v.selling_dealer.$dirty) return errors
-      !this.$v.selling_dealer.required && errors.push('Name is required.')
-      return errors
-    },
   },
   mounted() {
     this.fetchDealers()
   },
   methods: {
+    validation (field, name) {
+      const errors = []
+      if (!this.$v[field].$dirty) return errors
+      !this.$v[field].required && errors.push(`${name ? name : field} is required.`)
+      return errors
+    },
     fetchDealers () {
       axios.get(`http://localhost/fleet_training_request/api/guest/dealers/get`)
       .then(({data}) => {
@@ -136,7 +153,7 @@ export default {
       })
     },
     updateSelection () {
-      this.$store.dispatch('request/addFormData', {selling_dealer: this.selling_dealer})
+      
     },
     proceed () {
 

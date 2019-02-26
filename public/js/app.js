@@ -2068,8 +2068,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     SubmitForm: _components_SubmitForm__WEBPACK_IMPORTED_MODULE_7__["default"]
   },
   data: function data() {
-    var _form;
-
     return {
       page: 1,
       dialog: false,
@@ -2083,15 +2081,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       step4: false,
       step5: false,
       step6: false,
-      // Form
-      form: (_form = {
-        company_name: '',
-        office_address: '',
-        contact_person: '',
-        email: '',
-        contact_number: '',
-        position: ''
-      }, _defineProperty(_form, "contact_number", ''), _defineProperty(_form, "training_date", ''), _defineProperty(_form, "training_venue", []), _defineProperty(_form, "training_address", ''), _defineProperty(_form, "training_program_id", 0), _defineProperty(_form, "unit_model_id", 0), _defineProperty(_form, "selling_dealer", []), _defineProperty(_form, "unit_models", []), _defineProperty(_form, "training_participants", []), _form),
       unit_models: [],
       dealers: [],
       training_programs: [],
@@ -2120,9 +2109,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuelidate__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuelidate__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
-
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 //
@@ -2211,44 +2197,78 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'CustomerForm',
   mixins: [vuelidate__WEBPACK_IMPORTED_MODULE_0__["validationMixin"]],
   validations: {
-    selling_dealer: {
-      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
-      minLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["minLength"])(4)
+    company_name: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"]
     },
-    age: {
-      between: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["between"])(20, 30)
+    office_address: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"]
+    },
+    contact_person: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"]
+    },
+    email: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"]
+    },
+    position: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"]
+    },
+    selling_dealer: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"]
+    },
+    unit_models: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"]
     }
   },
   data: function data() {
-    return {
+    var _ref;
+
+    return _ref = {
       dealers: [],
-      selling_dealer: []
-    };
+      selling_dealer: [],
+      unit_models: [],
+      company_name: '',
+      office_address: '',
+      contact_person: '',
+      email: '',
+      contact_number: '',
+      position: ''
+    }, _defineProperty(_ref, "selling_dealer", []), _defineProperty(_ref, "unit_model_id", 0), _ref;
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])('request', ['requestFormState']), {
-    nameErrors: function nameErrors() {
-      var errors = [];
-      if (!this.$v.selling_dealer.$dirty) return errors;
-      !this.$v.selling_dealer.required && errors.push('Name is required.');
-      return errors;
-    }
-  }),
   mounted: function mounted() {
     this.fetchDealers();
   },
   methods: {
+    validation: function validation(field, name) {
+      var errors = [];
+      if (!this.$v[field].$dirty) return errors;
+      !this.$v[field].required && errors.push("".concat(name ? name : field, " is required."));
+      return errors;
+    },
     fetchDealers: function fetchDealers() {
       var _this = this;
 
-      axios.get("http://localhost/fleet_training_request/api/guest/dealers/get").then(function (_ref) {
-        var data = _ref.data;
+      axios.get("http://localhost/fleet_training_request/api/guest/dealers/get").then(function (_ref2) {
+        var data = _ref2.data;
         data.forEach(function (element) {
           element.dealer = element.dealer + ' | ' + element.branch;
         });
@@ -2257,11 +2277,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         console.log(error.response);
       });
     },
-    updateSelection: function updateSelection() {
-      this.$store.dispatch('request/addFormData', {
-        selling_dealer: this.selling_dealer
-      });
-    },
+    updateSelection: function updateSelection() {},
     proceed: function proceed() {}
   }
 });
@@ -2281,6 +2297,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuelidate__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuelidate__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 //
 //
 //
@@ -2369,7 +2386,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2386,10 +2403,12 @@ __webpack_require__.r(__webpack_exports__);
       required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"]
     },
     email: {
-      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"]
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
+      email: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["email"]
     },
     contact: {
-      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"]
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
+      integer: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["integer"]
     }
   },
   data: function data() {
@@ -2406,10 +2425,19 @@ __webpack_require__.r(__webpack_exports__);
       var errors = [];
       if (!this.$v[field].$dirty) return errors;
       !this.$v[field].required && errors.push("".concat(name ? name : field, " is required."));
+
+      if (field === 'email') {
+        !this.$v.email.email && errors.push('Invalid Email');
+      }
+
+      if (field === 'contact') {
+        !this.$v.contact.integer && errors.push('Invalid Contact Number');
+      }
+
       return errors;
     },
     proceed: function proceed() {
-      this.$v.contact.$touch();
+      this.$v.$touch();
 
       if (this.$v.$anyError) {
         return alert('you must complete the form');
@@ -4009,6 +4037,47 @@ var render = function() {
                     "v-container",
                     { attrs: { fluid: "" } },
                     [
+                      _c(
+                        "v-layout",
+                        { attrs: { "justify-center": "", row: "", wrap: "" } },
+                        [
+                          _c(
+                            "v-flex",
+                            { attrs: { xs6: "", sm6: "" } },
+                            [
+                              _c("v-text-field", {
+                                attrs: {
+                                  label: "Company Name",
+                                  "error-messages": _vm.validation(
+                                    "company_name",
+                                    "Company Name"
+                                  ),
+                                  outline: "",
+                                  required: ""
+                                },
+                                on: {
+                                  input: function($event) {
+                                    return _vm.$v.company_name.$touch()
+                                  },
+                                  blur: function($event) {
+                                    return _vm.$v.company_name.$touch()
+                                  }
+                                },
+                                model: {
+                                  value: _vm.company_name,
+                                  callback: function($$v) {
+                                    _vm.company_name = $$v
+                                  },
+                                  expression: "company_name"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
                       _c(
                         "v-layout",
                         { attrs: { "justify-center": "", row: "", wrap: "" } },
@@ -46712,13 +46781,16 @@ var request = {
     requestorType: '',
     form_steppers: [],
     form: (_form = {
+      // Customer Info
       company_name: '',
       office_address: '',
       contact_person: '',
       email: '',
       contact_number: '',
-      position: ''
-    }, _defineProperty(_form, "contact_number", ''), _defineProperty(_form, "training_date", ''), _defineProperty(_form, "training_venue", []), _defineProperty(_form, "training_address", ''), _defineProperty(_form, "training_program_id", 0), _defineProperty(_form, "unit_model_id", 0), _defineProperty(_form, "selling_dealer", []), _defineProperty(_form, "unit_models", []), _defineProperty(_form, "training_participants", []), _defineProperty(_form, "dealer_info", {
+      position: '',
+      selling_dealer: [],
+      unit_model_id: 0
+    }, _defineProperty(_form, "selling_dealer", []), _defineProperty(_form, "training_date", ''), _defineProperty(_form, "training_venue", []), _defineProperty(_form, "training_address", ''), _defineProperty(_form, "training_program_id", 0), _defineProperty(_form, "training_participants", []), _defineProperty(_form, "unit_models", []), _defineProperty(_form, "dealer_info", {
       dealership_name: '',
       requestor_name: '',
       position: '',

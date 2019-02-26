@@ -4,21 +4,24 @@ const request = {
     requestorType: '',
     form_steppers: [],
     form: {
+      // Customer Info
       company_name: '',
       office_address: '',
       contact_person: '',
       email: '',
       contact_number: '',
       position: '',
-      contact_number: '',
+      selling_dealer: [],
+      unit_model_id: 0,
+
+      selling_dealer: [],
       training_date: '',
       training_venue: [],
       training_address: '',
       training_program_id: 0,
-      unit_model_id: 0,
-      selling_dealer: [],
-      unit_models: [],
       training_participants: [],
+      unit_models: [],
+
       dealer_info: {
         dealership_name: '',
         requestor_name: '',
@@ -73,7 +76,7 @@ const request = {
     requestorType ({commit}, requestor) {
       if (requestor == 'customer') {
         commit('SET_CUSTOMER_STATE')
-      } 
+      }
       else {
         commit('SET_DEALER_STATE')
       }
