@@ -29,6 +29,7 @@
 				"bootstrap": "^4.3.1",
 				"css-loader": "^2.1.0",
 				"material-design-icons-iconfont": "^3.0.3",
+				"moment": "^2.24.0",
 				"npm": "^6.8.0",
 				"sweetalert": "^2.1.2",
 				"sweetalert2": "^8.2.4",
