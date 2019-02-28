@@ -16,7 +16,7 @@ const request = {
 
       selling_dealer: [],
       training_date: '',
-      training_venue: [],
+      training_venue: '',
       training_address: '',
       training_program_id: 0,
       training_participants: [],

@@ -182,7 +182,7 @@ export default {
       })
     },
     fetchUnitModels () {
-      axios.get(`${this.baseURL}/api/guest/unit_models/get`)
+      axios.get(`${this.baseURL}api/guest/unit_models/get`)
       .then(({data}) => {
         this.models = data;
       })

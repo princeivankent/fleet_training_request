@@ -1,4 +1,5 @@
 <?php
 
-Route::get('guest/dealers/get', 'DealerController@index');
-Route::get('guest/unit_models/get', 'UnitModelController@index');
+Route::get('guest/dealers/get', 'Api\DealerController@index');
+Route::get('guest/unit_models/get', 'Api\UnitModelController@index');
+Route::get('guest/schedules/get', 'Api\ScheduleController@index');

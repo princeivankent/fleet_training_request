@@ -11,7 +11,7 @@ import {store} from './store/index';
 import App from './App'
 
 Vue.use(Vuetify)
-Vue.use(Vuex);
+Vue.use(Vuex)
 
 Vue.mixin({
   data() {
