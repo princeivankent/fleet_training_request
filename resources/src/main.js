@@ -13,6 +13,14 @@ import App from './App'
 Vue.use(Vuetify)
 Vue.use(Vuex);
 
+Vue.mixin({
+  data() {
+    return {
+      baseURL: process.env.MIX_DEV_URL
+    }
+  },
+})
+
 new Vue({
   render: h => h(App),
   store,
