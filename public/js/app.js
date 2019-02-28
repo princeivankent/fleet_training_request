@@ -2069,7 +2069,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
-      page: 1,
+      page: 2,
       dialog: false,
       photo_gallery: false,
       drawer: true,
@@ -2109,6 +2109,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuelidate__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuelidate__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 //
@@ -2211,6 +2214,43 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2224,6 +2264,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"]
     },
     contact_person: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"]
+    },
+    contact_number: {
       required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"]
     },
     email: {
@@ -2240,41 +2283,44 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   data: function data() {
-    var _ref;
-
-    return _ref = {
+    return {
       dealers: [],
-      selling_dealer: [],
-      unit_models: [],
-      company_name: '',
-      office_address: '',
-      contact_person: '',
-      email: '',
-      contact_number: '',
-      position: ''
-    }, _defineProperty(_ref, "selling_dealer", []), _defineProperty(_ref, "unit_model_id", 0), _ref;
+      models: []
+    };
   },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])('request', ['form'])),
   mounted: function mounted() {
     this.fetchDealers();
+    this.fetchUnitModels();
   },
   methods: {
-    validation: function validation(field, name) {
-      var errors = [];
-      if (!this.$v[field].$dirty) return errors;
-      !this.$v[field].required && errors.push("".concat(name ? name : field, " is required."));
-      return errors;
+    updateForm: function updateForm(field, value) {
+      this.$store.commit('request/UPDATE_FORM', {
+        key: field,
+        value: value
+      });
     },
     fetchDealers: function fetchDealers() {
       var _this = this;
 
-      axios.get("http://localhost/fleet_training_request/api/guest/dealers/get").then(function (_ref2) {
-        var data = _ref2.data;
+      axios.get("".concat(this.baseURL, "api/guest/dealers/get")).then(function (_ref) {
+        var data = _ref.data;
         data.forEach(function (element) {
           element.dealer = element.dealer + ' | ' + element.branch;
         });
         _this.dealers = data;
       }).catch(function (error) {
         console.log(error.response);
+      });
+    },
+    fetchUnitModels: function fetchUnitModels() {
+      var _this2 = this;
+
+      axios.get("".concat(this.baseURL, "/api/guest/unit_models/get")).then(function (_ref2) {
+        var data = _ref2.data;
+        _this2.models = data;
+      }).catch(function (error) {
+        console.log(error);
       });
     },
     updateSelection: function updateSelection() {},
@@ -2381,11 +2427,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 
@@ -2408,7 +2449,8 @@ __webpack_require__.r(__webpack_exports__);
     },
     contact: {
       required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
-      integer: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["integer"]
+      integer: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["integer"],
+      minLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["minLength"])(11)
     }
   },
   data: function data() {
@@ -2421,19 +2463,11 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    validation: function validation(field, name) {
-      var errors = [];
-      if (!this.$v[field].$dirty) return errors;
-      !this.$v[field].required && errors.push("".concat(name ? name : field, " is required."));
-      !this.$v.email.email && errors.push('Invalid Email');
-      !this.$v.contact.integer && errors.push('Invalid Contact Number');
-      return errors;
-    },
     proceed: function proceed() {
       this.$v.$touch();
 
       if (this.$v.$anyError) {
-        return alert('you must complete the form');
+        return alert('Please check the form');
       }
 
       var data = {
@@ -4036,32 +4070,25 @@ var render = function() {
                         [
                           _c(
                             "v-flex",
-                            { attrs: { xs6: "", sm6: "" } },
+                            { attrs: { xs6: "", sm8: "" } },
                             [
                               _c("v-text-field", {
                                 attrs: {
                                   label: "Company Name",
-                                  "error-messages": _vm.validation(
-                                    "company_name",
-                                    "Company Name"
-                                  ),
+                                  value: _vm.form.company_name,
                                   outline: "",
                                   required: ""
                                 },
                                 on: {
                                   input: function($event) {
-                                    return _vm.$v.company_name.$touch()
+                                    return _vm.updateForm(
+                                      "company_name",
+                                      $event
+                                    )
                                   },
                                   blur: function($event) {
                                     return _vm.$v.company_name.$touch()
                                   }
-                                },
-                                model: {
-                                  value: _vm.company_name,
-                                  callback: function($$v) {
-                                    _vm.company_name = $$v
-                                  },
-                                  expression: "company_name"
                                 }
                               })
                             ],
@@ -4077,14 +4104,165 @@ var render = function() {
                         [
                           _c(
                             "v-flex",
-                            { attrs: { xs6: "", sm6: "" } },
+                            { attrs: { xs6: "", sm8: "" } },
+                            [
+                              _c("v-text-field", {
+                                attrs: {
+                                  label: "Office Address",
+                                  value: _vm.form.office_address,
+                                  outline: "",
+                                  required: ""
+                                },
+                                on: {
+                                  input: function($event) {
+                                    return _vm.updateForm(
+                                      "office_address",
+                                      $event
+                                    )
+                                  },
+                                  blur: function($event) {
+                                    return _vm.$v.office_address.$touch()
+                                  }
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-layout",
+                        { attrs: { "justify-center": "", row: "", wrap: "" } },
+                        [
+                          _c(
+                            "v-flex",
+                            { attrs: { xs6: "", sm4: "" } },
+                            [
+                              _c("v-text-field", {
+                                attrs: {
+                                  label: "Contact Person",
+                                  value: _vm.form.contact_person,
+                                  outline: "",
+                                  required: ""
+                                },
+                                on: {
+                                  input: function($event) {
+                                    return _vm.updateForm(
+                                      "contact_person",
+                                      $event
+                                    )
+                                  },
+                                  blur: function($event) {
+                                    return _vm.$v.contact_person.$touch()
+                                  }
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-flex",
+                            { attrs: { xs6: "", sm4: "" } },
+                            [
+                              _c("v-text-field", {
+                                attrs: {
+                                  label: "Position",
+                                  value: _vm.form.position,
+                                  outline: "",
+                                  required: ""
+                                },
+                                on: {
+                                  input: function($event) {
+                                    return _vm.updateForm("position", $event)
+                                  },
+                                  blur: function($event) {
+                                    return _vm.$v.position.$touch()
+                                  }
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-layout",
+                        { attrs: { "justify-center": "", row: "", wrap: "" } },
+                        [
+                          _c(
+                            "v-flex",
+                            { attrs: { xs6: "", sm4: "" } },
+                            [
+                              _c("v-text-field", {
+                                attrs: {
+                                  label: "Email Address",
+                                  value: _vm.form.email,
+                                  outline: "",
+                                  required: ""
+                                },
+                                on: {
+                                  input: function($event) {
+                                    return _vm.updateForm("email", $event)
+                                  },
+                                  blur: function($event) {
+                                    return _vm.$v.email.$touch()
+                                  }
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-flex",
+                            { attrs: { xs6: "", sm4: "" } },
+                            [
+                              _c("v-text-field", {
+                                attrs: {
+                                  label: "Contact Number",
+                                  value: _vm.form.contact_number,
+                                  outline: "",
+                                  required: ""
+                                },
+                                on: {
+                                  input: function($event) {
+                                    return _vm.updateForm(
+                                      "contact_number",
+                                      $event
+                                    )
+                                  },
+                                  blur: function($event) {
+                                    return _vm.$v.contact_number.$touch()
+                                  }
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-layout",
+                        { attrs: { "justify-center": "", row: "", wrap: "" } },
+                        [
+                          _c(
+                            "v-flex",
+                            { attrs: { xs6: "", sm4: "" } },
                             [
                               _c("v-select", {
                                 attrs: {
+                                  label: "Isuzu Dealership Name",
+                                  value: _vm.form.selling_dealer,
                                   items: _vm.dealers,
                                   "item-text": "dealer",
                                   "item-value": "dealer_id",
-                                  label: "Isuzu Dealership Name",
                                   "deletable-chips": "",
                                   chips: "",
                                   color: "red",
@@ -4093,75 +4271,45 @@ var render = function() {
                                   outline: "",
                                   required: ""
                                 },
-                                on: { blur: _vm.updateSelection },
-                                model: {
-                                  value: _vm.selling_dealer,
-                                  callback: function($$v) {
-                                    _vm.selling_dealer = $$v
+                                on: {
+                                  change: function($event) {
+                                    return _vm.updateForm(
+                                      "selling_dealer",
+                                      $event
+                                    )
                                   },
-                                  expression: "selling_dealer"
+                                  blur: _vm.updateSelection
                                 }
                               })
                             ],
                             1
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-layout",
-                        { attrs: { "justify-center": "", row: "", wrap: "" } },
-                        [
+                          ),
+                          _vm._v(" "),
                           _c(
                             "v-flex",
-                            { attrs: { xs6: "", sm3: "" } },
+                            { attrs: { xs6: "", sm4: "" } },
                             [
-                              _c("v-text-field", {
+                              _c("v-select", {
                                 attrs: {
-                                  label: "Name of requester",
-                                  outline: ""
+                                  label: "Isuzu Specific Model",
+                                  value: _vm.form.unit_models,
+                                  items: _vm.models,
+                                  "item-text": "model_name",
+                                  "item-value": "model_name",
+                                  "deletable-chips": "",
+                                  chips: "",
+                                  color: "red",
+                                  "search-input": "",
+                                  multiple: "",
+                                  outline: "",
+                                  required: ""
+                                },
+                                on: {
+                                  change: function($event) {
+                                    return _vm.updateForm("unit_models", $event)
+                                  },
+                                  blur: _vm.updateSelection
                                 }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-flex",
-                            { attrs: { xs12: "", sm3: "" } },
-                            [
-                              _c("v-text-field", {
-                                attrs: { label: "Position", outline: "" }
-                              })
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-layout",
-                        { attrs: { "justify-center": "", row: "", wrap: "" } },
-                        [
-                          _c(
-                            "v-flex",
-                            { attrs: { xs6: "", sm3: "" } },
-                            [
-                              _c("v-text-field", {
-                                attrs: { label: "Email Address", outline: "" }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-flex",
-                            { attrs: { xs12: "", sm3: "" } },
-                            [
-                              _c("v-text-field", {
-                                attrs: { label: "Contact Number", outline: "" }
                               })
                             ],
                             1
@@ -4187,7 +4335,7 @@ var render = function() {
                       on: { click: _vm.proceed }
                     },
                     [
-                      _vm._v("\n            Proceed  \n            "),
+                      _vm._v("\n              Proceed  \n              "),
                       _c("v-icon", { attrs: { small: "" } }, [
                         _vm._v("fa fa-arrow-circle-right")
                       ])
@@ -4256,10 +4404,6 @@ var render = function() {
                               _c("v-text-field", {
                                 attrs: {
                                   label: "Isuzu Dealership Name",
-                                  "error-messages": _vm.validation(
-                                    "dealership_name",
-                                    "Dealership Name"
-                                  ),
                                   outline: "",
                                   required: ""
                                 },
@@ -4297,10 +4441,6 @@ var render = function() {
                               _c("v-text-field", {
                                 attrs: {
                                   label: "Name of requester",
-                                  "error-messages": _vm.validation(
-                                    "requestor_name",
-                                    "Requestor Name"
-                                  ),
                                   outline: "",
                                   required: ""
                                 },
@@ -4331,7 +4471,6 @@ var render = function() {
                               _c("v-text-field", {
                                 attrs: {
                                   label: "Position",
-                                  "error-messages": _vm.validation("position"),
                                   outline: "",
                                   required: ""
                                 },
@@ -4369,7 +4508,6 @@ var render = function() {
                               _c("v-text-field", {
                                 attrs: {
                                   label: "Email Address",
-                                  "error-messages": _vm.validation("email"),
                                   outline: "",
                                   required: ""
                                 },
@@ -4400,7 +4538,6 @@ var render = function() {
                               _c("v-text-field", {
                                 attrs: {
                                   label: "Contact Number",
-                                  "error-messages": _vm.validation("contact"),
                                   outline: "",
                                   required: ""
                                 },
@@ -19030,7 +19167,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-var withParams = Object({"MIX_APP_URL":"http://localhost/fleet_training_request","NODE_ENV":"development"}).BUILD === 'web' ? __webpack_require__(/*! ./withParamsBrowser */ "./node_modules/vuelidate/lib/withParamsBrowser.js").withParams : __webpack_require__(/*! ./params */ "./node_modules/vuelidate/lib/params.js").withParams;
+var withParams = Object({"MIX_APP_URL":"http://localhost/fleet_training_request","MIX_DEV_URL":"http://localhost/fleet_training_request/","MIX_PROD_URL":"http://portal.isuzuphil.com/fleet_training_request/","NODE_ENV":"development"}).BUILD === 'web' ? __webpack_require__(/*! ./withParamsBrowser */ "./node_modules/vuelidate/lib/withParamsBrowser.js").withParams : __webpack_require__(/*! ./params */ "./node_modules/vuelidate/lib/params.js").withParams;
 var _default = withParams;
 exports.default = _default;
 
@@ -46213,6 +46350,13 @@ __webpack_require__(/*! ../assets/js/bootstrap */ "./resources/assets/js/bootstr
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuetify__WEBPACK_IMPORTED_MODULE_2___default.a);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.mixin({
+  data: function data() {
+    return {
+      baseURL: "http://localhost/fleet_training_request/"
+    };
+  }
+});
 new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   render: function render(h) {
     return h(_App__WEBPACK_IMPORTED_MODULE_7__["default"]);
@@ -46803,6 +46947,10 @@ var request = {
     }
   },
   mutations: {
+    //--> Dynamic Data Bindings from vue component
+    UPDATE_FORM: function UPDATE_FORM(state, payload) {
+      state.form[payload.key] = payload.value;
+    },
     SET_REQUESTOR: function SET_REQUESTOR(state, requestor) {
       state.requestorType = requestor;
     },

@@ -66,7 +66,7 @@ export default {
   },
   data() {
     return {
-      page: 1,
+      page: 2,
       dialog: false,
       photo_gallery: false,
       drawer: true,

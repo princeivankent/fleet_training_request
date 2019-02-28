@@ -11,7 +11,6 @@
                 v-model="dealership_name"
                 @input="$v.dealership_name.$touch()"
                 @blur="$v.dealership_name.$touch()"
-                :error-messages="validation('dealership_name', 'Dealership Name')"
                 outline
                 required
                 ></v-text-field>
@@ -25,7 +24,6 @@
                 v-model="requestor_name"
                 @input="$v.requestor_name.$touch()"
                 @blur="$v.requestor_name.$touch()"
-                :error-messages="validation('requestor_name', 'Requestor Name')"
                 outline
                 required
                 ></v-text-field>
@@ -37,7 +35,6 @@
                 v-model="position"
                 @input="$v.position.$touch()"
                 @blur="$v.position.$touch()"
-                :error-messages="validation('position')"
                 outline
                 required
                 ></v-text-field>
@@ -51,7 +48,6 @@
                 v-model="email"
                 @input="$v.email.$touch()"
                 @blur="$v.email.$touch()"
-                :error-messages="validation('email')"
                 outline
                 required
                 ></v-text-field>
@@ -63,7 +59,6 @@
                 v-model="contact"
                 @input="$v.contact.$touch()"
                 @blur="$v.contact.$touch()"
-                :error-messages="validation('contact')"
                 outline
                 required
                 ></v-text-field>
@@ -99,7 +94,7 @@ export default {
     requestor_name: { required },
     position: { required },
     email: { required, email },
-    contact: { required, integer },
+    contact: { required, integer, minLength: minLength(11) },
   },
   data() {
     return {
@@ -111,24 +106,11 @@ export default {
     }
   },
   methods: {
-    validation (field, name) {
-      const errors = []
-      if (!this.$v[field].$dirty) 
-        return errors
-
-      !this.$v[field].required && errors.push(`${name ? name : field} is required.`)
-
-        !this.$v.email.email && errors.push('Invalid Email')
-
-        !this.$v.contact.integer && errors.push('Invalid Contact Number')
-
-      return errors
-    },
     proceed () {
       this.$v.$touch()
 
       if (this.$v.$anyError) {
-        return alert('you must complete the form')
+        return alert('Please check the form')
       }
 
       const data = {
