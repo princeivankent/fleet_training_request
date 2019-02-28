@@ -32,17 +32,15 @@ const request = {
     }
   },
   getters: {
-    getRequestor (state) {
-      return state.requestorType
-    },
-    getFormSteppers (state) {
-      return state.form_steppers
-    },
-    requestFormState (state) {
-      return state.form
-    }
+    getRequestor: state => state.requestorType,
+    getFormSteppers: state => state.form_steppers,
+    requestFormState: state => state.form
   },
   mutations: {
+    //--> Dynamic Data Bindings from vue component
+    UPDATE_FORM (state, payload) {
+      state.form[payload.key] = payload.value
+    },
     SET_REQUESTOR (state, requestor) {
       state.requestorType = requestor
     },
