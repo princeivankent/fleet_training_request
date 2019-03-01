@@ -9,7 +9,7 @@
                 <v-dialog
                 ref="dialog"
                 v-model="modal"
-                :return-value.sync="date"
+                :return-value.sync="form.training_date"
                 persistent
                 lazy
                 full-width
@@ -26,7 +26,8 @@
                   ></v-text-field>
 
                   <v-date-picker
-                  v-model="date"
+                  :value="form.training_date"
+                  @change="updateForm('training_date', $event)"
                   :allowed-dates="allowedDates"
                   :reactive="reactive"
                   width="100%"
@@ -35,7 +36,7 @@
                   >
                     <v-spacer></v-spacer>
                     <v-btn flat color="green" @click="modal = false">Cancel</v-btn>
-                    <v-btn flat color="green" @click="$refs.dialog.save(date)">OK</v-btn>
+                    <v-btn flat color="green" @click="$refs.dialog.save(form.training_date)">OK</v-btn>
                   </v-date-picker>
                 </v-dialog>
               </v-flex>
@@ -104,7 +105,6 @@ export default {
   data() {
     return {
       // date: new Date().toISOString().substr(0, 10),
-      date: '',
       modal: false,
       reactive: true,
       training_venues: ['IPC Customer', 'IPC'],
@@ -114,7 +114,7 @@ export default {
   computed: {
     ...mapState('request', ['form']),
     dateFormatted () {
-      return this.date ? moment(this.date).format('dddd, MMMM Do YYYY') : ''
+      return this.form.training_date ? moment(this.form.training_date).format('dddd, MMMM Do YYYY') : ''
     },
   },
   mounted () {

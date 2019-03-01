@@ -41,6 +41,13 @@ const request = {
     UPDATE_FORM (state, payload) {
       state.form[payload.key] = payload.value
     },
+    PUSH_FORM (state, payload) {
+      state.form[payload.key].push(payload.value)
+    },
+    SPLICE_FORM (state, payload) {
+      state.form[payload.key].splice(payload.value,1)
+    },
+    //--> end
     SET_REQUESTOR (state, requestor) {
       state.requestorType = requestor
     },

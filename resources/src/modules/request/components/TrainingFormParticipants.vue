@@ -2,24 +2,22 @@
   <div>
     <v-card>
       <v-list>
-        <template v-for="(item, index) in items">
-          <v-divider
-          v-if="index != 0"
-          :key="index"
-          ></v-divider>
-          <div :key="item.title">
-            <div v-if="index+1 == items.length">
+        <template>
+          <div>
+            <div>
               <v-list-tile>
                 <v-list-tile-action>
-                  <v-btn color="success" fab small flat dark>
-                    <v-icon>check</v-icon>
+                  <v-btn color="success" fab small flat dark @click="addParticipant">
+                    <v-icon medium>add_circle</v-icon>
                   </v-btn>
                 </v-list-tile-action>
                 <v-list-tile-content>
                     <v-layout row wrap>
                       <v-flex xs12 md7>
                         <v-select 
-                        label="Participants"
+                        label="Choose participants"
+                        placeholder="--"
+                        v-model="participant.participant"
                         :items="default_participants"
                         ></v-select>
                       </v-flex>
@@ -27,6 +25,7 @@
                       <v-flex xs12 md4>
                         <v-text-field
                         label="headcount"
+                        v-model.number="participant.quantity"
                         required
                         ></v-text-field>
                       </v-flex>
@@ -34,16 +33,26 @@
                 </v-list-tile-content>
               </v-list-tile>
             </div>
-            <div v-else>
+          </div>
+        </template>
+        <template v-for="(item, index) in form.training_participants">
+          <v-divider
+          :key="index"
+          ></v-divider>
+          <div :key="item.participant">
+            <div>
               <v-list-tile>
                 <v-list-tile-action>
-                  <v-btn color="red" fab small flat dark>
-                    <v-icon>close</v-icon>
+                  <v-btn color="red" fab small flat dark @click="removeParticipant(index)">
+                    <v-icon medium>cancel</v-icon>
                   </v-btn>
                 </v-list-tile-action>
                 <v-list-tile-content>
                   <v-list-tile-sub-title>
-                    <label>Added Item</label>
+                    <v-chip color="green" text-color="white">
+                      <v-avatar class="green darken-4">{{ item.quantity }}</v-avatar>
+                      {{ item.participant }}
+                    </v-chip>
                   </v-list-tile-sub-title>
                 </v-list-tile-content>
               </v-list-tile>
@@ -52,6 +61,41 @@
         </template>
       </v-list>
     </v-card>
+
+    <v-dialog v-model="manual_participants" max-width="290" persistent>
+      <v-card>
+          <v-card-title
+          class="headline"
+          primary-title
+          >
+            Enter desired participants
+          </v-card-title>
+          <v-card-text>
+              <div class="form-group">
+                  <v-text-field
+                  label="Participant"
+                  v-model="participant.participant"
+                  outline
+                  required
+                  ></v-text-field>
+              </div>
+              <div class="form-group">
+                  <v-text-field
+                  label="Quantity"
+                  type="number"
+                  v-model.number="participant.quantity"
+                  outline
+                  required
+                  ></v-text-field>
+              </div>
+          </v-card-text>
+          <v-card-actions style="margin-top: -18px;">
+              <v-spacer></v-spacer>
+              <v-btn color="red darken-1" flat @click="manual_participants = false">Cancel</v-btn>
+              <v-btn color="green darken-1" flat @click="addParticipant">Save</v-btn>
+          </v-card-actions>
+      </v-card>
+  </v-dialog>
   </div>
 </template>
 
@@ -62,30 +106,55 @@ export default {
   data() {
     return {
       default_participants: ['Driver', 'Mechanic', 'Fleet Head', 'Others'],
-      items: [
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-          title: 'Brunch this weekend?',
-          subtitle: "<span class='text--primary'>Ali Connors</span> &mdash; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?"
-        },
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
-          title: 'Summer BBQ <span class="grey--text text--lighten-1">4</span>',
-          subtitle: "<span class='text--primary'>to Alex, Scott, Jennifer</span> &mdash; Wish I could come, but I'm out of town this weekend."
-        },
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
-          title: 'Oui oui',
-          subtitle: "<span class='text--primary'>Sandra Adams</span> &mdash; Do you have Paris recommendations? Have you ever been?"
+      participant: {
+        participant: '',
+        quantity: 0
+      },
+      manual_participants: false
+    }
+  },
+  watch: {
+    participant: {
+      handler (v) {
+        if (this.participant.participant == 'Others') {
+          this.resetParticipant()
+          this.manual_participants = true
         }
-      ]
+      },
+      deep: true
     }
   },
   computed: {
-    ...mapState('request', ['form']),
+    ...mapState('request', ['form'])
   },
   methods: {
-    
+    updateForm (field, value) {
+      this.$store.commit('request/UPDATE_FORM', {key:field,value:value})
+    },
+    addParticipant () {
+      let error = false
+      this.form.training_participants.forEach(element => {
+        if (this.participant.participant == element.participant) {
+          error = true
+        }
+      });
+
+      if (error == true) return
+      if (this.participant.participant == 'Others') return
+      if (this.participant.participant != '' && this.participant.quantity != '') {
+        this.$store.commit('request/PUSH_FORM', {key:'training_participants',value:this.participant})
+        this.resetParticipant()
+      }
+    },
+    removeParticipant (index) {
+      this.$store.commit('request/SPLICE_FORM', {key:'training_participants',value:index})
+    },
+    resetParticipant () {
+      this.participant = Object.assign({}, this.participant, {
+        participant: '',
+        quantity: 0
+      })
+    }
   }
 }
 </script>
