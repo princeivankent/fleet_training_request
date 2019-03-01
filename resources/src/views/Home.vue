@@ -45,13 +45,13 @@
 
 <script>
 import { mapGetters, mapState } from 'vuex'
-import RequestorTypeDialog from './dialogs/RequestorTypeDialog'
-import DealerForm from './components/DealerForm'
-import CustomerForm from './components/CustomerForm'
-import TrainingForm from './components/TrainingForm'
-import ProgramForm from './components/ProgramForm'
-import IsuzuModelForm from './components/IsuzuModelForm'
-import SubmitForm from './components/SubmitForm'
+import RequestorTypeDialog from '../dialogs/RequestorTypeDialog'
+import DealerForm from '../components/DealerForm'
+import CustomerForm from '../components/CustomerForm'
+import TrainingForm from '../components/TrainingForm'
+import ProgramForm from '../components/ProgramForm'
+import IsuzuModelForm from '../components/IsuzuModelForm'
+import SubmitForm from '../components/SubmitForm'
 
 export default {
   name: 'home',
@@ -66,7 +66,7 @@ export default {
   },
   data() {
     return {
-      page: 3,
+      page: 4,
       dialog: false,
       photo_gallery: false,
       drawer: true,

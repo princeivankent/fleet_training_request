@@ -2303,7 +2303,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     fetchDealers: function fetchDealers() {
       var _this = this;
 
-      axios.get("".concat(this.baseURL, "api/guest/dealers/get")).then(function (_ref) {
+      axios.get("".concat(this.base_url, "api/guest/dealers/get")).then(function (_ref) {
         var data = _ref.data;
         data.forEach(function (element) {
           element.dealer = element.dealer + ' | ' + element.branch;
@@ -2316,7 +2316,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     fetchUnitModels: function fetchUnitModels() {
       var _this2 = this;
 
-      axios.get("".concat(this.baseURL, "api/guest/unit_models/get")).then(function (_ref2) {
+      axios.get("".concat(this.base_url, "api/guest/unit_models/get")).then(function (_ref2) {
         var data = _ref2.data;
         _this2.models = data;
       }).catch(function (error) {
@@ -2484,6 +2484,40 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/src/modules/request/components/ProgramForm.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/src/modules/request/components/ProgramForm.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'ProgramForm',
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('request', ['forms'])),
+  methods: {
+    fetchTrainingPrograms: function fetchTrainingPrograms() {
+      var _this = this;
+
+      axios.get("".concat(this.base_url, "/guest/training_programs/get")).then(function (_ref) {
+        var data = _ref.data;
+        _this.training_programs = data;
+      }).catch(function (error) {
+        console.log(error);
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/src/modules/request/components/TrainingForm.vue?vue&type=script&lang=js&":
 /*!****************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/src/modules/request/components/TrainingForm.vue?vue&type=script&lang=js& ***!
@@ -2594,6 +2628,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -2613,7 +2648,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {
       // date: new Date().toISOString().substr(0, 10),
-      date: '',
       modal: false,
       reactive: true,
       training_venues: ['IPC Customer', 'IPC'],
@@ -2622,7 +2656,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('request', ['form']), {
     dateFormatted: function dateFormatted() {
-      return this.date ? moment__WEBPACK_IMPORTED_MODULE_3___default()(this.date).format('dddd, MMMM Do YYYY') : '';
+      return this.form.training_date ? moment__WEBPACK_IMPORTED_MODULE_3___default()(this.form.training_date).format('dddd, MMMM Do YYYY') : '';
     }
   }),
   mounted: function mounted() {
@@ -2641,7 +2675,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getDisabledDates: function getDisabledDates() {
       var _this = this;
 
-      axios.get("".concat(this.baseURL, "api/guest/schedules/get")).then(function (_ref) {
+      axios.get("".concat(this.base_url, "api/guest/schedules/get")).then(function (_ref) {
         var data = _ref.data;
         var dates = [];
         data.map(function (date) {
@@ -2732,17 +2766,70 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       default_participants: ['Driver', 'Mechanic', 'Fleet Head', 'Others'],
-      items: [],
       participant: {
         participant: '',
         quantity: 0
-      }
+      },
+      manual_participants: false
     };
+  },
+  watch: {
+    participant: {
+      handler: function handler(v) {
+        if (this.participant.participant == 'Others') {
+          this.resetParticipant();
+          this.manual_participants = true;
+        }
+      },
+      deep: true
+    }
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('request', ['form'])),
   methods: {
@@ -2753,15 +2840,36 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     addParticipant: function addParticipant() {
-      this.items.splice(1, 1);
-      this.items.push(this.participant);
+      var _this = this;
+
+      var error = false;
+      this.form.training_participants.forEach(function (element) {
+        if (_this.participant.participant == element.participant) {
+          error = true;
+        }
+      });
+      if (error == true) return;
+      if (this.participant.participant == 'Others') return;
+
+      if (this.participant.participant != '' && this.participant.quantity != '') {
+        this.$store.commit('request/PUSH_FORM', {
+          key: 'training_participants',
+          value: this.participant
+        });
+        this.resetParticipant();
+      }
+    },
+    removeParticipant: function removeParticipant(index) {
+      this.$store.commit('request/SPLICE_FORM', {
+        key: 'training_participants',
+        value: index
+      });
+    },
+    resetParticipant: function resetParticipant() {
       this.participant = Object.assign({}, this.participant, {
         participant: '',
         quantity: 0
       });
-    },
-    removeParticipant: function removeParticipant(index) {
-      this.items.splice(index, 1);
     }
   }
 });
@@ -22638,47 +22746,6 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c(
-                "v-form",
-                [
-                  _c(
-                    "v-container",
-                    [
-                      _c(
-                        "v-layout",
-                        { attrs: { "align-center": "" } },
-                        [
-                          _c(
-                            "v-flex",
-                            { attrs: { xs12: "", md4: "" } },
-                            [
-                              _c("label", [_vm._v("Isuzu Dealership Name")]),
-                              _vm._v(" "),
-                              _c("v-text-field", { attrs: { solo: "" } })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-flex",
-                            { attrs: { md4: "" } },
-                            [
-                              _c("label", [_vm._v("Name of requester")]),
-                              _vm._v(" "),
-                              _c("v-text-field", { attrs: { solo: "" } })
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
                 "v-layout",
                 { attrs: { "justify-end": "", row: "" } },
                 [
@@ -22865,7 +22932,7 @@ var render = function() {
                                 {
                                   ref: "dialog",
                                   attrs: {
-                                    "return-value": _vm.date,
+                                    "return-value": _vm.form.training_date,
                                     persistent: "",
                                     lazy: "",
                                     "full-width": "",
@@ -22873,10 +22940,18 @@ var render = function() {
                                   },
                                   on: {
                                     "update:returnValue": function($event) {
-                                      _vm.date = $event
+                                      return _vm.$set(
+                                        _vm.form,
+                                        "training_date",
+                                        $event
+                                      )
                                     },
                                     "update:return-value": function($event) {
-                                      _vm.date = $event
+                                      return _vm.$set(
+                                        _vm.form,
+                                        "training_date",
+                                        $event
+                                      )
                                     }
                                   },
                                   model: {
@@ -22905,18 +22980,20 @@ var render = function() {
                                     "v-date-picker",
                                     {
                                       attrs: {
+                                        value: _vm.form.training_date,
                                         "allowed-dates": _vm.allowedDates,
                                         reactive: _vm.reactive,
                                         width: "100%",
                                         color: "green",
                                         scrollable: ""
                                       },
-                                      model: {
-                                        value: _vm.date,
-                                        callback: function($$v) {
-                                          _vm.date = $$v
-                                        },
-                                        expression: "date"
+                                      on: {
+                                        change: function($event) {
+                                          return _vm.updateForm(
+                                            "training_date",
+                                            $event
+                                          )
+                                        }
                                       }
                                     },
                                     [
@@ -22942,7 +23019,7 @@ var render = function() {
                                           on: {
                                             click: function($event) {
                                               return _vm.$refs.dialog.save(
-                                                _vm.date
+                                                _vm.form.training_date
                                               )
                                             }
                                           }
@@ -23104,9 +23181,120 @@ var render = function() {
           _c(
             "v-list",
             [
-              _vm._l(_vm.items, function(item, index) {
+              [
+                _c("div", [
+                  _c(
+                    "div",
+                    [
+                      _c(
+                        "v-list-tile",
+                        [
+                          _c(
+                            "v-list-tile-action",
+                            [
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: {
+                                    color: "success",
+                                    fab: "",
+                                    small: "",
+                                    flat: "",
+                                    dark: ""
+                                  },
+                                  on: { click: _vm.addParticipant }
+                                },
+                                [
+                                  _c("v-icon", { attrs: { medium: "" } }, [
+                                    _vm._v("add_circle")
+                                  ])
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-list-tile-content",
+                            [
+                              _c(
+                                "v-layout",
+                                { attrs: { row: "", wrap: "" } },
+                                [
+                                  _c(
+                                    "v-flex",
+                                    { attrs: { xs12: "", md7: "" } },
+                                    [
+                                      _c("v-select", {
+                                        attrs: {
+                                          label: "Choose participants",
+                                          placeholder: "--",
+                                          items: _vm.default_participants
+                                        },
+                                        model: {
+                                          value: _vm.participant.participant,
+                                          callback: function($$v) {
+                                            _vm.$set(
+                                              _vm.participant,
+                                              "participant",
+                                              $$v
+                                            )
+                                          },
+                                          expression: "participant.participant"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c("v-divider", {
+                                    staticClass: "mx-2",
+                                    attrs: { inset: "", vertical: "" }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-flex",
+                                    { attrs: { xs12: "", md4: "" } },
+                                    [
+                                      _c("v-text-field", {
+                                        attrs: {
+                                          label: "headcount",
+                                          required: ""
+                                        },
+                                        model: {
+                                          value: _vm.participant.quantity,
+                                          callback: function($$v) {
+                                            _vm.$set(
+                                              _vm.participant,
+                                              "quantity",
+                                              _vm._n($$v)
+                                            )
+                                          },
+                                          expression: "participant.quantity"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ])
+              ],
+              _vm._v(" "),
+              _vm._l(_vm.form.training_participants, function(item, index) {
                 return [
-                  index != 0 ? _c("v-divider", { key: index }) : _vm._e(),
+                  _c("v-divider", { key: index }),
                   _vm._v(" "),
                   _c("div", { key: item.participant }, [
                     _c(
@@ -23122,15 +23310,23 @@ var render = function() {
                                   "v-btn",
                                   {
                                     attrs: {
-                                      color: "success",
+                                      color: "red",
                                       fab: "",
                                       small: "",
                                       flat: "",
                                       dark: ""
                                     },
-                                    on: { click: _vm.addParticipant }
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.removeParticipant(index)
+                                      }
+                                    }
                                   },
-                                  [_c("v-icon", [_vm._v("check")])],
+                                  [
+                                    _c("v-icon", { attrs: { medium: "" } }, [
+                                      _vm._v("cancel")
+                                    ])
+                                  ],
                                   1
                                 )
                               ],
@@ -23141,61 +23337,27 @@ var render = function() {
                               "v-list-tile-content",
                               [
                                 _c(
-                                  "v-layout",
-                                  { attrs: { row: "", wrap: "" } },
+                                  "v-list-tile-sub-title",
                                   [
                                     _c(
-                                      "v-flex",
-                                      { attrs: { xs12: "", md7: "" } },
+                                      "v-chip",
+                                      {
+                                        attrs: {
+                                          color: "green",
+                                          "text-color": "white"
+                                        }
+                                      },
                                       [
-                                        _c("v-select", {
-                                          attrs: {
-                                            label: "Choose participants",
-                                            items: _vm.default_participants
-                                          },
-                                          model: {
-                                            value: _vm.participant.participant,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.participant,
-                                                "participant",
-                                                $$v
-                                              )
-                                            },
-                                            expression:
-                                              "participant.participant"
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c("v-divider", {
-                                      staticClass: "mx-2",
-                                      attrs: { inset: "", vertical: "" }
-                                    }),
-                                    _vm._v(" "),
-                                    _c(
-                                      "v-flex",
-                                      { attrs: { xs12: "", md4: "" } },
-                                      [
-                                        _c("v-text-field", {
-                                          attrs: {
-                                            label: "headcount",
-                                            required: ""
-                                          },
-                                          model: {
-                                            value: _vm.participant.quantity,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.participant,
-                                                "quantity",
-                                                _vm._n($$v)
-                                              )
-                                            },
-                                            expression: "participant.quantity"
-                                          }
-                                        })
+                                        _c(
+                                          "v-avatar",
+                                          { staticClass: "green darken-4" },
+                                          [_vm._v(_vm._s(item.quantity))]
+                                        ),
+                                        _vm._v(
+                                          "\n                    " +
+                                            _vm._s(item.participant) +
+                                            "\n                  "
+                                        )
                                       ],
                                       1
                                     )
@@ -23216,6 +23378,112 @@ var render = function() {
               })
             ],
             2
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-dialog",
+        {
+          attrs: { "max-width": "290", persistent: "" },
+          model: {
+            value: _vm.manual_participants,
+            callback: function($$v) {
+              _vm.manual_participants = $$v
+            },
+            expression: "manual_participants"
+          }
+        },
+        [
+          _c(
+            "v-card",
+            [
+              _c(
+                "v-card-title",
+                { staticClass: "headline", attrs: { "primary-title": "" } },
+                [_vm._v("\n          Enter desired participants\n        ")]
+              ),
+              _vm._v(" "),
+              _c("v-card-text", [
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("v-text-field", {
+                      attrs: {
+                        label: "Participant",
+                        outline: "",
+                        required: ""
+                      },
+                      model: {
+                        value: _vm.participant.participant,
+                        callback: function($$v) {
+                          _vm.$set(_vm.participant, "participant", $$v)
+                        },
+                        expression: "participant.participant"
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("v-text-field", {
+                      attrs: {
+                        label: "Quantity",
+                        type: "number",
+                        outline: "",
+                        required: ""
+                      },
+                      model: {
+                        value: _vm.participant.quantity,
+                        callback: function($$v) {
+                          _vm.$set(_vm.participant, "quantity", _vm._n($$v))
+                        },
+                        expression: "participant.quantity"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                { staticStyle: { "margin-top": "-18px" } },
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "red darken-1", flat: "" },
+                      on: {
+                        click: function($event) {
+                          _vm.manual_participants = false
+                        }
+                      }
+                    },
+                    [_vm._v("Cancel")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "green darken-1", flat: "" },
+                      on: { click: _vm.addParticipant }
+                    },
+                    [_vm._v("Save")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
           )
         ],
         1
@@ -64577,7 +64845,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.mixin({
   data: function data() {
     return {
-      baseURL: "http://localhost/fleet_training_request/"
+      base_url: "http://localhost/fleet_training_request/"
     };
   }
 });
@@ -64878,15 +65146,17 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ProgramForm_vue_vue_type_template_id_d35943cc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ProgramForm.vue?vue&type=template&id=d35943cc& */ "./resources/src/modules/request/components/ProgramForm.vue?vue&type=template&id=d35943cc&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _ProgramForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ProgramForm.vue?vue&type=script&lang=js& */ "./resources/src/modules/request/components/ProgramForm.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
-var script = {}
+
+
 
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
-  script,
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ProgramForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _ProgramForm_vue_vue_type_template_id_d35943cc___WEBPACK_IMPORTED_MODULE_0__["render"],
   _ProgramForm_vue_vue_type_template_id_d35943cc___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
@@ -64900,6 +65170,20 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 if (false) { var api; }
 component.options.__file = "resources/src/modules/request/components/ProgramForm.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/src/modules/request/components/ProgramForm.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/src/modules/request/components/ProgramForm.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ProgramForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ProgramForm.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/src/modules/request/components/ProgramForm.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ProgramForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -65259,6 +65543,13 @@ var request = {
     UPDATE_FORM: function UPDATE_FORM(state, payload) {
       state.form[payload.key] = payload.value;
     },
+    PUSH_FORM: function PUSH_FORM(state, payload) {
+      state.form[payload.key].push(payload.value);
+    },
+    SPLICE_FORM: function SPLICE_FORM(state, payload) {
+      state.form[payload.key].splice(payload.value, 1);
+    },
+    //--> end
     SET_REQUESTOR: function SET_REQUESTOR(state, requestor) {
       state.requestorType = requestor;
     },

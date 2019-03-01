@@ -3,7 +3,7 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
-import request from './modules/request'
+import request from './request.module'
 
 export const store = new Vuex.Store({
   modules: {

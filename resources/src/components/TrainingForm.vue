@@ -128,7 +128,7 @@ export default {
       return this.disabledDates.indexOf(date) === -1 
     },
     getDisabledDates () {
-      axios.get(`${this.baseURL}api/guest/schedules/get`)
+      axios.get(`${this.base_url}api/guest/schedules/get`)
       .then(({data}) => {
         var dates = []
         data.map((date) => {

@@ -14,9 +14,9 @@ Vue.use(Vuetify)
 Vue.use(Vuex)
 
 Vue.mixin({
-  data() {
+  data () {
     return {
-      baseURL: process.env.MIX_DEV_URL
+      base_url: process.env.MIX_DEV_URL
     }
   },
 })

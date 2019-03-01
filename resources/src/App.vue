@@ -11,7 +11,7 @@
 
 <script>
 import Header from './templates/Header'
-import Home from './modules/request/Home'
+import Home from './views/Home'
 
 export default {
   components: {Header,Home}

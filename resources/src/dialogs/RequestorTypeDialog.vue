@@ -21,7 +21,7 @@
               <v-flex xs6 class="text-xs-center">
                 <v-avatar size="100">
                   <img
-                    src="../../../assets/images/customer.jpg"
+                    src="../assets/images/customer.jpg"
                     alt="image"
                   >
                 </v-avatar>
@@ -29,7 +29,7 @@
               <v-flex xs6 class="text-xs-center">
                 <v-avatar size="100">
                   <img
-                    src="../../../assets/images/dealer.png"
+                    src="../assets/images/dealer.png"
                     alt="image"
                   >
                 </v-avatar>
