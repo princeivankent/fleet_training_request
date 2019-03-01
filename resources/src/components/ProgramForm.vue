@@ -34,15 +34,15 @@ export default {
       <v-card>
         <v-card-title primary-title>
           <div>
-            <h3 class="headline mb-0">Program Offerings</h3>
+            <h3 class="headline mb-0">Program Offering</h3>
           </div>
         </v-card-title>
 
         <v-layout justify-end row>
-            <v-btn color="red darken-1" flat dark>
-              Proceed &nbsp;
-              <v-icon small>fa fa-arrow-circle-right</v-icon>
-            </v-btn>
+          <v-btn color="red darken-1" flat dark>
+            Proceed &nbsp;
+            <v-icon small>fa fa-arrow-circle-right</v-icon>
+          </v-btn>
         </v-layout>
       </v-card>
     </v-flex>
