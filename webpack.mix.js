@@ -4,6 +4,7 @@ mix.setResourceRoot('/fleet_training_request/public/')
 .js('resources/assets/js/admin.js', 'public/js/admin.js')
 .js('resources/assets/js/client.js', 'public/js/client.js')
 .js('resources/src/main.js', 'public/js/app.js')
+.extract(['vue'])
 .browserSync('http://localhost/fleet_training_request/')
 .disableNotifications();
 

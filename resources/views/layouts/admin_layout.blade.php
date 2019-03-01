@@ -53,6 +53,8 @@
     </div>
 
     <!-- Scripts -->
+	<script src="{{ url('public/js/manifest.js') }}"></script>
+	<script src="{{ url('public/js/vendor.js') }}"></script>
 	<script src="{{ url('public/js/admin.js') }}"></script>
 	<script src="{{ url('public/libraries/adminlte/jquery.min.js') }}"></script>
 	<script src="{{ url('public/libraries/adminlte/bootstrap.min.js') }}"></script>

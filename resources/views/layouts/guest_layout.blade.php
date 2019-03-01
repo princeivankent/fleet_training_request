@@ -14,6 +14,8 @@
 </head>
 <body>
 	<div id="app"></div>
+	<script src="{{ url('public/js/manifest.js') }}"></script>
+	<script src="{{ url('public/js/vendor.js') }}"></script>
 	<script src="{{ url('public/js/app.js') }}"></script>
 	{{-- <script src="{{ url('public/libraries/js/moment.js') }}"></script> --}}
 	{{-- <script src="{{ url('public/libraries/js/bootstrap-datetimepicker.min.js') }}"></script> --}}
