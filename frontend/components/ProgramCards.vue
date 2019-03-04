@@ -31,12 +31,11 @@
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="default" small>
+            <v-btn @click="openGallery(index)" color="default" small>
               <i class="fa fa-images"></i>&nbsp;
               SEE PHOTOS
-
             </v-btn>
-            <v-btn color="success" small @click="openGallery(index)">
+            <v-btn color="success" small>
               SELECT &nbsp;
               <i class="fa fa-arrow-circle-right"></i>
             </v-btn>
@@ -44,7 +43,7 @@
         </v-card>
       </v-flex>
     </v-layout>
-    <ProgramCardGallery :gallery_data="gallery_data"/>
+    <ProgramCardGallery :gallery_data="gallery_data" v-on:closeGallery="closeGallery"/>
   </v-container>
 </template>
 
@@ -75,12 +74,18 @@ export default {
     fetchTrainingPrograms () {
       this.$store.dispatch('request/setTrainingPrograms')
     },
-    openGallery(payload) {
+    openGallery (payload) {
       this.gallery_data = {
         image_index: payload,
         isOpen: true
       }
     },
+    closeGallery () {
+      this.gallery_data = {
+        image_index: 0,
+        isOpen: false
+      }
+    }
   }
 }
 </script>
