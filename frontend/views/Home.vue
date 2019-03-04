@@ -49,7 +49,7 @@ import RequestorTypeDialog from '../dialogs/RequestorTypeDialog'
 import DealerForm from '../components/DealerForm'
 import CustomerForm from '../components/CustomerForm'
 import TrainingForm from '../components/TrainingForm'
-import ProgramForm from '../components/ProgramForm'
+import Programs from '../components/Programs'
 import IsuzuModelForm from '../components/IsuzuModelForm'
 import SubmitForm from '../components/SubmitForm'
 
@@ -60,7 +60,7 @@ export default {
     DealerForm, 
     CustomerForm, 
     TrainingForm, 
-    ProgramForm, 
+    Programs, 
     IsuzuModelForm, 
     SubmitForm
   },

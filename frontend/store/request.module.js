@@ -1,3 +1,5 @@
+import ApiService from '../services/api.service'
+
 const request = {
   namespaced: true,
   state: {
@@ -29,12 +31,17 @@ const request = {
         email: '',
         contact: ''
       }
-    }
+    },
+    training_programs: []
   },
   getters: {
     getRequestor: state => state.requestorType,
     getFormSteppers: state => state.form_steppers,
-    requestFormState: state => state.form
+    requestFormState: state => state.form,
+    getImages: (state) => (payload) => {
+      const data = state.training_programs.find((item, index) => index === payload)
+      return data.images
+    }
   },
   mutations: {
     //--> Dynamic Data Bindings from vue component
@@ -56,7 +63,7 @@ const request = {
         {step: 1, step_name: 'Dealer', component: 'DealerForm'},
         {step: 2, step_name: 'Customer', component: 'CustomerForm'},
         {step: 3, step_name: 'Training', component: 'TrainingForm'},
-        {step: 4, step_name: 'Programs', component: 'ProgramForm'},
+        {step: 4, step_name: 'Programs', component: 'Programs'},
         {step: 5, step_name: 'Isuzu Models', component: 'IsuzuModelForm'},
         {step: 6, step_name: 'Submit', component: 'SubmitForm'}
       ]
@@ -65,7 +72,7 @@ const request = {
       state.form_steppers = [
         {step: 1, step_name: 'Customer', component: 'CustomerForm'},
         {step: 2, step_name: 'Training', component: 'TrainingForm'},
-        {step: 3, step_name: 'Programs', component: 'ProgramForm'},
+        {step: 3, step_name: 'Programs', component: 'Programs'},
         {step: 4, step_name: 'Isuzu Models', component: 'IsuzuModelForm'},
         {step: 5, step_name: 'Submit', component: 'SubmitForm'}
       ]
@@ -75,6 +82,9 @@ const request = {
     },
     ADD_DEALER_DATA (state, payload) {
       state.form.dealer_info = Object.assign({}, state.form.dealer_info, payload)
+    },
+    SET_TRAINING_PROGRAMS (state, payload) {
+      state.training_programs = payload
     }
   },
   actions: {
@@ -99,6 +109,10 @@ const request = {
     },
     addDealerData ({commit}, payload) {
       commit('ADD_DEALER_DATA', payload)
+    },
+    async setTrainingPrograms ({commit}, payload) {
+      const {data} = await ApiService.get('/guest/training_programs/get')
+      commit('SET_TRAINING_PROGRAMS', data)
     }
   }
 }
