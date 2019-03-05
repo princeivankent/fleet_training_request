@@ -79,4 +79,9 @@ class UnitModelController extends Controller
 
 		return response()->json($query);
     }
+
+    public function get_unit_models()
+    {
+        return response()->json(UnitModel::select('image')->get());
+    }
 }

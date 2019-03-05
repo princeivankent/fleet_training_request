@@ -49,7 +49,7 @@ import DealerForm from '../components/DealerForm'
 import CustomerForm from '../components/CustomerForm'
 import TrainingForm from '../components/TrainingForm'
 import Programs from '../components/Programs'
-import IsuzuModelForm from '../components/IsuzuModelForm'
+import IsuzuModels from '../components/IsuzuModels'
 import SubmitForm from '../components/SubmitForm'
 
 export default {
@@ -60,7 +60,7 @@ export default {
     CustomerForm, 
     TrainingForm, 
     Programs, 
-    IsuzuModelForm, 
+    IsuzuModels, 
     SubmitForm
   },
   data() {
@@ -69,14 +69,6 @@ export default {
       photo_gallery: false,
       drawer: true,
       participants: {},
-
-      // make all false except on step1
-      // step1: true,
-      // step2: false,
-      // step3: false,
-      // step4: false,
-      // step5: false,
-      // step6: false,
       
       unit_models: [],
       dealers: [],
@@ -89,37 +81,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('request', [
-      'getFormSteppers', 'getRequestor'
-    ]),
-    ...mapState('request', [
-      'current_page'
-    ]),
-    editable () {
-      switch (this.current_page) {
-        case 1:
-          return this.step1
-          break;
-        case 2:
-          return this.step2
-          break;
-        case 3:
-          return this.step3
-          break;
-        case 4:
-          return this.step4
-          break;
-        case 5:
-          return this.step5
-          break;
-        case 6:
-          return this.step6
-          break;
-      
-        default:
-          break;
-      }
-    }
+    ...mapGetters('request', ['getFormSteppers', 'getRequestor']),
+    ...mapState('request', ['current_page']),
   }
 }
 </script>

@@ -12,7 +12,7 @@ Vue.use(Vuetify)
 Vue.use(Vuex)
 
 // Set axios base URL
-ApiService.init(process.env.MIX_APP_URL)
+ApiService.init(process.env.MIX_API_URL)
 
 // Set axios x-csrf-token
 window.axios = require('axios');

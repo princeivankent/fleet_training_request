@@ -3,7 +3,7 @@ import ApiService from '../services/api.service'
 const request = {
   namespaced: true,
   state: {
-    current_page: 1,
+    current_page: 5,
     requestorType: '',
     form_steppers: [],
     form: {
@@ -33,7 +33,8 @@ const request = {
         contact: ''
       }
     },
-    training_programs: []
+    training_programs: [],
+    unit_models: []
   },
   getters: {
     getRequestor: state => state.requestorType,
@@ -71,7 +72,7 @@ const request = {
         {step: 2, step_name: 'Customer', component: 'CustomerForm'},
         {step: 3, step_name: 'Training', component: 'TrainingForm'},
         {step: 4, step_name: 'Programs', component: 'Programs'},
-        {step: 5, step_name: 'Isuzu Models', component: 'IsuzuModelForm'},
+        {step: 5, step_name: 'Isuzu Models', component: 'IsuzuModels'},
         {step: 6, step_name: 'Submit', component: 'SubmitForm'}
       ]
     },
@@ -80,7 +81,7 @@ const request = {
         {step: 1, step_name: 'Customer', component: 'CustomerForm'},
         {step: 2, step_name: 'Training', component: 'TrainingForm'},
         {step: 3, step_name: 'Programs', component: 'Programs'},
-        {step: 4, step_name: 'Isuzu Models', component: 'IsuzuModelForm'},
+        {step: 4, step_name: 'Isuzu Models', component: 'IsuzuModels'},
         {step: 5, step_name: 'Submit', component: 'SubmitForm'}
       ]
     },
@@ -92,16 +93,17 @@ const request = {
     },
     SET_TRAINING_PROGRAMS (state, payload) {
       state.training_programs = payload
+    },
+    SET_UNIT_MODELS (state, payload) {
+      state.unit_models = payload
     }
   },
   actions: {
     requestorType ({commit}, requestor) {
-      if (requestor == 'customer') {
+      if (requestor == 'customer')
         commit('SET_CUSTOMER_STATE')
-      }
-      else {
+      else
         commit('SET_DEALER_STATE')
-      }
 
       commit('SET_REQUESTOR', requestor)
     },
@@ -118,8 +120,12 @@ const request = {
       commit('ADD_DEALER_DATA', payload)
     },
     async setTrainingPrograms ({commit}, payload) {
-      const {data} = await ApiService.get('/guest/training_programs/get')
+      const {data} = await ApiService.get('guest/training_programs/get')
       commit('SET_TRAINING_PROGRAMS', data)
+    },
+    async fetchUnitModels ({commit}) {
+      const {data} = await ApiService.get('guest/unit_models/get')
+      commit('SET_UNIT_MODELS', data)
     }
   }
 }
