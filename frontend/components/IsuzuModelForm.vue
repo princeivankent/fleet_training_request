@@ -31,12 +31,39 @@
         </v-form>
 
         <v-layout justify-end row>
-            <v-btn color="red darken-1" flat dark>
-              Proceed &nbsp;
-              <v-icon small>fa fa-arrow-circle-right</v-icon>
-            </v-btn>
+          <v-btn 
+          @click="back"
+          color="red darken-1" 
+          flat dark
+          >
+            <v-icon small>fa fa-arrow-circle-left</v-icon>&nbsp;
+            Back
+          </v-btn>
+          <v-spacer></v-spacer>
+          <v-btn 
+          @click="nextPage"
+          color="red darken-1" 
+          flat dark
+          >
+            Proceed &nbsp;
+            <v-icon small>fa fa-arrow-circle-right</v-icon>
+          </v-btn>
         </v-layout>
       </v-card>
     </v-flex>
   </v-layout>
 </template>
+
+<script>
+export default {
+  name: 'IsuzuModel',
+  methods: {
+    nextPage () {
+      this.$store.commit('request/NEXT_PAGE')
+    },
+    back () {
+      this.$store.commit('request/BACK_PAGE')
+    }
+  }
+}
+</script>

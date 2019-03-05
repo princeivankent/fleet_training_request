@@ -3,6 +3,7 @@ import ApiService from '../services/api.service'
 const request = {
   namespaced: true,
   state: {
+    current_page: 1,
     requestorType: '',
     form_steppers: [],
     form: {
@@ -44,6 +45,12 @@ const request = {
     }
   },
   mutations: {
+    BACK_PAGE (state) {
+      state.current_page--
+    },
+    NEXT_PAGE (state) {
+      state.current_page++
+    },
     //--> Dynamic Data Bindings from vue component
     UPDATE_FORM (state, payload) {
       state.form[payload.key] = payload.value

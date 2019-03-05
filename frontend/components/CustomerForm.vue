@@ -121,6 +121,15 @@
         </v-form>
 
         <v-layout justify-end row>
+            <v-btn 
+            @click="back"
+            color="red darken-1" 
+            flat dark
+            >
+              <v-icon small>fa fa-arrow-circle-left</v-icon>&nbsp;
+              Back
+            </v-btn>
+            <v-spacer></v-spacer>
             <v-btn color="red darken-1" 
             flat dark
             @click="proceed"
@@ -194,7 +203,10 @@ export default {
       
     },
     proceed () {
-
+      this.$store.commit('request/NEXT_PAGE')
+    },
+    back () {
+      this.$store.commit('request/BACK_PAGE')
     }
   }
 }

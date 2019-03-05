@@ -3,7 +3,7 @@
     <RequestorTypeDialog />
     <v-stepper 
     v-if="this.$store.state.request.requestorType" 
-    v-model="page" 
+    :value="current_page" 
     non-linear
     >
       <v-stepper-header>
@@ -12,11 +12,10 @@
         >
           <v-stepper-step 
           :key="step.step"
-          :editable="step1" 
-          :complete="page > step.step" 
+          :complete="current_page > step.step" 
           :step="`${index+1}`" 
           edit-icon="$vuetify.icons.complete"
-          color="red" 
+          color="red"
           >
             {{ step.step_name }}
           </v-stepper-step>
@@ -66,19 +65,18 @@ export default {
   },
   data() {
     return {
-      page: 4,
       dialog: false,
       photo_gallery: false,
       drawer: true,
       participants: {},
 
       // make all false except on step1
-      step1: true,
-      step2: false,
-      step3: false,
-      step4: false,
-      step5: false,
-      step6: false,
+      // step1: true,
+      // step2: false,
+      // step3: false,
+      // step4: false,
+      // step5: false,
+      // step6: false,
       
       unit_models: [],
       dealers: [],
@@ -93,7 +91,35 @@ export default {
   computed: {
     ...mapGetters('request', [
       'getFormSteppers', 'getRequestor'
-    ])
+    ]),
+    ...mapState('request', [
+      'current_page'
+    ]),
+    editable () {
+      switch (this.current_page) {
+        case 1:
+          return this.step1
+          break;
+        case 2:
+          return this.step2
+          break;
+        case 3:
+          return this.step3
+          break;
+        case 4:
+          return this.step4
+          break;
+        case 5:
+          return this.step5
+          break;
+        case 6:
+          return this.step6
+          break;
+      
+        default:
+          break;
+      }
+    }
   }
 }
 </script>

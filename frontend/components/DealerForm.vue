@@ -84,7 +84,7 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required, minLength, between, email, integer } from 'vuelidate/lib/validators'
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters, mapState, mapMutations } from 'vuex'
 
 export default {
   name: 'DealerForm',
@@ -106,22 +106,23 @@ export default {
     }
   },
   methods: {
-    proceed () {
-      this.$v.$touch()
+    async proceed () {
+      // this.$v.$touch()
 
-      if (this.$v.$anyError) {
-        return alert('Please check the form')
-      }
+      // if (this.$v.$anyError) {
+      //   return alert('Please check the form')
+      // }
 
-      const data = {
-        dealership_name: this.dealership_name,
-        requestor_name: this.requestor_name,
-        position: this.position,
-        email: this.email,
-        contact: this.contact
-      }
+      // const data = {
+      //   dealership_name: this.dealership_name,
+      //   requestor_name: this.requestor_name,
+      //   position: this.position,
+      //   email: this.email,
+      //   contact: this.contact
+      // }
 
-      this.$store.dispatch('request/addDealerData', data)
+      const data = await this.$store.dispatch('request/addDealerData', data)
+      this.$store.commit('request/NEXT_PAGE')
     }
   }
 }
