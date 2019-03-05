@@ -50,7 +50,7 @@ import CustomerForm from '../components/CustomerForm'
 import TrainingForm from '../components/TrainingForm'
 import Programs from '../components/Programs'
 import IsuzuModels from '../components/IsuzuModels'
-import SubmitForm from '../components/SubmitForm'
+import Submit from '../components/Submit'
 
 export default {
   name: 'home',
@@ -61,7 +61,7 @@ export default {
     TrainingForm, 
     Programs, 
     IsuzuModels, 
-    SubmitForm
+    Submit
   },
   data() {
     return {

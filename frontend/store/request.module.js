@@ -3,7 +3,7 @@ import ApiService from '../services/api.service'
 const request = {
   namespaced: true,
   state: {
-    current_page: 5,
+    current_page: 6,
     requestorType: '',
     form_steppers: [],
     form: {
@@ -73,7 +73,7 @@ const request = {
         {step: 3, step_name: 'Training', component: 'TrainingForm'},
         {step: 4, step_name: 'Programs', component: 'Programs'},
         {step: 5, step_name: 'Isuzu Models', component: 'IsuzuModels'},
-        {step: 6, step_name: 'Submit', component: 'SubmitForm'}
+        {step: 6, step_name: 'Submit', component: 'Submit'}
       ]
     },
     SET_CUSTOMER_STATE (state) {
@@ -82,7 +82,7 @@ const request = {
         {step: 2, step_name: 'Training', component: 'TrainingForm'},
         {step: 3, step_name: 'Programs', component: 'Programs'},
         {step: 4, step_name: 'Isuzu Models', component: 'IsuzuModels'},
-        {step: 5, step_name: 'Submit', component: 'SubmitForm'}
+        {step: 5, step_name: 'Submit', component: 'Submit'}
       ]
     },
     ADD_FORM_DATA (state, payload) {
