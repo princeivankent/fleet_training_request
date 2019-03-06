@@ -89,7 +89,7 @@ export default {
   },
   methods: {
     fetchTrainingPrograms () {
-      this.$store.dispatch('request/setTrainingPrograms')
+      return this.$store.dispatch('request/setTrainingPrograms')
     },
     openGallery (payload) {
       this.gallery_data = {

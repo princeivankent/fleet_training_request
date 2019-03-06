@@ -34,7 +34,8 @@ const request = {
       }
     },
     training_programs: [],
-    unit_models: []
+    unit_models: [],
+    special_trainings: []
   },
   getters: {
     getRequestor: state => state.requestorType,
@@ -96,6 +97,9 @@ const request = {
     },
     SET_UNIT_MODELS (state, payload) {
       state.unit_models = payload
+    },
+    SET_SPECIAL_TRAININGS (state, payload) {
+      state.special_trainings = payload
     }
   },
   actions: {
@@ -126,6 +130,10 @@ const request = {
     async fetchUnitModels ({commit}) {
       const {data} = await ApiService.get('guest/unit_models/get')
       commit('SET_UNIT_MODELS', data)
+    },
+    async setSpecialTrainings ({commit}) {
+      const {data} = await ApiService.get('special_trainings')
+      return commit('SET_SPECIAL_TRAININGS', data)
     }
   }
 }

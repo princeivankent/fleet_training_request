@@ -23,7 +23,18 @@
               In case you need an update on your request you may contact <strong>Isuzu Training Department</strong><br>
               at <strong>(049) 541-0224 local 346</strong> , Monday to Friday, 7:30 A.M - 5:45 P.M and look for <strong>Ms. Clarissa Manimtim</strong>.
             </p>
+            <v-btn
+            @click="changeButtonState"
+            :color="button_status.color"
+            >
+              <i :class="`fa fa-${button_status.icon}`"></i>&nbsp;
+              {{ button_status.text }}
+            </v-btn>
           </v-alert>
+        </v-card-text>
+
+        <v-card-text>
+          <SpecialTrainings />
         </v-card-text>
 
         <v-layout justify-end row>
@@ -35,8 +46,10 @@
           </v-btn>
           <v-spacer></v-spacer>
           <v-btn 
+          id="submit_button"
           @click="submit"
           color="red darken-1" 
+          :disabled="button_status.is_disabled"
           dark
           >
             <v-icon small>fa fa-check-circle</v-icon> &nbsp;
@@ -49,14 +62,38 @@
 </template>
 
 <script>
+import SpecialTrainings from './SpecialTrainings'
+
 export default {
   name: 'Submit',
+  data () {
+    return {
+      button_status: {
+        color: '',
+        icon: 'question-circle',
+        text: 'Done Reading',
+        is_disabled: true
+      }
+    }
+  },
+  components: {SpecialTrainings},
+  watch: {
+
+  },
   methods: {
-    submit () {
-      console.log('atlast')
-    },
+    submit () {},
     back () {
       this.$store.commit('request/BACK_PAGE')
+    },
+    changeButtonState () {
+      this.button_status = Object.assign({}, this.button_status, {
+        color: 'green white--text',
+        icon: 'check',
+        text: 'Already Read',
+        is_disabled: false
+      })
+
+      this.$vuetify.goTo('#submit_button')
     }
   }
 }
