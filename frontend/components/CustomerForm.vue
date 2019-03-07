@@ -14,9 +14,10 @@
               <v-flex xs6 sm8>
                 <v-text-field
                 label="Company Name"
-                :value="form.company_name"
-                @input="updateForm('company_name', $event)"
-                @blur="$v.company_name.$touch()"
+                name="Company Name"
+                v-model="company_name"
+                v-validate="'required'"
+                :error-messages="errors.first('Company Name')"
                 outline
                 required
                 ></v-text-field>
@@ -27,9 +28,10 @@
               <v-flex xs6 sm8>
                 <v-text-field
                 label="Office Address"
-                :value="form.office_address"
-                @input="updateForm('office_address', $event)"
-                @blur="$v.office_address.$touch()"
+                name="Office Address"
+                v-model="office_address"
+                v-validate="'required'"
+                :error-messages="errors.first('Office Address')"
                 outline
                 required
                 ></v-text-field>
@@ -40,9 +42,10 @@
               <v-flex xs6 sm4>
                 <v-text-field
                 label="Contact Person"
-                :value="form.contact_person"
-                @input="updateForm('contact_person', $event)"
-                @blur="$v.contact_person.$touch()"
+                name="Contact Person"
+                v-model="contact_person"
+                v-validate="'required'"
+                :error-messages="errors.first('Contact Person')"
                 outline
                 required
                 ></v-text-field>
@@ -50,9 +53,10 @@
               <v-flex xs6 sm4>
                 <v-text-field
                 label="Position"
-                :value="form.position"
-                @input="updateForm('position', $event)"
-                @blur="$v.position.$touch()"
+                name="Position"
+                v-model="position"
+                v-validate="'required'"
+                :error-messages="errors.first('Position')"
                 outline
                 required
                 ></v-text-field>
@@ -63,9 +67,10 @@
               <v-flex xs6 sm4>
                 <v-text-field
                 label="Email Address"
-                :value="form.email"
-                @input="updateForm('email', $event)"
-                @blur="$v.email.$touch()"
+                name="Email"
+                v-model="email"
+                v-validate="'required|email'"
+                :error-messages="errors.first('Email')"
                 outline
                 required
                 ></v-text-field>
@@ -73,9 +78,11 @@
               <v-flex xs6 sm4>
                 <v-text-field
                 label="Contact Number"
-                :value="form.contact_number"
-                @input="updateForm('contact_number', $event)"
-                @blur="$v.contact_number.$touch()"
+                name="Contact Number"
+                v-model.number="contact_number"
+                v-validate="'required|max:10|min:10|integer'"
+                :error-messages="errors.first('Contact Number')"
+                type="number"
                 outline
                 required
                 ></v-text-field>
@@ -86,8 +93,10 @@
               <v-flex xs6 sm4>
                 <v-select
                 label="Isuzu Dealership Name"
-                :value="form.selling_dealer"
-                @change="updateForm('selling_dealer', $event)"
+                name="Isuzu Dealership Name"
+                v-model="selling_dealer"
+                v-validate="'required'"
+                :error-messages="errors.first('Isuzu Dealership Name')"
                 :items="dealers"
                 item-text="dealer"
                 item-value="dealer_id"
@@ -106,8 +115,10 @@
               <v-flex xs6 sm4>
                 <v-select
                 label="Isuzu Specific Model"
-                :value="form.unit_models"
-                @change="updateForm('unit_models', $event)"
+                name="Isuzu Specific Model"
+                v-model="unit_models"
+                v-validate="'required'"
+                :error-messages="errors.first('Isuzu Specific Model')"
                 :items="models"
 								item-text="model_name"
                 item-value="model_name"
@@ -130,15 +141,17 @@
             <v-btn 
             @click="back"
             color="red darken-1" 
-            flat dark
+            flat
             >
               <v-icon small>fa fa-arrow-circle-left</v-icon>&nbsp;
               Back
             </v-btn>
             <v-spacer></v-spacer>
-            <v-btn color="red darken-1" 
-            flat dark
+            <v-btn 
             @click="proceed"
+            :disabled="isFormInvalid"
+            color="red darken-1" 
+            flat
             >
               Proceed &nbsp;
               <v-icon small>fa fa-arrow-circle-right</v-icon>
@@ -150,33 +163,87 @@
 </template>
 
 <script>
-import { validationMixin } from 'vuelidate'
-import { required, minLength, between } from 'vuelidate/lib/validators'
 import { mapGetters, mapState } from 'vuex'
 
 export default {
   name: 'CustomerForm',
-  mixins: [validationMixin],
-  validations: {
-    company_name: { required },
-    office_address: { required },
-    contact_person: { required },
-    contact_number: { required },
-    email: { required },
-    position: { required },
-    selling_dealer: { required },
-    unit_models: { required }
-  },
-  data() {
+  data () {
     return {
       dealers: [],
       models: []
     }
   },
   computed: {
-    ...mapState('request', ['form'])
+    ...mapState('request', ['form']),
+    isFormInvalid () {
+      return Object.keys(this.fields).some(key => this.fields[key].invalid);
+    },
+    company_name: {
+      get () {
+        return this.$store.state.request.form.company_name
+      },
+      set (val) {
+        this.$store.commit('request/UPDATE_FORM', {key:'company_name',value:val})
+      }
+    },
+    office_address: {
+      get () {
+        return this.$store.state.request.form.office_address
+      },
+      set (val) {
+        this.$store.commit('request/UPDATE_FORM', {key:'office_address',value:val})
+      }
+    },
+    contact_person: {
+      get () {
+        return this.$store.state.request.form.contact_person
+      },
+      set (val) {
+        this.$store.commit('request/UPDATE_FORM', {key:'contact_person',value:val})
+      }
+    },
+    position: {
+      get () {
+        return this.$store.state.request.form.position
+      },
+      set (val) {
+        this.$store.commit('request/UPDATE_FORM', {key:'position',value:val})
+      }
+    },
+    email: {
+      get () {
+        return this.$store.state.request.form.email
+      },
+      set (val) {
+        this.$store.commit('request/UPDATE_FORM', {key:'email',value:val})
+      }
+    },
+    contact_number: {
+      get () {
+        return this.$store.state.request.form.contact_number
+      },
+      set (val) {
+        this.$store.commit('request/UPDATE_FORM', {key:'contact_number',value:val})
+      }
+    },
+    selling_dealer: {
+      get () {
+        return this.$store.state.request.form.selling_dealer
+      },
+      set (val) {
+        this.$store.commit('request/UPDATE_FORM', {key:'selling_dealer',value:val})
+      }
+    },
+    unit_models: {
+      get () {
+        return this.$store.state.request.form.unit_models
+      },
+      set (val) {
+        this.$store.commit('request/UPDATE_FORM', {key:'unit_models',value:val})
+      }
+    },
   },
-  mounted() {
+  mounted () {
     this.fetchDealers()
     this.fetchUnitModels()
   },

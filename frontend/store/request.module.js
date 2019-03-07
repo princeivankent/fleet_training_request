@@ -3,7 +3,7 @@ import ApiService from '../services/api.service'
 const request = {
   namespaced: true,
   state: {
-    current_page: 1,
+    current_page: 2,
     requestorType: '',
     form_steppers: [],
     form: {
