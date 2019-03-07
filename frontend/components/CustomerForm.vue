@@ -137,6 +137,7 @@
 
         <v-layout justify-end row>
             <v-btn 
+            v-if="$store.state.request.requestorType == 'dealer'"
             @click="back"
             color="red darken-1" 
             flat
