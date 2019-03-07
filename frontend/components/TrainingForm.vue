@@ -32,8 +32,10 @@
                   ></v-text-field>
 
                   <v-date-picker
-                  :value="form.training_date"
-                  @change="updateForm('training_date', $event)"
+                  v-model="training_date"
+                  name="Training Date"
+                  v-validate="'required'"
+                  :error-messages="errors.first('Training Date')"
                   :allowed-dates="allowedDates"
                   :reactive="reactive"
                   width="100%"
@@ -52,11 +54,12 @@
               <v-flex xs8 sm8 md8 lg5>
                 <v-select
                 label="Training Venue"
-                :value="form.training_venue"
-                @change="updateForm('training_venue', $event)"
+                name="Training Venue"
+                v-model="training_venue"
+                v-validate="'required'"
+                :error-messages="errors.first('Training Venue')"
                 :items="training_venues"
                 outline
-                required
                 ></v-select>
               </v-flex>
             </v-layout>
@@ -65,10 +68,11 @@
               <v-flex xs8 sm8 md8 lg5>
                 <v-text-field
                 label="Training Address"
-                :value="form.training_address"
-                @input="updateForm('training_address', $event)"
+                name="Training Address"
+                v-model="training_address"
+                v-validate="'required'"
+                :error-messages="errors.first('Training Address')"
                 outline
-                required
                 ></v-text-field>
               </v-flex>
             </v-layout>
@@ -91,9 +95,11 @@
               Back
             </v-btn>
             <v-spacer></v-spacer>
-            <v-btn color="red darken-1" 
-            flat dark
+            <v-btn 
             @click="proceed"
+            :disabled="isFormInvalid"
+            color="red darken-1" 
+            flat
             >
               Proceed &nbsp;
               <v-icon small>fa fa-arrow-circle-right</v-icon>
@@ -106,18 +112,12 @@
 
 <script>
 import { mapGetters, mapState } from 'vuex'
-import { validationMixin } from 'vuelidate'
-import { required, minLength, between } from 'vuelidate/lib/validators'
 import moment from 'moment'
 import TrainingFormParticipants from './TrainingFormParticipants'
 
 export default {
   name: 'TrainingForm',
   components: {TrainingFormParticipants},
-  mixins: [validationMixin],
-  validations: {
-    training_venue: { required },
-  },
   data() {
     return {
       // date: new Date().toISOString().substr(0, 10),
@@ -125,12 +125,56 @@ export default {
       reactive: true,
       training_venues: ['IPC Customer', 'IPC'],
       disabledDates: [],
+      shouldDisable: false,
     }
   },
   computed: {
     ...mapState('request', ['form']),
     dateFormatted () {
       return this.form.training_date ? moment(this.form.training_date).format('dddd, MMMM Do YYYY') : ''
+    },
+    isFormInvalid () {
+      return Object.keys(this.fields).some(key => this.fields[key].invalid);
+    },
+    training_date: {
+      get () {
+        return this.$store.state.request.form.training_date
+      },
+      set (val) {
+        this.$store.commit('request/UPDATE_FORM', {key:'training_date',value:val})
+      }
+    },
+    training_venue: {
+      get () {
+        return this.$store.state.request.form.training_venue
+      },
+      set (val) {
+        this.$store.commit('request/UPDATE_FORM', {key:'training_venue',value:val})
+      }
+    },
+    training_address: {
+      get () {
+        return this.$store.state.request.form.training_address
+      },
+      set (val) {
+        this.$store.commit('request/UPDATE_FORM', {key:'training_address',value:val})
+      }
+    },
+    company_name: {
+      get () {
+        return this.$store.state.request.form.company_name
+      },
+      set (val) {
+        this.$store.commit('request/UPDATE_FORM', {key:'company_name',value:val})
+      }
+    },
+    training_participants: {
+      get () {
+        return this.$store.state.request.form.training_participants
+      },
+      set (val) {
+        this.$store.commit('request/UPDATE_FORM', {key:'training_participants',value:val})
+      }
     },
   },
   mounted () {
@@ -163,7 +207,12 @@ export default {
       this.$store.commit('request/BACK_PAGE')
     },
     proceed () {
-      this.$store.commit('request/NEXT_PAGE')
+      if (this.training_participants.length <= 0) {
+        alert('Fill out training participants')
+      }
+      else {
+        this.$store.commit('request/NEXT_PAGE')
+      }
     }
   }
 }

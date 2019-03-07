@@ -107,7 +107,6 @@
                 multiple
                 outline
                 required
-                @blur="updateSelection"
                 >
                 </v-select>
               </v-flex>
@@ -129,7 +128,6 @@
                 multiple
                 outline
                 required
-                @blur="updateSelection"
                 >
                 </v-select>
               </v-flex>
@@ -271,9 +269,6 @@ export default {
       .catch((error) => {
         console.log(error);
       });
-    },
-    updateSelection () {
-      
     },
     proceed () {
       this.$store.commit('request/NEXT_PAGE')
