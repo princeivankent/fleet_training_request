@@ -22,7 +22,7 @@
                 <v-card-title primary-title>
                   <div class="card-title">
                     <h3 class="headline mb-0">{{ item.program_title }}</h3>
-                    <div>{{ item.description }}</div>
+                    <div style="min-height: 50px;">{{ item.description }}</div>
                   </div>
                 </v-card-title>
 
@@ -68,9 +68,11 @@
             Back
           </v-btn>
           <v-spacer></v-spacer>
-          <v-btn color="red darken-1" 
-          flat dark
+          <v-btn 
           @click="next"
+          :disabled="!this.form.training_program_id ? true : false"
+          color="red darken-1" 
+          flat
           >
             Proceed &nbsp;
             <v-icon small>fa fa-arrow-circle-right</v-icon>
@@ -81,16 +83,23 @@
 
     <ProgramCardGallery :gallery_data="gallery_data" v-on:closeGallery="closeGallery"/>
     <ProgramFeatures :features="feature_data" v-on:hideFeatures="hideFeatures"/>
+    <Snackbar 
+    :status="displayToast.status" 
+    :text="displayToast.text" 
+    v-on:close="closeToast"
+    />
   </v-layout>
 </template>
 
 <script>
 import { mapGetters, mapState } from 'vuex'
 import ApiService from '../services/api.service'
+import Snackbar from '../dialogs/Snackbar'
 
 export default {
   name: 'ProgramCards',
   components: {
+    Snackbar,
     'ProgramCardGallery': () => import('./ProgramCardGallery'),
     'ProgramFeatures': () => import('./ProgramFeatures')
   },
@@ -109,6 +118,10 @@ export default {
       feature_data: {
         isFeatureOpen: false,
         features: []
+      },
+      displayToast: {
+        status: false,
+        text: ''
       }
     }
   },
@@ -149,7 +162,20 @@ export default {
       this.$store.commit('request/BACK_PAGE')
     },
     next () {
-      this.$store.commit('request/NEXT_PAGE')
+      if (!this.form.training_program_id) {
+        this.displayToast = {
+          status: true,
+          text: 'Please select one of our programs.'
+        }
+      }
+      else 
+        this.$store.commit('request/NEXT_PAGE')
+    },
+    closeToast () {
+      this.displayToast = {
+        status: false,
+        text: ''
+      }
     }
   }
 }

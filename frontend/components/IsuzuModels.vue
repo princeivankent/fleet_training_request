@@ -15,8 +15,9 @@
             </v-btn>
             <v-btn 
             @click="nextPage"
-            color="red darken-1" 
-            dark
+            :disabled="!this.form.unit_model_id ? true : false"
+            color="red darken-1"
+            :dark="!this.form.unit_model_id ? false : true"
             >
               Proceed &nbsp;
               <v-icon small>fa fa-arrow-circle-right</v-icon>
