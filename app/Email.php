@@ -23,8 +23,8 @@ class Email extends Model
     protected $primaryKey = 'email_id';
     public $timestamps = false;
 
-    public function email_category()
-    {
-        return $this->belongsTo();
-    }
+    // public function email_category()
+    // {
+    //     return $this->belongsTo();
+    // }
 }

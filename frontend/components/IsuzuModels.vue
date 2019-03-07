@@ -4,7 +4,7 @@
       <v-card flat>
         <v-card-title primary-title>
           <div>
-            <h3 class="raleway headline mb-0">Isuzu Models</h3>
+            <h3 class="raleway headline mb-0">Choose Isuzu Model</h3>
             <v-btn 
             @click="back"
             color="red darken-1" 
@@ -90,7 +90,6 @@ export default {
   font-family: 'Raleway', sans-serif;
   font-weight: 600;
 }
-
 .menu {
   width:170px; 
   text-align:center; 

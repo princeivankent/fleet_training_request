@@ -6,6 +6,12 @@
           <v-container fluid>
             <v-layout justify-center row wrap>
               <v-flex xs6 sm8>
+                <h5 class="display-1">Customer Details</h5>
+              </v-flex>
+            </v-layout>
+            
+            <v-layout justify-center row wrap>
+              <v-flex xs6 sm8>
                 <v-text-field
                 label="Company Name"
                 :value="form.company_name"

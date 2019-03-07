@@ -6,6 +6,12 @@
           <v-container fluid>
             <v-layout justify-center row wrap>
               <v-flex xs6 sm6>
+                <h5 class="display-1">Requesting Isuzu Dealer</h5>
+              </v-flex>
+            </v-layout>
+
+            <v-layout justify-center row wrap>
+              <v-flex xs6 sm6>
                 <v-text-field
                 label="Isuzu Dealership Name"
                 v-model="dealership_name"

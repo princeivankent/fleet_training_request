@@ -4,7 +4,7 @@
       <v-card>
         <v-card-title primary-title>
           <div>
-            <h3 class="headline mb-0">Submit Request</h3>
+            <h5 class="display-1">Choose Program</h5>
           </div>
         </v-card-title>
 
@@ -77,9 +77,6 @@ export default {
     }
   },
   components: {SpecialTrainings},
-  watch: {
-
-  },
   methods: {
     submit () {},
     back () {

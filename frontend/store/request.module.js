@@ -3,7 +3,7 @@ import ApiService from '../services/api.service'
 const request = {
   namespaced: true,
   state: {
-    current_page: 6,
+    current_page: 4,
     requestorType: '',
     form_steppers: [],
     form: {
@@ -44,6 +44,10 @@ const request = {
     getImages: (state) => (payload) => {
       const data = state.training_programs.find((item, index) => index === payload)
       return data.images
+    },
+    getFeatures: state => payload => {
+      const data = state.training_programs.find((item, index) => index === payload)
+      return data.program_features
     }
   },
   mutations: {

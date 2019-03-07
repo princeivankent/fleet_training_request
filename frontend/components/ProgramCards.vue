@@ -5,6 +5,12 @@
         <v-container 
         fluid
         >
+          <v-layout justify-center row wrap>
+            <v-flex xs6 sm8>
+              <h5 class="display-1">Choose Program</h5>
+            </v-flex>
+          </v-layout>
+
           <v-layout align-center justify-center row fill-height wrap>
             <v-flex
             v-for="(item, index) in training_programs"
@@ -20,28 +26,32 @@
                   </div>
                 </v-card-title>
 
-                <v-data-table
-                :items="item.program_features"
-                hide-headers
-                hide-actions
-                >
-                  <template v-slot:items="props">
-                    <td>
-                      <ion-icon name="checkmark-circle-outline"></ion-icon>&nbsp;
-                      {{ props.item.feature }}
-                    </td>
-                  </template>
-                </v-data-table>
+                <v-divider></v-divider>
 
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn @click="openGallery(index)" color="default" small>
-                    <i class="fa fa-images"></i>&nbsp;
-                    SEE PHOTOS
+                  <v-btn 
+                  @click="showFeatures(index)"
+                  color="default" 
+                  small
+                  >
+                    FEATURES
                   </v-btn>
-                  <v-btn @click="updateForm('training_program_id', item.training_program_id)" color="success" small>
-                    SELECT &nbsp;
-                    <i class="fa fa-arrow-circle-right"></i>
+                  <v-btn 
+                  @click="openGallery(index)" 
+                  color="default" 
+                  small
+                  >
+                    PHOTOS
+                  </v-btn>
+                  <v-btn 
+                  @click="updateForm('training_program_id', item.training_program_id)" 
+                  :color="`${item.training_program_id === form.training_program_id ? 'success' : ''}`" 
+                  small
+                  >
+                    {{ item.training_program_id === form.training_program_id ? 'SELECTED &nbsp;' : 'SELECT' }}
+                    <i v-if="item.training_program_id === form.training_program_id" 
+                    class="fa fa-check-circle"></i>
                   </v-btn>
                 </v-card-actions>
               </v-card>
@@ -57,37 +67,66 @@
             <v-icon small>fa fa-arrow-circle-left</v-icon>&nbsp;
             Back
           </v-btn>
+          <v-spacer></v-spacer>
+          <v-btn color="red darken-1" 
+          flat dark
+          @click="next"
+          >
+            Proceed &nbsp;
+            <v-icon small>fa fa-arrow-circle-right</v-icon>
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-flex>
+
     <ProgramCardGallery :gallery_data="gallery_data" v-on:closeGallery="closeGallery"/>
+    <ProgramFeatures :features="feature_data" v-on:hideFeatures="hideFeatures"/>
   </v-layout>
 </template>
 
 <script>
 import { mapGetters, mapState } from 'vuex'
 import ApiService from '../services/api.service'
-import ProgramCardGallery from './ProgramCardGallery'
 
 export default {
   name: 'ProgramCards',
-  components: {ProgramCardGallery},
+  components: {
+    'ProgramCardGallery': () => import('./ProgramCardGallery'),
+    'ProgramFeatures': () => import('./ProgramFeatures')
+  },
   data () {
     return {
       gallery_data: {
         image_index: 0,
         isOpen: false
+      },
+      button_status: {
+        color: '',
+        text: '',
+        status: ''
+      },
+      iterator: [],
+      feature_data: {
+        isFeatureOpen: false,
+        features: []
       }
     }
   },
   computed: {
-    ...mapState('request', ['training_programs']),
-    ...mapGetters('request', ['getImages'])
+    ...mapState('request', ['training_programs','form']),
+    ...mapGetters('request', ['getImages','getFeatures'])
   },
   mounted () {
     this.fetchTrainingPrograms()
   },
   methods: {
+    showFeatures (index) {
+      this.feature_data.isFeatureOpen = true
+      this.feature_data.features = this.getFeatures(index)
+    },
+    hideFeatures () {
+      this.feature_data.isFeatureOpen = false
+    },
     fetchTrainingPrograms () {
       return this.$store.dispatch('request/setTrainingPrograms')
     },
@@ -103,23 +142,15 @@ export default {
         isOpen: false
       }
     },
-    async updateForm (field, value) {
-      const data = this.$store.commit('request/UPDATE_FORM', {key:field,value:value})
-      this.$store.commit('request/NEXT_PAGE')
+    updateForm (field, value) {
+      this.$store.commit('request/UPDATE_FORM', {key:field,value:value})
     },
     back () {
       this.$store.commit('request/BACK_PAGE')
+    },
+    next () {
+      this.$store.commit('request/NEXT_PAGE')
     }
   }
 }
 </script>
-
-<style scoped>
-.card-title {
-  min-height: 80px;
-}
-ion-icon {
-  font-size: 14px;
-  color: green;
-}
-</style>

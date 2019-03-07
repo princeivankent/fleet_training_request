@@ -42,7 +42,7 @@ export default {
       return `${this.base_url}public/images/photo_gallery/`
     }
   },
-  created () {
+  mounted () {
     this.fetchSpecialTrainings()
   },
   methods: {

@@ -6,6 +6,12 @@
           <v-container fluid>
             <v-layout justify-center row wrap>
               <v-flex xs8 sm8 md8 lg5>
+                <h5 class="display-1">Training Details</h5>
+              </v-flex>
+            </v-layout>
+
+            <v-layout justify-center row wrap>
+              <v-flex xs8 sm8 md8 lg5>
                 <v-dialog
                 ref="dialog"
                 v-model="modal"
