@@ -3,7 +3,7 @@ import ApiService from '../services/api.service'
 const request = {
   namespaced: true,
   state: {
-    current_page: 6,
+    current_page: 1,
     requestorType: '',
     form_steppers: [],
     form: {
@@ -66,6 +66,9 @@ const request = {
     },
     SPLICE_FORM (state, payload) {
       state.form[payload.key].splice(payload.value,1)
+    },
+    UPDATE_DEALER_FORM (state, payload) {
+      state.form.dealer_info[payload.key] = payload.value
     },
     //--> end
     SET_REQUESTOR (state, requestor) {

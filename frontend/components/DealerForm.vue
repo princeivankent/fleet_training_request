@@ -14,8 +14,8 @@
               <v-flex xs6 sm6>
                 <v-text-field
                 label="Isuzu Dealership Name"
-                v-model="dealership_name"
-                @input="$v.dealership_name.$touch()"
+                :value="form.dealer_info.dealership_name"
+                @input="updateForm('dealership_name', $event)"
                 @blur="$v.dealership_name.$touch()"
                 outline
                 required
@@ -27,8 +27,8 @@
               <v-flex xs6 sm3>
                 <v-text-field
                 label="Name of requester"
-                v-model="requestor_name"
-                @input="$v.requestor_name.$touch()"
+                :value="form.dealer_info.requestor_name"
+                @input="updateForm('requestor_name', $event)"
                 @blur="$v.requestor_name.$touch()"
                 outline
                 required
@@ -38,8 +38,8 @@
               <v-flex xs12 sm3>
                 <v-text-field
                 label="Position"
-                v-model="position"
-                @input="$v.position.$touch()"
+                :value="form.dealer_info.position"
+                @input="updateForm('position', $event)"
                 @blur="$v.position.$touch()"
                 outline
                 required
@@ -51,8 +51,8 @@
               <v-flex xs6 sm3>
                 <v-text-field
                 label="Email Address"
-                v-model="email"
-                @input="$v.email.$touch()"
+                :value="form.dealer_info.email"
+                @input="updateForm('email', $event)"
                 @blur="$v.email.$touch()"
                 outline
                 required
@@ -62,8 +62,8 @@
               <v-flex xs12 sm3>
                 <v-text-field
                 label="Contact Number"
-                v-model="contact"
-                @input="$v.contact.$touch()"
+                :value="form.dealer_info.contact"
+                @input="updateForm('contact', $event)"
                 @blur="$v.contact.$touch()"
                 outline
                 required
@@ -111,7 +111,13 @@ export default {
       contact: ''
     }
   },
+  computed: {
+    ...mapState('request', ['form'])
+  },
   methods: {
+    updateForm (field, value) {
+      this.$store.commit('request/UPDATE_DEALER_FORM', {key:field,value:value})
+    },
     async proceed () {
       // this.$v.$touch()
 
