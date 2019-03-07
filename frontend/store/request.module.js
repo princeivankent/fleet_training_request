@@ -1,14 +1,13 @@
 import ApiService from '../services/api.service'
-import { resolve } from 'q';
 
 const request = {
   namespaced: true,
   state: {
     current_page: 1,
-    requestorType: '',
     form_steppers: [],
     form: {
       // Customer Info
+      requestorType: '',
       company_name: '',
       office_address: '',
       contact_person: '',
@@ -39,7 +38,7 @@ const request = {
     special_trainings: []
   },
   getters: {
-    getRequestor: state => state.requestorType,
+    getRequestor: state => state.form.requestorType,
     getFormSteppers: state => state.form_steppers,
     requestFormState: state => state.form,
     getImages: (state) => (payload) => {
@@ -73,7 +72,7 @@ const request = {
     },
     //--> end
     SET_REQUESTOR (state, requestor) {
-      state.requestorType = requestor
+      state.form.requestorType = requestor
     },
     SET_DEALER_STATE (state) {
       state.form_steppers = [
@@ -144,8 +143,7 @@ const request = {
       commit('SET_SPECIAL_TRAININGS', data)
     },
     async submitRequest ({commit}, payload) {
-      const {data} = await ApiService.post('submit', payload)
-      console.log(data)
+      await ApiService.post('submit', payload)
     }
   }
 }

@@ -2,7 +2,7 @@
   <div>
     <RequestorTypeDialog />
     <v-stepper 
-    v-if="this.$store.state.request.requestorType" 
+    v-if="this.$store.state.request.form.requestorType" 
     :value="current_page" 
     non-linear
     >

@@ -115,14 +115,16 @@ class TrainingRequestController extends Controller
 			}
 
 			// Dealer Detail
-			$_dealer_detail = new DealerDetail;
-			$_dealer_detail->requestor_name = $request->dealer_info['requestor_name'];
-			$_dealer_detail->dealership_name = $request->dealer_info['dealership_name'];
-			$_dealer_detail->position = $request->dealer_info['position'];
-			$_dealer_detail->email = $request->dealer_info['email'];
-			$_dealer_detail->contact = $request->dealer_info['contact'];
-			$_dealer_detail->training_request_id = $training_request_id;
-			$_dealer_detail->save();
+			if ($request->requestorType == 'dealer') {
+				$_dealer_detail = new DealerDetail;
+				$_dealer_detail->requestor_name = $request->dealer_info['requestor_name'];
+				$_dealer_detail->dealership_name = $request->dealer_info['dealership_name'];
+				$_dealer_detail->position = $request->dealer_info['position'];
+				$_dealer_detail->email = $request->dealer_info['email'];
+				$_dealer_detail->contact = $request->dealer_info['contact'];
+				$_dealer_detail->training_request_id = $training_request_id;
+				$_dealer_detail->save();
+			}
 
 			DB::commit();
 

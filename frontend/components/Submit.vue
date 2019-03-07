@@ -78,6 +78,7 @@ export default {
   components: {SpecialTrainings},
   methods: {
     submit () {
+      // const data = 
       this.$store.dispatch('request/submitRequest', this.$store.state.request.form)
     },
     back () {
