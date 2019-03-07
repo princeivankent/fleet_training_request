@@ -14,9 +14,10 @@
               <v-flex xs6 sm6>
                 <v-text-field
                 label="Isuzu Dealership Name"
-                :value="form.dealer_info.dealership_name"
-                @input="updateForm('dealership_name', $event)"
-                @blur="$v.dealership_name.$touch()"
+                name="Dealership Name"
+                v-model="dealership_name"
+                v-validate="'required'"
+                :error-messages="errors.first('Dealership Name')"
                 outline
                 required
                 ></v-text-field>
@@ -27,9 +28,10 @@
               <v-flex xs6 sm3>
                 <v-text-field
                 label="Name of requester"
-                :value="form.dealer_info.requestor_name"
-                @input="updateForm('requestor_name', $event)"
-                @blur="$v.requestor_name.$touch()"
+                name="Requestor Name"
+                v-model="requestor_name"
+                v-validate="'required'"
+                :error-messages="errors.first('Requestor Name')"
                 outline
                 required
                 ></v-text-field>
@@ -38,9 +40,10 @@
               <v-flex xs12 sm3>
                 <v-text-field
                 label="Position"
-                :value="form.dealer_info.position"
-                @input="updateForm('position', $event)"
-                @blur="$v.position.$touch()"
+                name="Position"
+                v-model="position"
+                v-validate="'required'"
+                :error-messages="errors.first('Position')"
                 outline
                 required
                 ></v-text-field>
@@ -51,9 +54,10 @@
               <v-flex xs6 sm3>
                 <v-text-field
                 label="Email Address"
-                :value="form.dealer_info.email"
-                @input="updateForm('email', $event)"
-                @blur="$v.email.$touch()"
+                name="Email"
+                v-model="email"
+                v-validate="'required|email'"
+                :error-messages="errors.first('Email')"
                 outline
                 required
                 ></v-text-field>
@@ -62,9 +66,11 @@
               <v-flex xs12 sm3>
                 <v-text-field
                 label="Contact Number"
-                :value="form.dealer_info.contact"
-                @input="updateForm('contact', $event)"
-                @blur="$v.contact.$touch()"
+                name="Contact"
+                v-model.number="contact"
+                v-validate="'required|max:10|min:10|integer'"
+                :error-messages="errors.first('Contact')"
+                type="number"
                 outline
                 required
                 ></v-text-field>
@@ -74,9 +80,11 @@
           </v-container>
         </v-form>
         <v-layout justify-end row>
-            <v-btn color="red darken-1" 
-            flat dark
+            <v-btn 
             @click="proceed"
+            :disabled="isFormInvalid"
+            color="red darken-1" 
+            flat
             >
               Proceed &nbsp;
               <v-icon small>fa fa-arrow-circle-right</v-icon>
@@ -88,52 +96,61 @@
 </template>
 
 <script>
-import { validationMixin } from 'vuelidate'
-import { required, minLength, between, email, integer } from 'vuelidate/lib/validators'
-import { mapGetters, mapState, mapMutations } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   name: 'DealerForm',
-  mixins: [validationMixin],
-  validations: {
-    dealership_name: { required },
-    requestor_name: { required },
-    position: { required },
-    email: { required, email },
-    contact: { required, integer, minLength: minLength(11) },
-  },
-  data() {
-    return {
-      dealership_name: '',
-      requestor_name: '',
-      position: '',
-      email: '',
-      contact: ''
-    }
-  },
   computed: {
-    ...mapState('request', ['form'])
+    ...mapState('request', ['form']),
+    isFormInvalid () {
+      return Object.keys(this.fields).some(key => this.fields[key].invalid);
+    },
+    dealership_name: {
+      get () {
+        return this.$store.state.request.form.dealer_info.dealership_name
+      },
+      set (val) {
+        this.$store.commit('request/UPDATE_DEALER_FORM', {key:'dealership_name',value:val})
+      }
+    },
+    requestor_name: {
+      get () {
+        return this.$store.state.request.form.dealer_info.requestor_name
+      },
+      set (val) {
+        this.$store.commit('request/UPDATE_DEALER_FORM', {key:'requestor_name',value:val})
+      }
+    },
+    position: {
+      get () {
+        return this.$store.state.request.form.dealer_info.position
+      },
+      set (val) {
+        this.$store.commit('request/UPDATE_DEALER_FORM', {key:'position',value:val})
+      }
+    },
+    email: {
+      get () {
+        return this.$store.state.request.form.dealer_info.email
+      },
+      set (val) {
+        this.$store.commit('request/UPDATE_DEALER_FORM', {key:'email',value:val})
+      }
+    },
+    contact: {
+      get () {
+        return this.$store.state.request.form.dealer_info.contact
+      },
+      set (val) {
+        this.$store.commit('request/UPDATE_DEALER_FORM', {key:'contact',value:val})
+      }
+    }
   },
   methods: {
     updateForm (field, value) {
       this.$store.commit('request/UPDATE_DEALER_FORM', {key:field,value:value})
     },
-    async proceed () {
-      // this.$v.$touch()
-
-      // if (this.$v.$anyError) {
-      //   return alert('Please check the form')
-      // }
-
-      // const data = {
-      //   dealership_name: this.dealership_name,
-      //   requestor_name: this.requestor_name,
-      //   position: this.position,
-      //   email: this.email,
-      //   contact: this.contact
-      // }
-
-      const data = await this.$store.dispatch('request/addDealerData', data)
+    proceed () {
       this.$store.commit('request/NEXT_PAGE')
     }
   }
