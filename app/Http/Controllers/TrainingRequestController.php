@@ -42,7 +42,8 @@ class TrainingRequestController extends Controller
 			TrainingRequest::with([
 				'training_program',
 				'unit_model',
-				'trainor_designations.trainor'
+				'trainor_designations.trainor',
+				'dealer_details'
 			])
 			->get()
 		);
@@ -56,7 +57,8 @@ class TrainingRequestController extends Controller
 				'customer_models',
 				'customer_participants',
 				'training_program',
-				'unit_model'
+				'unit_model',
+				'dealer_details'
 			])
 			->first();
 

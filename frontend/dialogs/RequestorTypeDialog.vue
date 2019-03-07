@@ -10,7 +10,7 @@
           class="headline"
           primary-title
         >
-          What type of requestor are you?
+          Who are you?
         </v-card-title>
 
         <v-card-text>
@@ -35,7 +35,7 @@
                 </v-avatar>
               </v-flex>
               <v-flex xs6 class="text-xs-center">
-                <v-btn color="success" @click="changeRequestorType('customer')">Customer</v-btn>
+                <v-btn color="success" @click="changeRequestorType('customer')">Fleet Customer</v-btn>
               </v-flex>
               <v-flex xs6 class="text-xs-center">
                 <v-btn color="success" @click="changeRequestorType('dealer')">Dealer</v-btn>
@@ -61,9 +61,9 @@ export default {
       return this.getRequestor === '' ? 1 : 0 
     }
   },
-  created() {
-    this.changeRequestorType('dealer') //--> for dev
-  },
+  // created() {
+  //   this.changeRequestorType('dealer') //--> for dev
+  // },
   methods: {
     changeRequestorType(requestor) {
       this.$store.dispatch('request/requestorType', requestor)

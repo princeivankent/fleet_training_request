@@ -61,4 +61,9 @@ class TrainingRequest extends Model
     {
         return $this->hasMany('App\DesignatedTrainor', 'training_request_id', 'training_request_id');
     }
+
+    public function dealer_details()
+    {
+        return $this->hasOne('App\DealerDetail');
+    }
 }

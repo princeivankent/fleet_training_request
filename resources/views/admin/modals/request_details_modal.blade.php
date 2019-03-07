@@ -8,9 +8,37 @@
 			</div>
 			<div class="modal-body">
 				<!-- FLEET CUSTOMER INFORMATION -->
+				<div v-if="training_request.dealer_details" class="box box-solid">
+					<div class="box-header with-border">
+						<h3 class="box-title text-danger">Dealership Information</h3>
+					</div>
+					<div class="box-body row">
+						<div class="form-group col-md-6">
+							<label>Dealership Name</label>
+							<input type="text" v-model="training_request.dealer_details.dealership_name" class="form-control" readonly>
+						</div>
+						<div class="form-group col-md-6">
+							<label>Requestor</label>
+							<input type="text" v-model="training_request.dealer_details.requestor_name" class="form-control" readonly>
+						</div>
+						<div class="form-group col-md-6">
+							<label>Position Title</label>
+							<input type="text" v-model="training_request.dealer_details.position" class="form-control" readonly>
+						</div>
+						<div class="form-group col-md-6">
+							<label>Email</label>
+							<input type="text" v-model="training_request.dealer_details.email" class="form-control" readonly>
+						</div>
+						<div class="form-group col-md-6">
+							<label>Contact No</label>
+							<input type="text" v-model="training_request.dealer_details.contact" class="form-control" readonly>
+						</div>
+					</div>
+				</div>
+				<!-- FLEET CUSTOMER INFORMATION -->
 				<div class="box box-solid">
 					<div class="box-header with-border">
-						<h3 class="box-title text-danger">Fleet Customer Information</h3>
+						<h3 class="box-title text-danger">Customer Information</h3>
 					</div>
 					<div class="box-body row">
 						<div class="form-group col-md-6">
