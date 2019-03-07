@@ -48,9 +48,8 @@
           <v-btn 
           id="submit_button"
           @click="submit"
-          color="red darken-1" 
+          color="red darken-1 white--text" 
           :disabled="button_status.is_disabled"
-          dark
           >
             <v-icon small>fa fa-check-circle</v-icon> &nbsp;
             Submit
