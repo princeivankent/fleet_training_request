@@ -1,9 +1,10 @@
 import ApiService from '../services/api.service'
+import { resolve } from 'q';
 
 const request = {
   namespaced: true,
   state: {
-    current_page: 4,
+    current_page: 1,
     requestorType: '',
     form_steppers: [],
     form: {
@@ -140,7 +141,11 @@ const request = {
     },
     async setSpecialTrainings ({commit}) {
       const {data} = await ApiService.get('special_trainings')
-      return commit('SET_SPECIAL_TRAININGS', data)
+      commit('SET_SPECIAL_TRAININGS', data)
+    },
+    async submitRequest ({commit}, payload) {
+      const {data} = await ApiService.post('submit', payload)
+      console.log(data)
     }
   }
 }

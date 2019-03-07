@@ -83,26 +83,17 @@
 
     <ProgramCardGallery :gallery_data="gallery_data" v-on:closeGallery="closeGallery"/>
     <ProgramFeatures :features="feature_data" v-on:hideFeatures="hideFeatures"/>
-    <Snackbar 
-    :status="displayToast.status" 
-    :text="displayToast.text" 
-    v-on:close="closeToast"
-    />
   </v-layout>
 </template>
 
 <script>
 import { mapGetters, mapState } from 'vuex'
-import ApiService from '../services/api.service'
-import Snackbar from '../dialogs/Snackbar'
+import ProgramCardGallery from './ProgramCardGallery'
+import ProgramFeatures from './ProgramFeatures'
 
 export default {
   name: 'ProgramCards',
-  components: {
-    Snackbar,
-    'ProgramCardGallery': () => import('./ProgramCardGallery'),
-    'ProgramFeatures': () => import('./ProgramFeatures')
-  },
+  components: {ProgramCardGallery,ProgramFeatures},
   data () {
     return {
       gallery_data: {
@@ -162,20 +153,7 @@ export default {
       this.$store.commit('request/BACK_PAGE')
     },
     next () {
-      if (!this.form.training_program_id) {
-        this.displayToast = {
-          status: true,
-          text: 'Please select one of our programs.'
-        }
-      }
-      else 
-        this.$store.commit('request/NEXT_PAGE')
-    },
-    closeToast () {
-      this.displayToast = {
-        status: false,
-        text: ''
-      }
+      this.$store.commit('request/NEXT_PAGE')
     }
   }
 }

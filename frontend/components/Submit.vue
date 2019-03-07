@@ -77,7 +77,9 @@ export default {
   },
   components: {SpecialTrainings},
   methods: {
-    submit () {},
+    submit () {
+      this.$store.dispatch('request/submitRequest', this.$store.state.request.form)
+    },
     back () {
       this.$store.commit('request/BACK_PAGE')
     },
