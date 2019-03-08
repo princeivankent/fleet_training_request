@@ -16,7 +16,7 @@
 	<div id="app"></div>
 	<script src="https://unpkg.com/ionicons@4.4.4/dist/ionicons.js"></script>
 	<script src="{{ url('public/libraries/iziToast.min.js') }}"></script>
-	<script src="http://localhost:8080/js/app.js"></script>
-	{{-- <script src="{{ url('public/js/app.js') }}"></script> --}}
+	{{-- <script src="http://localhost:8080/js/app.js"></script> --}}
+	<script src="{{ url('public/js/app.js') }}"></script>
 </body>
 </html>
