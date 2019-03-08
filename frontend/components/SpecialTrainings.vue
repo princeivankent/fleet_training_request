@@ -16,13 +16,13 @@
             :key="i"
             :src="photoURL + image.image"
             >
-            <v-container fill-height fluid>
-              <v-layout fill-height>
-                <v-flex xs12 align-end flexbox>
-                  <span class="headline white--text darken-2 title-border">{{ item.program_title }}</span>
-                </v-flex>
-              </v-layout>
-            </v-container>
+              <v-container fill-height fluid>
+                <v-layout fill-height>
+                  <v-flex xs12 align-end flexbox>
+                    <span class="headline white--text darken-2 title-border">{{ item.program_title }}</span>
+                  </v-flex>
+                </v-layout>
+              </v-container>
             </v-carousel-item>
           </v-carousel>
         </v-card>
@@ -42,7 +42,7 @@ export default {
       return `${this.base_url}public/images/photo_gallery/`
     }
   },
-  mounted () {
+  created () {
     this.fetchSpecialTrainings()
   },
   methods: {

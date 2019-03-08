@@ -47,24 +47,34 @@
           <v-spacer></v-spacer>
           <v-btn 
           id="submit_button"
-          @click="submit"
           color="red darken-1 white--text" 
+
+          @click="submit"
           :disabled="button_status.is_disabled"
+          :loading="$store.state.request.isSubmitting"
           >
-            <v-icon small>fa fa-check-circle</v-icon> &nbsp;
             Submit
+            <template v-slot:loader>
+              <span class="custom-loader">
+                <v-icon light>cached</v-icon>
+              </span>
+            </template>
           </v-btn>
         </v-layout>
       </v-card>
     </v-flex>
+    <Snackbar />
   </v-layout>
 </template>
 
 <script>
 import SpecialTrainings from './SpecialTrainings'
+import Snackbar from '../dialogs/Snackbar'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Submit',
+  components: {Snackbar,SpecialTrainings},
   data () {
     return {
       button_status: {
@@ -75,10 +85,8 @@ export default {
       }
     }
   },
-  components: {SpecialTrainings},
   methods: {
     submit () {
-      // const data = 
       this.$store.dispatch('request/submitRequest', this.$store.state.request.form)
     },
     back () {
@@ -97,3 +105,42 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.custom-loader {
+  animation: loader 1s infinite;
+  display: flex;
+}
+@-moz-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@-o-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>

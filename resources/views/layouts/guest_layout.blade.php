@@ -10,10 +10,12 @@
 	<title>{{ config('app.name', 'Laravel') }}</title>
 	<link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons' rel="stylesheet">
 	<link rel="stylesheet" href="{{ url('public/libraries/css/animate.min.css') }}">
+	<link rel="stylesheet" href="{{ url('public/libraries/iziToast.min.css') }}">
 </head>
 <body>
 	<div id="app"></div>
 	<script src="https://unpkg.com/ionicons@4.4.4/dist/ionicons.js"></script>
+	<script src="{{ url('public/libraries/iziToast.min.js') }}"></script>
 	<script src="http://localhost:8080/js/app.js"></script>
 	{{-- <script src="{{ url('public/js/app.js') }}"></script> --}}
 </body>

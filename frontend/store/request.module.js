@@ -3,6 +3,11 @@ import ApiService from '../services/api.service'
 const request = {
   namespaced: true,
   state: {
+    isSubmitting: false,
+    toastNotif: {
+      status: false,
+      message: ''
+    },
     current_page: 1,
     form_steppers: [],
     form: {
@@ -51,6 +56,9 @@ const request = {
     }
   },
   mutations: {
+    NAVIGATE_PAGE (state, page) {
+      state.current_page = page
+    },
     BACK_PAGE (state) {
       state.current_page--
     },
@@ -69,6 +77,35 @@ const request = {
     },
     UPDATE_DEALER_FORM (state, payload) {
       state.form.dealer_info[payload.key] = payload.value
+    },
+    RESET_FORM (state) {
+      state.form = {
+        requestorType: '',
+        company_name: '',
+        office_address: '',
+        contact_person: '',
+        email: '',
+        contact_number: '',
+        position: '',
+        selling_dealer: [],
+        unit_model_id: 0,
+
+        selling_dealer: [],
+        training_date: '',
+        training_venue: '',
+        training_address: '',
+        training_program_id: 0,
+        training_participants: [],
+        unit_models: [],
+
+        dealer_info: {
+          dealership_name: '',
+          requestor_name: '',
+          position: '',
+          email: '',
+          contact: ''
+        }
+      }
     },
     //--> end
     SET_REQUESTOR (state, requestor) {
@@ -107,7 +144,15 @@ const request = {
     },
     SET_SPECIAL_TRAININGS (state, payload) {
       state.special_trainings = payload
-    }
+    },
+    INITIALIZE_LOADER (state) {
+      state.isSubmitting = true
+    },
+    TERMINATE_LOADER (state) {
+      state.isSubmitting = false      
+    },
+    TRIGGER_NOTIFICATION: (state, payload) => state.toastNotif = {status: payload.status, message: payload.message},
+    CLOSE_NOTIFICATION: (state) => state.toastNotif = {status: false, message: ''}
   },
   actions: {
     requestorType ({commit}, requestor) {
@@ -143,9 +188,33 @@ const request = {
       commit('SET_SPECIAL_TRAININGS', data)
     },
     async submitRequest ({commit}, payload) {
-      await ApiService.post('submit', payload)
+      commit('INITIALIZE_LOADER')
+
+      const submitRequest = async () => {
+        try {
+          const {data} = await ApiService.post('submit', payload)
+          return data
+        } catch (error) {
+          console.log(error)
+        }
+      }
+
+      submitRequest()
+      .then(() => {
+        commit('TERMINATE_LOADER')
+      })
+      .then(() => {
+        commit('NAVIGATE_PAGE', 1)
+      })
+      .then(() => {
+        iziToast.success({
+          title: 'Great!',
+          message: 'Your request has been sent. Please wait for our response.',
+        });
+        commit('RESET_FORM')
+      })
     }
   }
 }
 
-export default request;
+export default request

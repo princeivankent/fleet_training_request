@@ -1,15 +1,15 @@
 <template>
   <v-snackbar
-  v-model="status"
+  v-model="toastNotif.status"
   :timeout="6000"
   right
   bottom
   >
-    {{ text }}
+    {{ toastNotif.message }}
     <v-btn
     color="red"
     flat
-    @click="$emit('close', false)"
+    @click="close"
     >
       Close
     </v-btn>
@@ -17,11 +17,16 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
+
 export default {
   name: 'Snackbar',
-  props: {
-    status: Boolean,
-    text: String
+  computed: mapState('request', ['toastNotif']),
+  methods: {
+    ...mapMutations('request', ['CLOSE_NOTIFICATION']),
+    close () {
+      this.CLOSE_NOTIFICATION()
+    }
   }
 }
 </script>
