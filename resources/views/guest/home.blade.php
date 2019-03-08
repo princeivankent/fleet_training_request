@@ -1,100 +1,10 @@
 @extends('layouts.guest_layout')
 
-@push('styles')
-	<style>
-		.swal-button--confirm {
-			background-color: #F44336;
-		}
-	</style>
-@endpush
-
-@push('styles')
-	<link href="{{ url('public/libraries/css/bootstrap.min.css') }}" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
-	<link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" href="{{ url('public/libraries/css/viewer.min.css') }}">
-	<style>
-		.raleway {
-			color: #636b6f;
-			font-family: 'Raleway', sans-serif;
-			font-weight: 600;
-		}
-
-		.menu {
-			width:170px; 
-			text-align:center; 
-			float:left; 
-			position:relative
-		}
-
-		.menu_label {
-			color:#FFFFFF; 
-			float:left; 
-			position:absolute; 
-			top:20px; 
-			left:150px;
-		} 
-	</style>
-@endpush
-
 @section('content')
 <template>
-	<v-stepper non-linear v-model="e1">
-		<v-stepper-header>
-			<v-stepper-step :editable="step1" :complete="e1 > 1" step="1" color="red" edit-icon="$vuetify.icons.complete">I. Customer Information</v-stepper-step>
-			<v-divider></v-divider>
-			<v-stepper-step :editable="step2" :complete="e1 > 2" step="2" color="red" edit-icon="$vuetify.icons.complete">II. Training Information</v-stepper-step>
-			<v-divider></v-divider>
-			<v-stepper-step :editable="step3" :complete="e1 > 3" step="3" color="red" edit-icon="$vuetify.icons.complete">Program Offerings</v-stepper-step>
-			<v-divider></v-divider>
-			<v-stepper-step :editable="step4" :complete="e1 > 4" step="4" color="red" edit-icon="$vuetify.icons.complete">Isuzu Models</v-stepper-step>
-			<v-divider></v-divider>
-			<v-stepper-step :editable="step5" :complete="e1 > 5" step="5" color="red" edit-icon="$vuetify.icons.complete">Submit</v-stepper-step>
-		</v-stepper-header>
-	
-		<v-stepper-items>
-			<v-stepper-content step="1">
-				@include('guest.customer_information')
-				<v-layout justify-end row>
-					<v-btn
-					color="red darken-1"
-					v-on:click="checkFirstForm"
-					dark
-					>
-					<v-icon small>ion ion-android-checkmark-circle</v-icon>&nbsp;
-					Continue
-					</v-btn>
-				</v-layout>
-			</v-stepper-content>
-		
-			<v-stepper-content step="2">
-				@include('guest.training_information')
-				<v-layout justify-end row>
-					<v-btn
-					color="red darken-1"
-					v-on:click="checkSecondForm"
-					dark
-					>
-					<v-icon small>ion ion-android-checkmark-circle</v-icon>&nbsp;
-					Continue
-					</v-btn>
-				</v-layout>
-		
-			</v-stepper-content>
-		
-			<v-stepper-content step="3">
-				@include('guest.programs_offering')
-			</v-stepper-content>
-
-			<v-stepper-content step="4">
-				@include('guest.isuzu_models')
-			</v-stepper-content>
-
-			<v-stepper-content step="5">
-				@include('guest.submit_form')
-			</v-stepper-content>
-		</v-stepper-items>
-	</v-stepper>
+	<div>
+		<h3>Hello</h3>
+	</div>
 </template>
 @endsection
 
@@ -102,7 +12,8 @@
 	<script src="{{ url('public/libraries/js/bootstrap.min.js') }}"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>
 	<script src="{{ url('public/libraries/js/viewer.min.js') }}"></script>
-	<script>
+	<script src="{{ url('public/js/app.js') }}"></script>
+	{{-- <script>
 		var app = new Vue({
 			el: '#app',
 			data() {
@@ -112,12 +23,15 @@
 					photo_gallery: false,
 					drawer: true,
 					participants: {},
-					//
+					
+					// make all false except on step1
 					step1: true,
-					step2: false,
-					step3: false,
-					step4: false,
-					step5: false,
+					step2: true,
+					step3: true,
+					step4: true,
+					step5: true,
+					step6: true,
+					step7: true,
 					// Form
 					form: {
 						company_name: '',
@@ -398,18 +312,19 @@
 				getDisabledDates() {
 					axios.get(`${this.base_url}/guest/schedules/get`)
 					.then(({data}) => {
-						var disabled_dates = [];
-						data.forEach(element => {
-							disabled_dates.push(element.date);
-						});
-						
-						$(function () {
-							$('#training-date').datetimepicker({
-								focusOnShow: true,
-								disabledDates: disabled_dates
+						var dates = [];
+						var disabled_dates = data.map(function (date) {
+							date.date_range.forEach(element => {
+								dates.push(element)
 							});
 						});
 
+						$(function () {
+							$('#training-date').datetimepicker({
+								focusOnShow: true,
+								disabledDates: dates
+							});
+						});
 					})
 					.catch((error) => {
 						console.log(error);
@@ -429,5 +344,37 @@
 				}
 			}
 		})
-	</script>
+	</script> --}}
+@endpush
+
+@push('styles')
+	<link href="{{ url('public/libraries/css/bootstrap.min.css') }}" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="{{ url('public/libraries/css/viewer.min.css') }}">
+	<style>
+		.raleway {
+			color: #636b6f;
+			font-family: 'Raleway', sans-serif;
+			font-weight: 600;
+		}
+
+		.menu {
+			width:170px; 
+			text-align:center; 
+			float:left; 
+			position:relative
+		}
+
+		.menu_label {
+			color:#FFFFFF; 
+			float:left; 
+			position:absolute; 
+			top:20px; 
+			left:150px;
+		} 
+		.swal-button--confirm {
+			background-color: #F44336;
+		}
+	</style>
 @endpush

@@ -1,5 +1,5 @@
 <div class="card" style="height: 480px;">
-	<h5 class="card-header">II. Training Information</h5>
+	<h5 class="card-header">Part C. Training Information</h5>
 	<div class="card-body">
 		<div class="form-row">
 			<div class="col-md-3"></div>
@@ -105,4 +105,4 @@
 	</div>
 </div>
 
-@include('guest.participants_dialog')
+@include('guest.dialogs.participants')

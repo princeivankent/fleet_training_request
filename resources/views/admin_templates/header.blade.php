@@ -14,6 +14,12 @@
     <!-- Navbar Right Menu -->
     <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
+            <li class="dropdown messages-menu" id="calendar_tab">
+                <a href="{{ route('calendar') }}">
+                    <i class="fa fa-calendar"></i>&nbsp;
+                    <span>Calendar</span>
+                </a>
+            </li>
             <!-- Messages: style can be found in dropdown.less-->
 
             {{-- <li class="dropdown messages-menu">

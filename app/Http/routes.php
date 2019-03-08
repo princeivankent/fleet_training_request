@@ -22,7 +22,8 @@ Route::get('customer/cancellation_request/{training_request_id}', 'RequestorCont
 Route::get('customer/reschedule_request/{training_request_id}', 'RequestorController@reschedule')->name('customer_reschedule');
 
 // ============== Public Views ================ //
-Route::get('/', function() { return view('guest.home'); });
+// Route::get('/', function() { return view('guest.home'); });
+Route::get('/', function() { return view('layouts.guest_layout'); });
 Route::get('guest/message', function() { return view('public_pages.message'); });
 
 // ============== Login ================ //
@@ -36,6 +37,13 @@ Route::group(['middleware' => ['admin_guard']], function () {
     
     // Logout
     Route::get('admin/logout', 'SessionLoginController@logout');
+
+    // Calendar
+    Route::get('admin/calendar/events', 'CalendarController@events');
+    Route::get('admin/calendar/events/{schedule_id}', 'CalendarController@event');
+    Route::post('admin/calendar/events', 'CalendarController@save_event');
+    Route::put('admin/calendar/events/{schedule_id}', 'CalendarController@update_event');
+    Route::delete('admin/calendar/events/{schedule_id}', 'CalendarController@delete_event');
 
     // Designated Trainors
     Route::get('admin/designated_trainors/assigned_trainors/{training_request_id}', 'DesignatedTrainorController@assigned_trainors');
@@ -124,4 +132,5 @@ Route::group(['middleware' => ['admin_guard']], function () {
     Route::get('admin/trainors', function() { return view('admin.trainors'); })->name('trainors');
     Route::get('admin/schedules', function() { return view('admin.schedules'); })->name('schedules');
     Route::get('admin/special_trainings', function() { return view('admin.special_trainings'); })->name('special_trainings');
+    Route::get('admin/calendar', function() { return view('admin.calendar'); })->name('calendar');
 });
