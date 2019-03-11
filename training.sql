@@ -28,13 +28,9 @@ CREATE TABLE `approval_statuses` (
   KEY `approver_id` (`approver_id`),
   CONSTRAINT `approver_id` FOREIGN KEY (`approver_id`) REFERENCES `approvers` (`approver_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `training_request_id` FOREIGN KEY (`training_request_id`) REFERENCES `training_requests` (`training_request_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=145 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Data for the table `approval_statuses` */
-
-insert  into `approval_statuses`(`approval_status_id`,`training_request_id`,`approver_id`,`status`,`created_at`,`updated_at`) values 
-(143,62,14,'pending','2018-12-26 15:23:45','2018-12-26 15:23:45'),
-(144,63,14,'pending','2018-12-26 17:09:44','2018-12-26 17:09:44');
 
 /*Table structure for table `approvers` */
 
@@ -68,13 +64,9 @@ CREATE TABLE `customer_dealers` (
   PRIMARY KEY (`customer_dealer_id`),
   KEY `cd.training_request_id` (`training_request_id`),
   CONSTRAINT `cd.training_request_id` FOREIGN KEY (`training_request_id`) REFERENCES `training_requests` (`training_request_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Data for the table `customer_dealers` */
-
-insert  into `customer_dealers`(`customer_dealer_id`,`training_request_id`,`dealer`,`branch`) values 
-(57,62,'GenCars','Alabang'),
-(58,63,'GenCars','Alabang');
 
 /*Table structure for table `customer_models` */
 
@@ -87,13 +79,9 @@ CREATE TABLE `customer_models` (
   PRIMARY KEY (`customer_model_id`),
   KEY `cm.training_request_id` (`training_request_id`),
   CONSTRAINT `cm.training_request_id` FOREIGN KEY (`training_request_id`) REFERENCES `training_requests` (`training_request_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Data for the table `customer_models` */
-
-insert  into `customer_models`(`customer_model_id`,`training_request_id`,`model`) values 
-(60,62,'mu-X'),
-(61,63,'C&E Series');
 
 /*Table structure for table `customer_participants` */
 
@@ -107,13 +95,30 @@ CREATE TABLE `customer_participants` (
   PRIMARY KEY (`customer_participant_id`),
   KEY `cp.training_request_id` (`training_request_id`),
   CONSTRAINT `cp.training_request_id` FOREIGN KEY (`training_request_id`) REFERENCES `training_requests` (`training_request_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Data for the table `customer_participants` */
 
-insert  into `customer_participants`(`customer_participant_id`,`training_request_id`,`participant`,`quantity`) values 
-(54,62,'Devs',20),
-(55,63,'Driver',1);
+/*Table structure for table `dealer_details` */
+
+DROP TABLE IF EXISTS `dealer_details`;
+
+CREATE TABLE `dealer_details` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `requestor_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `dealership_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `position` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `contact` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `training_request_id` int(10) unsigned DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `dd_training_request_id` (`training_request_id`),
+  CONSTRAINT `dd_training_request_id` FOREIGN KEY (`training_request_id`) REFERENCES `training_requests` (`training_request_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Data for the table `dealer_details` */
 
 /*Table structure for table `dealers` */
 
@@ -150,13 +155,9 @@ CREATE TABLE `designated_trainors` (
   KEY `td.training_request_id` (`training_request_id`),
   CONSTRAINT `td.training_request_id` FOREIGN KEY (`training_request_id`) REFERENCES `training_requests` (`training_request_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `trainor_id` FOREIGN KEY (`trainor_id`) REFERENCES `trainors` (`trainor_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Data for the table `designated_trainors` */
-
-insert  into `designated_trainors`(`designated_trainor_id`,`training_request_id`,`trainor_id`,`assigned_by`,`created_at`,`updated_at`) values 
-(24,62,22,'Prince Ivan Kent Tiburcio','2018-12-26 15:23:42','2018-12-26 15:23:42'),
-(25,63,22,'Prince Ivan Kent Tiburcio','2018-12-26 17:09:43','2018-12-26 17:09:43');
 
 /*Table structure for table `email_categories` */
 
@@ -203,19 +204,9 @@ CREATE TABLE `emails` (
   PRIMARY KEY (`email_id`),
   KEY `email_category_id` (`email_category_id`),
   CONSTRAINT `email_category_id` FOREIGN KEY (`email_category_id`) REFERENCES `email_categories` (`email_category_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=410 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=472 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Data for the table `emails` */
-
-insert  into `emails`(`email_id`,`email_category_id`,`subject`,`sender`,`recipient`,`title`,`message`,`cc`,`attachment`,`redirect_url`,`accept_url`,`deny_url`,`sent_at`,`created_at`,`updated_at`) values 
-(402,1,'Requesting for a Training','interface-notif@isuzuphil.com','prince-tiburcio@isuzuphil.com','Training Request','Greetings! Prince Ivan Kent Tiburcio of <strong>PayGo</strong> is requesting for a <br/>\r\n							training program: AFTERSALES TRAINING <br/>\r\n							on Dec 26, 2018 Wed - 02:47 PM\r\n							Please click the button to navigate directly to our system.',NULL,NULL,'http://localhost/fleet_training_request/admin/training_requests',NULL,NULL,'2018-12-26 14:52:36','2018-12-26 14:50:12','2018-12-26 14:52:36'),
-(403,5,'Request Submitted','interface-notif@isuzuphil.com','princeivankentmtiburcio@gmail.com','Request Submitted!','Greetings! Your <strong>request for training has been submitted.</strong> Please wait for IPC Administrator to response.<br>\r\n						Thank you.',NULL,NULL,NULL,NULL,NULL,'2018-12-26 14:52:40','2018-12-26 14:50:12','2018-12-26 14:52:40'),
-(404,1,'Requesting for a Training','interface-notif@isuzuphil.com','prince-tiburcio@isuzuphil.com','Training Request','Greetings! Prince Ivan Kent Tiburcio of <strong>PayGo</strong> is requesting for a <br/>\r\n							training program: AFTERSALES TRAINING <br/>\r\n							on Dec 27, 2018 Thu - 08:30 AM\r\n							Please click the button to navigate directly to our system.',NULL,NULL,'http://localhost/fleet_training_request/admin/training_requests',NULL,NULL,'2018-12-26 15:23:04','2018-12-26 15:22:03','2018-12-26 15:23:04'),
-(405,5,'Request Submitted','interface-notif@isuzuphil.com','princeivankentmtiburcio@gmail.com','Request Submitted!','Greetings! Your <strong>request for training has been submitted.</strong> Please wait for IPC Administrator to response.<br>\r\n						Thank you.',NULL,NULL,NULL,NULL,NULL,'2018-12-26 15:23:09','2018-12-26 15:22:03','2018-12-26 15:23:09'),
-(406,2,'Training Request Approval','interface-notif@isuzuphil.com','princeivankentmtiburcio@gmail.com','Training Request Approval','Greetings! Prince Ivan Kent Tiburcio of <strong>PayGo</strong> is requesting for a <br/>\r\n                            training program                                                        : AFTERSALES TRAINING <br/>\r\n                            on       Dec 27, 2018 Thu - 08: 30 AM',NULL,NULL,NULL,'http://localhost/fleet_training_request/superior/approve/143','http://localhost/fleet_training_request/superior/disapprove/143','2018-12-26 15:26:31','2018-12-26 15:23:45','2018-12-26 15:26:31'),
-(407,1,'Requesting for a Training','interface-notif@isuzuphil.com','prince-tiburcio@isuzuphil.com','Training Request','Greetings! Prince Ivan Kent Marquez Tiburcio of <strong>adas</strong> is requesting for a <br/>\r\n							training program: AFTERSALES TRAINING <br/>\r\n							on Nov 20, 2018 Tue - 05:08 PM\r\n							Please click the button to navigate directly to our system.',NULL,NULL,'http://localhost/fleet_training_request/admin/training_requests',NULL,NULL,NULL,'2018-12-26 17:09:20','2018-12-26 17:09:20'),
-(408,5,'Request Submitted','interface-notif@isuzuphil.com','princeivankentmtiburcio@gmail.com','Request Submitted!','Greetings! Your <strong>request for training has been submitted.</strong> Please wait for IPC Administrator to response.<br>\r\n						Thank you.',NULL,NULL,NULL,NULL,NULL,NULL,'2018-12-26 17:09:20','2018-12-26 17:09:20'),
-(409,2,'Training Request Approval','interface-notif@isuzuphil.com','princeivankentmtiburcio@gmail.com','Training Request Approval','Greetings! Prince Ivan Kent Marquez Tiburcio of <strong>adas</strong> is requesting for a <br/>\r\n                            training program                                                        : AFTERSALES TRAINING <br/>\r\n                            on       Nov 20, 2018 Tue - 05: 08 PM',NULL,NULL,NULL,'http://localhost/fleet_training_request/superior/approve/144','http://localhost/fleet_training_request/superior/disapprove/144',NULL,'2018-12-26 17:09:44','2018-12-26 17:09:44');
 
 /*Table structure for table `images` */
 
@@ -230,7 +221,7 @@ CREATE TABLE `images` (
   PRIMARY KEY (`image_id`),
   KEY `training_program_id` (`training_program_id`),
   CONSTRAINT `training_program_id` FOREIGN KEY (`training_program_id`) REFERENCES `training_programs` (`training_program_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Data for the table `images` */
 
@@ -244,7 +235,8 @@ insert  into `images`(`image_id`,`training_program_id`,`image`,`created_at`,`upd
 (8,32,'1538969438.jpeg','2018-10-08 11:30:38','2018-10-08 11:30:38'),
 (9,32,'1538969441.jpeg','2018-10-08 11:30:41','2018-10-08 11:30:41'),
 (10,32,'1538969442.jpeg','2018-10-08 11:30:42','2018-10-08 11:30:42'),
-(11,33,'1539229396.jpeg','2018-10-11 11:43:17','2018-10-11 11:43:17');
+(11,33,'1539229396.jpeg','2018-10-11 11:43:17','2018-10-11 11:43:17'),
+(12,35,'1551680929.jpeg','2019-03-04 14:28:49','2019-03-04 14:28:49');
 
 /*Table structure for table `migrations` */
 
@@ -258,7 +250,8 @@ CREATE TABLE `migrations` (
 /*Data for the table `migrations` */
 
 insert  into `migrations`(`migration`,`batch`) values 
-('2018_11_22_093944_create_schedules_table',1);
+('2018_11_22_093944_create_schedules_table',1),
+('2019_03_07_160346_create_dealer_details_table',2);
 
 /*Table structure for table `password_resets` */
 
@@ -287,7 +280,7 @@ CREATE TABLE `program_features` (
   PRIMARY KEY (`program_feature_id`),
   KEY `pd.training_program_id` (`training_program_id`),
   CONSTRAINT `pd.training_program_id` FOREIGN KEY (`training_program_id`) REFERENCES `training_programs` (`training_program_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Data for the table `program_features` */
 
@@ -297,7 +290,15 @@ insert  into `program_features`(`program_feature_id`,`training_program_id`,`feat
 (24,33,'Pre-drive and Post-drive Safety Practices','2018-10-05 17:29:24','2018-10-05 17:29:24'),
 (41,32,'Basic Periodic Maintenance Service','2018-10-08 09:15:18','2018-10-08 09:15:18'),
 (42,32,'Isuzu Genuine Parts Familiarization','2018-10-08 09:15:18','2018-10-08 09:15:18'),
-(53,32,'Added feature #2','2018-10-09 13:01:24','2018-10-09 13:01:24');
+(53,32,'Added feature #2','2018-10-09 13:01:24','2018-10-09 13:01:24'),
+(54,34,'HTML','2019-03-04 08:01:05','2019-03-04 08:01:05'),
+(55,34,'CSS','2019-03-04 08:01:05','2019-03-04 08:01:05'),
+(56,34,'JavaScript','2019-03-04 08:01:05','2019-03-04 08:01:05'),
+(57,34,'PHP','2019-03-04 08:01:05','2019-03-04 08:01:05'),
+(58,35,'Hybrid Apps','2019-03-04 14:27:37','2019-03-04 14:27:37'),
+(59,35,'JavaScript','2019-03-04 14:27:37','2019-03-04 14:27:37'),
+(60,35,'Reactjs','2019-03-04 14:27:37','2019-03-04 14:27:37'),
+(61,35,'JSX','2019-03-04 14:27:37','2019-03-04 14:27:37');
 
 /*Table structure for table `schedules` */
 
@@ -313,13 +314,9 @@ CREATE TABLE `schedules` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`schedule_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Data for the table `schedules` */
-
-insert  into `schedules`(`schedule_id`,`start_date`,`end_date`,`reason`,`created_by`,`training_request_id`,`created_at`,`updated_at`) values 
-(11,'2018-11-15','2018-11-17','Training Program','Fourmi Structured Cabling Services | Maria Ivy T. Raymundo',60,'2018-12-26 10:50:47','2018-12-26 16:18:19'),
-(22,'2018-11-20','2018-11-21','AFTERSALES TRAINING for training people','adas | Prince Ivan Kent Marquez Tiburcio',63,'2018-12-26 17:09:44','2019-02-21 08:07:54');
 
 /*Table structure for table `special_training_images` */
 
@@ -374,13 +371,15 @@ CREATE TABLE `training_programs` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`training_program_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Data for the table `training_programs` */
 
 insert  into `training_programs`(`training_program_id`,`program_title`,`description`,`created_at`,`updated_at`) values 
 (32,'AFTERSALES TRAINING','Recommended for technician, mechanic and other technical staff.','2018-10-05 17:27:43','2018-10-05 17:27:43'),
-(33,'PRE-DELIVERY TRAINING','Recommended for driver, driver assistant, and other non-technical state.','2018-10-05 17:29:24','2018-10-05 17:29:24');
+(33,'PRE-DELIVERY TRAINING','Recommended for driver, driver assistant, and other non-technical state.','2018-10-05 17:29:24','2018-10-05 17:29:24'),
+(34,'Sample Program','-- none --','2019-03-04 08:01:05','2019-03-04 08:01:05'),
+(35,'Native App Development','Develop mobile apps that can deploy on both Android and iOS platform','2019-03-04 14:27:37','2019-03-04 14:27:37');
 
 /*Table structure for table `training_requests` */
 
@@ -408,13 +407,30 @@ CREATE TABLE `training_requests` (
   KEY `unit_model_id` (`unit_model_id`),
   CONSTRAINT `r.training_program_id` FOREIGN KEY (`training_program_id`) REFERENCES `training_programs` (`training_program_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `unit_model_id` FOREIGN KEY (`unit_model_id`) REFERENCES `unit_models` (`unit_model_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Data for the table `training_requests` */
 
 insert  into `training_requests`(`training_request_id`,`company_name`,`office_address`,`contact_person`,`email`,`position`,`contact_number`,`training_date`,`training_venue`,`training_address`,`training_program_id`,`unit_model_id`,`request_status`,`requestor_confirmation`,`created_at`,`updated_at`) values 
-(62,'PayGo','Parian Calamba Laguna','Prince Ivan Kent Tiburcio','princeivankentmtiburcio@gmail.com','Web Developer','9467311489','2018-12-27 08:30:00','Fleet Customer','Parian Calamba Laguna',32,22,'approved','pending','2018-12-26 15:22:03','2018-12-26 15:23:45'),
-(63,'adas','dasdas','Prince Ivan Kent Marquez Tiburcio','princeivankentmtiburcio@gmail.com','asdasd','9467311489','2018-11-20 17:08:00','Fleet Customer','asdasd',32,22,'approved','pending','2018-12-26 17:09:20','2018-12-26 17:09:44');
+(80,'GenCars','Alabang','Prince','secretary@gmail.com','Secretary','9467113970','2019-03-30 00:00:00','IPC','Alabang Colliseum',32,22,'pending','pending','2019-03-08 09:19:52','2019-03-08 09:19:52'),
+(81,'GenCars','Alabang','Prince','secretary@gmail.com','Secretary','9467113970','2019-03-30 00:00:00','IPC','Alabang Colliseum',32,22,'pending','pending','2019-03-08 09:20:52','2019-03-08 09:20:52'),
+(82,'GenCars','Alabang','Prince','secretary@gmail.com','Secretary','9467113970','2019-03-30 00:00:00','IPC','Alabang Colliseum',32,22,'pending','pending','2019-03-08 09:20:58','2019-03-08 09:20:58'),
+(83,'GenCars','Alabang','Prince','secretary@gmail.com','Secretary','9467113970','2019-03-30 00:00:00','IPC','Alabang Colliseum',32,22,'pending','pending','2019-03-08 09:21:57','2019-03-08 09:21:57'),
+(84,'GenCars','Alabang','Prince','secretary@gmail.com','Secretary','9467113970','2019-03-30 00:00:00','IPC','Alabang Colliseum',32,22,'pending','pending','2019-03-08 09:24:59','2019-03-08 09:24:59'),
+(85,'GenCars','Alabang','Prince','secretary@gmail.com','Secretary','9467113970','2019-03-30 00:00:00','IPC','Alabang Colliseum',32,22,'pending','pending','2019-03-08 09:25:01','2019-03-08 09:25:01'),
+(86,'GenCars','Alabang','Prince','secretary@gmail.com','Secretary','9467113970','2019-03-30 00:00:00','IPC','Alabang Colliseum',32,22,'pending','pending','2019-03-08 09:25:02','2019-03-08 09:25:02'),
+(87,'GenCars','Alabang','Prince','secretary@gmail.com','Secretary','9467113970','2019-03-30 00:00:00','IPC','Alabang Colliseum',32,22,'pending','pending','2019-03-08 09:27:14','2019-03-08 09:27:14'),
+(88,'GenCars','Alabang','Prince','secretary@gmail.com','Secretary','9467113970','2019-03-30 00:00:00','IPC','Alabang Colliseum',32,22,'pending','pending','2019-03-08 09:28:20','2019-03-08 09:28:20'),
+(89,'GenCars','Alabang','Prince','secretary@gmail.com','Secretary','9467113970','2019-03-30 00:00:00','IPC','Alabang Colliseum',32,22,'pending','pending','2019-03-08 09:29:12','2019-03-08 09:29:12'),
+(90,'sdfsdf','asdasd','dasdasd','asdasd@gmail.com','asdasd','9467311489','2019-03-08 00:00:00','IPC Customer','sdfsdfsdf',32,21,'pending','pending','2019-03-08 09:59:18','2019-03-08 09:59:18'),
+(91,'fsfsdfsd','fsdfsd','fsdfsdf','sdfsdfsdfs@isuzuphil.com','sfsdfsdf','9467311489','2019-03-08 00:00:00','IPC Customer','fsdfsdfsdf',32,21,'pending','pending','2019-03-08 10:01:31','2019-03-08 10:01:31'),
+(92,'dasdasdasd','asdadasd','asdas','dasdasdas@gmail.com','dasdas','9467311489','2019-03-08 00:00:00','IPC','sfsdf',32,22,'pending','pending','2019-03-08 10:02:42','2019-03-08 10:02:42'),
+(93,'dfsdf','sfsdfsf','sfsfsf','sfsf@gmail.com','sfsf','9467631548','2019-03-30 00:00:00','IPC','dfsf',32,29,'pending','pending','2019-03-08 10:04:43','2019-03-08 10:04:43'),
+(94,'sdfsd','fsdfsd','fsfsdf','sfsf@isuzuphil.com','sdfsdf','9467311488','2019-03-15 00:00:00','IPC','sdfsdf',32,22,'pending','pending','2019-03-08 10:06:07','2019-03-08 10:06:07'),
+(95,'GenCars','Alabang','Prince','secretary@gmail.com','Secretary','9467113970','2019-03-30 00:00:00','IPC','Alabang Colliseum',32,22,'pending','pending','2019-03-08 10:52:36','2019-03-08 10:52:36'),
+(96,'GenCars','Alabang','Prince','secretary@gmail.com','Secretary','9467113970','2019-03-30 00:00:00','IPC','Alabang Colliseum',32,22,'pending','pending','2019-03-08 10:53:38','2019-03-08 10:53:38'),
+(97,'GenCars','Alabang','Prince','secretary@gmail.com','Secretary','9467113970','2019-03-30 00:00:00','IPC','Alabang Colliseum',32,22,'pending','pending','2019-03-08 10:54:22','2019-03-08 10:54:22'),
+(98,'asdas','dasdad','asdada','asda@gmail.com','adad','9467311489','2019-03-11 00:00:00','IPC Customer','asdadasd',32,22,'pending','pending','2019-03-08 10:58:34','2019-03-08 10:58:34');
 
 /*Table structure for table `trainors` */
 
