@@ -515,7 +515,7 @@ eval("// window._ = require('lodash');\n// window.Popper = require('popper.js').
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\wamp64\www\fleet_training_request\resources\assets\js\admin.js */"./resources/assets/js/admin.js");
+module.exports = __webpack_require__(/*! C:\wamp\www\fleet_training_request\resources\assets\js\admin.js */"./resources/assets/js/admin.js");
 
 
 /***/ })

@@ -815,7 +815,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var mate
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\wamp64\www\fleet_training_request\resources\assets\js\client.js */"./resources/assets/js/client.js");
+module.exports = __webpack_require__(/*! C:\wamp\www\fleet_training_request\resources\assets\js\client.js */"./resources/assets/js/client.js");
 
 
 /***/ })

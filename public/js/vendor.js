@@ -14404,7 +14404,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-var withParams = Object({"MIX_APP_URL":"http://localhost/fleet_training_request","MIX_DEV_URL":"http://localhost/fleet_training_request/","MIX_PROD_URL":"http://portal.isuzuphil.com/fleet_training_request/","NODE_ENV":"development"}).BUILD === 'web' ? __webpack_require__(/*! ./withParamsBrowser */ "./node_modules/vuelidate/lib/withParamsBrowser.js").withParams : __webpack_require__(/*! ./params */ "./node_modules/vuelidate/lib/params.js").withParams;
+var withParams = Object({"MIX_APP_URL":"http://localhost/fleet_training_request","MIX_PROD_URL":"http://localhost/fleet_training_request/","MIX_PROD_URL":"http://portal.isuzuphil.com/fleet_training_request/","NODE_ENV":"development"}).BUILD === 'web' ? __webpack_require__(/*! ./withParamsBrowser */ "./node_modules/vuelidate/lib/withParamsBrowser.js").withParams : __webpack_require__(/*! ./params */ "./node_modules/vuelidate/lib/params.js").withParams;
 var _default = withParams;
 exports.default = _default;
 

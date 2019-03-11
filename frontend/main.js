@@ -13,6 +13,11 @@ Vue.use(Vuetify)
 Vue.use(Vuex)
 Vue.use(VeeValidate)
 
+// Set axios base URL
+const origin = window.location.origin
+const api = `${origin}/fleet_training_request/api/`
+ApiService.init(api)
+
 Vue.mixin({
   data () {
     return {
@@ -20,16 +25,6 @@ Vue.mixin({
     }
   }
 })
-
-// Set axios x-csrf-token
-// window.axios = require('axios')
-// window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
-// let token = document.head.querySelector('meta[name="csrf-token"]')
-// if (token) window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content
-// else console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token')
-
-// Set axios base URL
-ApiService.init(process.env.MIX_API_URL)
 
 new Vue({
   store,
