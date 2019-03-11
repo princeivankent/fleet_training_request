@@ -15,6 +15,7 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
+        \Barryvdh\Cors\HandlePreflightSimple::class
     ];
 
     /**
@@ -33,11 +34,11 @@ class Kernel extends HttpKernel
 
         'api' => [
             'throttle:60,1',
-            \Barryvdh\Cors\HandleCors::class,
+            'cors'
         ],
 
         'admin_guard' => [
-            \App\Http\Middleware\AdminGuardMiddleware::class
+            \App\Http\Middleware\AdminGuardMiddleware::class,
         ]
     ];
 
@@ -54,5 +55,6 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Foundation\Http\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'cors' => \Barryvdh\Cors\HandleCors::class, // add this line to enable cors to your routes
     ];
 }

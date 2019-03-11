@@ -1,4 +1,6 @@
 <?php
+header('Access-Control-Allow-Origin: *');
+header( 'Access-Control-Allow-Headers: Authorization, Content-Type');
 
 Route::get('guest/dealers/get', 'Api\DealerController@index');
 Route::get('guest/unit_models/get', 'Api\UnitModelController@index');
