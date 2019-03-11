@@ -113,6 +113,7 @@
 <script>
 import { mapGetters, mapState } from 'vuex'
 import moment from 'moment'
+import axios from 'axios'
 import TrainingFormParticipants from './TrainingFormParticipants'
 
 export default {
@@ -188,7 +189,7 @@ export default {
       return this.disabledDates.indexOf(date) === -1 
     },
     getDisabledDates () {
-      axios.get(`${this.base_url}api/guest/schedules/get`)
+      axios.get(`${process.env.MIX_API_URL}/guest/schedules/get`)
       .then(({data}) => {
         var dates = []
         data.map((date) => {

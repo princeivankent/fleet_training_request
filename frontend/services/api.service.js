@@ -3,7 +3,11 @@ import axios from 'axios'
 const ApiService = {
 
   init(baseURL) {
+    let token = document.head.querySelector('meta[name="csrf-token"]')
     axios.defaults.baseURL = baseURL
+    axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content
+    // if (token) axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content
+    // else console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token')
   },
 
   setHeader() {

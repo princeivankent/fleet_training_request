@@ -163,6 +163,7 @@
 
 <script>
 import { mapGetters, mapState } from 'vuex'
+import axios from 'axios'
 
 export default {
   name: 'CustomerForm',
@@ -251,7 +252,7 @@ export default {
       this.$store.commit('request/UPDATE_FORM', {key:field,value:value})
     },
     fetchDealers () {
-      axios.get(`${this.base_url}api/guest/dealers/get`)
+      axios.get(`${process.env.MIX_API_URL}/guest/dealers/get`)
       .then(({data}) => {
         data.forEach(element => {
           element.dealer = element.dealer + ' | ' + element.branch
@@ -263,7 +264,7 @@ export default {
       })
     },
     fetchUnitModels () {
-      axios.get(`${this.base_url}api/guest/unit_models/get`)
+      axios.get(`${process.env.MIX_API_URL}/guest/unit_models/get`)
       .then(({data}) => {
         this.models = data;
       })
