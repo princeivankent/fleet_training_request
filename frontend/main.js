@@ -16,7 +16,7 @@ Vue.use(VeeValidate)
 Vue.mixin({
   data () {
     return {
-      base_url: process.env.MIX_DEV_URL
+      base_url: process.env.MIX_PROD_URL
     }
   }
 })
