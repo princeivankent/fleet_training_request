@@ -43,7 +43,8 @@ class TrainingRequestController extends Controller
 				'training_program',
 				'unit_model',
 				'trainor_designations.trainor',
-				'dealer_details'
+				'dealer_details',
+				'approval_statuses'
 			])
 			->get()
 		);

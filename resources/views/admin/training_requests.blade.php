@@ -78,23 +78,23 @@
 				<h3 class="box-title">Training Requests</h3>
 			</div>
 			<div class="box-body">
-				<table id="training_requests" class="table table-responsive table-bordered table-hover" width="100%">
+				<table id="training_requests" class="table table-responsive table-bordered table-hover">
 					<thead>
 						<tr>
-							<th class="text-center text-uppercase">&nbsp;</th>
-							<th class="text-center text-uppercase">Company Name</th>
-							<th class="text-center text-uppercase">Contact Person</th>
-							<th class="text-center text-uppercase">Email</th>
-							<th class="text-center text-uppercase">Contact Number</th>
-							<th class="text-center text-uppercase">Requesting For</th>
-							<th class="text-center text-uppercase">Training Date</th>
-							<th class="text-center text-uppercase">Admin</th>
-							<th class="text-center text-uppercase">Requestor</th>
+							<th class="text-nowrap text-center text-uppercase">&nbsp;</th>
+							<th class="text-nowrap text-center text-uppercase">Company Name</th>
+							<th class="text-nowrap text-center text-uppercase">Contact Person</th>
+							<th class="text-nowrap text-center text-uppercase">Email</th>
+							<th class="text-nowrap text-center text-uppercase">Contact Number</th>
+							<th class="text-nowrap text-center text-uppercase">Requesting For</th>
+							<th class="text-nowrap text-center text-uppercase">Training Date</th>
+							<th class="text-nowrap text-center text-uppercase">Admin</th>
+							<th class="text-nowrap text-center text-uppercase">Requestor</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr v-for="(item, index) in items" v-bind:key="item.training_request_id">
-							<td class="text-center">
+							<td class="text-nowrap text-center">
 								<!-- Split button -->
 								<div class="btn-group">
 									<button type="button" class="btn btn-sm btn-primary dropdown-toggle py-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -145,13 +145,13 @@
 									</ul>
 								</div>
 							</td>
-							<td class="text-center">@{{ item.company_name }}</td>
-							<td class="text-center">@{{ item.contact_person }}</td>
-							<td class="text-center">@{{ item.email }}</td>
-							<td class="text-center">@{{ item.contact_number }}</td>
-							<td class="text-center">@{{ item.training_program.program_title }}</td>
-							<td class="text-center">@{{ item.training_date | dateTimeFormat }}</td>
-							<td class="text-center">
+							<td class="text-nowrap text-center">@{{ item.company_name }}</td>
+							<td class="text-nowrap text-center">@{{ item.contact_person }}</td>
+							<td class="text-nowrap text-center">@{{ item.email }}</td>
+							<td class="text-nowrap text-center">@{{ item.contact_number }}</td>
+							<td class="text-nowrap text-center">@{{ item.training_program.program_title }}</td>
+							<td class="text-nowrap text-center">@{{ item.training_date | dateTimeFormat }}</td>
+							<td class="text-nowrap text-center">
 								<div v-if="item.request_status == 'approved'" class="label label-success">
 									APPROVED
 								</div>
@@ -162,7 +162,7 @@
 									DENIED
 								</div>
 							</td>
-							<td class="text-center">
+							<td class="text-nowrap text-center">
 								<div v-if="item.requestor_confirmation == 'confirmed'" class="label label-success">
 									CONFIRMED
 								</div>
@@ -270,7 +270,9 @@
 							this.items = data;
 							
 							setTimeout(() => {
-								$('#training_requests').DataTable();
+								$('#training_requests').DataTable({
+									scrollX: true
+								});
 							});
 						})
 						.catch((error) => {
