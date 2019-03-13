@@ -93,8 +93,8 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr v-for="(item, index) in items" v-bind:key="item.training_request_id">
-							<td class="text-nowrap text-center">
+						<tr v-for="(item, index) in requests" v-bind:key="item.training_request_id">
+							<td class="text-nowrap">
 								<!-- Split button -->
 								<div class="btn-group">
 									<button type="button" class="btn btn-sm btn-primary dropdown-toggle py-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -128,12 +128,16 @@
 
 										<li v-if="item.request_status != 'denied'" role="separator" class="divider"></li>
 										<li v-if="item.request_status != 'denied' && item.request_status != 'approved'" class="dropdown-header">Your actions</li>
-										<li v-if="item.request_status == 'approved'" class="text-center">
-											<div class="label label-success" style="pading: 8px;">
-												<i class="fa fa-check-circle"></i> &nbsp;
-												already approved
+
+										<li 
+										v-if="item.request_status == 'approved'" 
+										class="text-center">
+											<div :class="`label label-${item.color_stats} py-2 px-2`" style="pading: 8px;">
+												<i v-if="item.stats == 'approved'" class="fa fa-check-circle mr-3"></i>
+												@{{ item.stats.toUpperCase() }}
 											</div>
 										</li>
+
 										<li v-if="item.request_status != 'denied' && item.request_status != 'approved'" class="text-left"><a href="#" v-on:click="showDesignatedTrainors(item.training_request_id)">
 											<i class="fa fa-check text-success"></i>&nbsp;
 											Approve
@@ -145,13 +149,13 @@
 									</ul>
 								</div>
 							</td>
-							<td class="text-nowrap text-center">@{{ item.company_name }}</td>
-							<td class="text-nowrap text-center">@{{ item.contact_person }}</td>
-							<td class="text-nowrap text-center">@{{ item.email }}</td>
-							<td class="text-nowrap text-center">@{{ item.contact_number }}</td>
-							<td class="text-nowrap text-center">@{{ item.training_program.program_title }}</td>
-							<td class="text-nowrap text-center">@{{ item.training_date | dateTimeFormat }}</td>
-							<td class="text-nowrap text-center">
+							<td class="text-nowrap">@{{ item.company_name }}</td>
+							<td class="text-nowrap">@{{ item.contact_person }}</td>
+							<td class="text-nowrap">@{{ item.email }}</td>
+							<td class="text-nowrap">@{{ item.contact_number }}</td>
+							<td class="text-nowrap">@{{ item.training_program.program_title }}</td>
+							<td class="text-nowrap">@{{ item.training_date | dateTimeFormat }}</td>
+							<td class="text-nowrap">
 								<div v-if="item.request_status == 'approved'" class="label label-success">
 									APPROVED
 								</div>
@@ -162,7 +166,7 @@
 									DENIED
 								</div>
 							</td>
-							<td class="text-nowrap text-center">
+							<td class="text-nowrap">
 								<div v-if="item.requestor_confirmation == 'confirmed'" class="label label-success">
 									CONFIRMED
 								</div>
@@ -214,6 +218,35 @@
 					designated_trainors: [],
 					toggledButton: false
 				}
+			},
+			computed: {
+				requests () {
+					var stats = ''
+					var color_stats = ''
+					var items = this.items
+
+					items.forEach((el, i) => {
+						el.approval_statuses.forEach(status => {
+							if (status.status === 'approved') {
+								stats = 'approved'
+								color_stats = 'success'
+							}
+							if (status.status === 'denied') {
+								stats = 'denied'
+								color_stats = 'danger'
+							}
+							else {
+								stats = 'pending'
+								color_stats = 'warning'
+							}
+						});
+
+						el['stats'] = stats
+						el['color_stats'] = color_stats
+					});
+
+					return items
+				}	
 			},
 			created() {
 				this.getDashboard();
@@ -268,8 +301,8 @@
 					return axios.get(`${this.base_url}/admin/training_requests/get`)
 						.then(({data}) => {
 							this.items = data;
-							
-							setTimeout(() => {
+
+							this.$nextTick(() => {
 								$('#training_requests').DataTable({
 									scrollX: true
 								});

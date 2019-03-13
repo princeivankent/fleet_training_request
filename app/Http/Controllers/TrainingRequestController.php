@@ -19,11 +19,31 @@ class TrainingRequestController extends Controller
 {	
 	public function training_requests_statuses()
 	{
+		$query = TrainingRequest::with('approval_statuses')->get();
+		$all = 0;
+		$approved = 0;
+		$pending = 0;
+		$denied = 0;
+		$stat = '';
+		foreach ($query as $value) {
+			// loop thru approval statuses and capture priority status
+			foreach ($value['approval_statuses'] as $stats) {
+				if ($stats['status'] == 'approved') $stat = 'approved';
+				if ($stats['status'] == 'denied') $stat = 'denied';
+				else $stat = 'pending';
+			}
+			// next append variables based on last stat value
+			if ($stat == 'approved') $approved++;
+			if ($stat == 'pending') $pending++;
+			if ($stat == 'denied') $denied++;
+			$all++;
+		}
+
 		return response()->json([
-			'all_requests' => TrainingRequest::count(),
-			'pending_requests' => TrainingRequest::where('request_status', 'pending')->count(),
-			'approved_requests' => TrainingRequest::where('request_status', 'approved')->count(),
-			'denied_requests' => TrainingRequest::where('request_status', 'denied')->count()
+			'all_requests'      => $all,
+			'pending_requests'  => $pending,
+			'approved_requests' => $approved,
+			'denied_requests'   => $denied
 		]);
 	}
 
