@@ -9,11 +9,9 @@
         <v-card-title
           class="headline"
           primary-title
+          style="color: #444444"
         >
-          <p>
-            Please select <br>
-            which type of <strong>Requestor</strong> you are?
-          </p>
+          Please select which type <br/>of Requestor you are?
         </v-card-title>
 
         <v-card-text>
