@@ -124,7 +124,7 @@ export default {
       // date: new Date().toISOString().substr(0, 10),
       modal: false,
       reactive: true,
-      training_venues: ['IPC Customer', 'IPC'],
+      training_venues: ['Fleet Customer Premises', 'IPC'],
       disabledDates: [],
       shouldDisable: false,
     }
@@ -150,6 +150,13 @@ export default {
         return this.$store.state.request.form.training_venue
       },
       set (val) {
+        if (val === 'IPC') {
+          this.training_address = 'Isuzu Philippines Corporation 114 Technology Avenue Phase II, Laguna Technopark Biñan Laguna 4024 Philippines'
+        }
+        else {
+          this.training_address = ''
+        }
+
         this.$store.commit('request/UPDATE_FORM', {key:'training_venue',value:val})
       }
     },
