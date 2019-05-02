@@ -10,7 +10,10 @@
           class="headline"
           primary-title
         >
-          Who are you?
+          <p>
+            Please select <br>
+            which type of <strong>Requestor</strong> you are?
+          </p>
         </v-card-title>
 
         <v-card-text>
