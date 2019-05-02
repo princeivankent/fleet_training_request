@@ -35,7 +35,7 @@
                   color="default" 
                   small
                   >
-                    FEATURES
+                    Topics
                   </v-btn>
                   <v-btn 
                   @click="openGallery(index)" 
