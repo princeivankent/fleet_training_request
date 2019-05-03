@@ -41,6 +41,7 @@
                   width="100%"
                   color="green"
                   scrollable
+                  dark
                   >
                     <v-spacer></v-spacer>
                     <v-btn flat color="green" @click="modal = false">Cancel</v-btn>
@@ -48,6 +49,13 @@
                   </v-date-picker>
                 </v-dialog>
               </v-flex>
+            </v-layout>
+
+            <v-layout justify-center row wrap>
+              <v-time-picker 
+              label="Select Time" 
+              v-model="training_time"
+              ></v-time-picker>
             </v-layout>
 
             <v-layout justify-center row wrap>
@@ -127,6 +135,7 @@ export default {
       training_venues: ['Fleet Customer Premises', 'IPC'],
       disabledDates: [],
       shouldDisable: false,
+      time: ''
     }
   },
   computed: {
@@ -143,6 +152,14 @@ export default {
       },
       set (val) {
         this.$store.commit('request/UPDATE_FORM', {key:'training_date',value:val})
+      }
+    },
+    training_time: {
+      get () {
+        return this.$store.state.request.form.training_time
+      },
+      set (val) {
+        this.$store.commit('request/UPDATE_FORM', {key:'training_time',value:val})
       }
     },
     training_venue: {
@@ -183,7 +200,7 @@ export default {
       set (val) {
         this.$store.commit('request/UPDATE_FORM', {key:'training_participants',value:val})
       }
-    },
+    }
   },
   mounted () {
     this.getDisabledDates()

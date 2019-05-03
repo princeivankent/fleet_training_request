@@ -24,6 +24,7 @@ const request = {
 
       selling_dealer: [],
       training_date: '',
+      training_time: '',
       training_venue: '',
       training_address: '',
       training_program_id: 0,
@@ -98,6 +99,7 @@ const request = {
 
         selling_dealer: [],
         training_date: '',
+        training_time: '',
         training_venue: '',
         training_address: '',
         training_program_id: 0,
@@ -196,10 +198,14 @@ const request = {
       const {data} = await ApiService.get('special_trainings')
       commit('SET_SPECIAL_TRAININGS', data)
     },
-    async submitRequest ({commit}, payload) {
+    async submitRequest ({commit,state}, payload) {
       commit('INITIALIZE_LOADER')
 
-      const submitRequest = async () => {
+      // Added Time on training_date for adjustment feature
+      let datetime = state.form.training_date + ' ' + state.form.training_time
+      payload['training_date'] = datetime
+
+      const submit = async () => {
         try {
           const {data} = await ApiService.post('submit', payload)
           return data
@@ -208,7 +214,7 @@ const request = {
         }
       }
 
-      submitRequest()
+      submit()
       .then(() => {
         commit('TERMINATE_LOADER')
       })
