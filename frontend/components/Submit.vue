@@ -99,6 +99,7 @@ export default {
     },
     back () {
       this.$store.commit('request/BACK_PAGE')
+      this.$store.commit('request/RESET_SPECIAL_TRAININGS')
     },
     changeButtonState () {
       this.button_status = Object.assign({}, this.button_status, {

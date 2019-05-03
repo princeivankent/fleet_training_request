@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div v-if="$store.state.request.special_trainings.length != 0">
     <v-layout row wrap>
       <v-flex
-      v-for="(item,index) in special_trainings"
+      v-for="(item,index) in $store.state.request.special_trainings"
       :key="index"
       xs4
       >
@@ -35,19 +35,8 @@
 export default {
   name: 'SpecialTrainings',
   computed: {
-    special_trainings () {
-      return this.$store.state.request.special_trainings
-    },
     photoURL () {
       return `${this.base_url}public/images/photo_gallery/`
-    }
-  },
-  created () {
-    this.fetchSpecialTrainings()
-  },
-  methods: {
-    fetchSpecialTrainings () {
-      this.$store.dispatch('request/setSpecialTrainings')
     }
   }
 }

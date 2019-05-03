@@ -14,6 +14,7 @@ import Header from './templates/Header'
 import Home from './views/Home'
 
 export default {
+  name: 'App',
   components: {Header,Home}
 }
 </script>

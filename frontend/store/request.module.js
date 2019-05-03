@@ -53,6 +53,12 @@ const request = {
     getFeatures: state => payload => {
       const data = state.training_programs.find((item, index) => index === payload)
       return data.program_features
+    },
+    getCurrentPage (state) {
+      return state.current_page
+    },
+    getSpecialTrainings (state) {
+      return state.special_trainings
     }
   },
   mutations: {
@@ -152,7 +158,10 @@ const request = {
       state.isSubmitting = false      
     },
     TRIGGER_NOTIFICATION: (state, payload) => state.toastNotif = {status: payload.status, message: payload.message},
-    CLOSE_NOTIFICATION: (state) => state.toastNotif = {status: false, message: ''}
+    CLOSE_NOTIFICATION: (state) => state.toastNotif = {status: false, message: ''},
+    RESET_SPECIAL_TRAININGS (state) {
+      state.special_trainings = []
+    }
   },
   actions: {
     requestorType ({commit}, requestor) {
