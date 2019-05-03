@@ -24,7 +24,7 @@
                   <v-text-field
                   slot="activator"
                   :value="dateFormatted"
-                  label="Request Training Date"
+                  label="Training Date"
                   append-icon="event"
                   outline
                   clearable
@@ -52,10 +52,37 @@
             </v-layout>
 
             <v-layout justify-center row wrap>
-              <v-time-picker 
-              label="Select Time" 
-              v-model="training_time"
-              ></v-time-picker>
+              <v-flex xs8 sm8 md8 lg5>
+                <v-dialog
+                  ref="dialog2"
+                  v-model="timePickerModal"
+                  :return-value.sync="form.training_time"
+                  persistent
+                  lazy
+                  full-width
+                  width="290px"
+                >
+                  <v-text-field
+                  slot="activator"
+                  :value="timeFormatted"
+                  label="Training Time"
+                  append-icon="access_time"
+                  outline
+                  clearable
+                  readonly
+                  ></v-text-field>
+
+                  <v-time-picker
+                    v-if="timePickerModal"
+                    v-model="training_time"
+                    full-width
+                  >
+                    <v-spacer></v-spacer>
+                    <v-btn flat color="primary" @click="timePickerModal = false">Cancel</v-btn>
+                    <v-btn flat color="primary" @click="$refs.dialog2.save(form.training_time)">OK</v-btn>
+                  </v-time-picker>
+                </v-dialog>
+              </v-flex>
             </v-layout>
 
             <v-layout justify-center row wrap>
@@ -135,6 +162,7 @@ export default {
       training_venues: ['Fleet Customer Premises', 'IPC'],
       disabledDates: [],
       shouldDisable: false,
+      timePickerModal: false,
       time: ''
     }
   },
@@ -142,6 +170,9 @@ export default {
     ...mapState('request', ['form']),
     dateFormatted () {
       return this.form.training_date ? moment(this.form.training_date).format('dddd, MMMM Do YYYY') : ''
+    },
+    timeFormatted () {
+      return this.form.training_time ? this.convertTime(this.form.training_time) : ''
     },
     isFormInvalid () {
       return Object.keys(this.fields).some(key => this.fields[key].invalid);
@@ -238,6 +269,20 @@ export default {
       else {
         this.$store.commit('request/NEXT_PAGE')
       }
+    },
+    /**
+     * Convert 24hr time into 12hr time (12:00 AM)
+     */
+    convertTime (time) {
+      // Check correct time format and split into components
+      time = time.toString().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+      if (time.length > 1) { // If time format correct
+        time = time.slice (1);  // Remove full string match value
+        time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
+        time[0] = +time[0] % 12 || 12; // Adjust hours
+      }
+      return time.join (''); // return adjusted time or original string
     }
   }
 }
