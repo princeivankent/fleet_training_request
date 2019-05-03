@@ -7,8 +7,6 @@
             <h3 class="raleway headline mb-0">Please select your preferred Isuzu model that will be the focus of training</h3>
             <v-btn 
             @click="back"
-            color="red darken-1" 
-            dark
             >
               <v-icon small>fa fa-arrow-circle-left</v-icon>&nbsp;
               Back
