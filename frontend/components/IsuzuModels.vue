@@ -4,7 +4,9 @@
       <v-card flat>
         <v-card-title primary-title>
           <div>
-            <h3 class="raleway headline mb-0">Please select your preferred Isuzu model that will be the focus of training</h3>
+            <h3 class="raleway headline mb-0">
+              Choose the Isuzu model for the requested training
+            </h3>
             <v-btn 
             @click="back"
             >

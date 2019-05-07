@@ -29,7 +29,7 @@
 							data-width="100%"
 							data-size="6">
 								<option value="Fleet Customer">Fleet Customer</option>
-								<option value="IPC">IPC</option>
+								<option value="Isuzu Training Center">Isuzu Training Center</option>
 							</select>
 						</div>
 					</div>

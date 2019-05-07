@@ -102,11 +102,11 @@
             <v-layout justify-center row wrap>
               <v-flex xs8 sm8 md8 lg5>
                 <v-text-field
-                label="Training Address"
-                name="Training Address"
+                label="Training Venue Address"
+                name="Training Venue Address"
                 v-model="training_address"
                 v-validate="'required'"
-                :error-messages="errors.first('Training Address')"
+                :error-messages="errors.first('Training Venue Address')"
                 outline
                 ></v-text-field>
               </v-flex>
@@ -159,7 +159,7 @@ export default {
       // date: new Date().toISOString().substr(0, 10),
       modal: false,
       reactive: true,
-      training_venues: ['Fleet Customer Premises', 'IPC'],
+      training_venues: ['Fleet Customer Premises', 'Isuzu Training Center'], // Isuzu Training Center
       disabledDates: [],
       shouldDisable: false,
       timePickerModal: false,
@@ -198,7 +198,7 @@ export default {
         return this.$store.state.request.form.training_venue
       },
       set (val) {
-        if (val === 'IPC') {
+        if (val === 'Isuzu Training Center') {
           this.training_address = 'Isuzu Philippines Corporation 114 Technology Avenue Phase II, Laguna Technopark Biñan Laguna 4024 Philippines'
         }
         else {

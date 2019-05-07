@@ -18,12 +18,7 @@
               <li>All data provided will serve as our guide for your training request.</li>
               <li>In case you have correction with the information you provided, changes on training venue, please contact your Isuzu dealer immediately.</li>
               <li>
-                Please regulary check your registered email address. You must received a 2 (two) consecutive email notification to give you an update with your request <br>
-                <ul>
-                  <li>1st email - Request successfully send (No need to response)</li>
-                  <li>2nd email - Training Confirmation (Response is needed)</li>
-                </ul>
-
+                Please regulary check your registered email address for the updates of your training request. <br>
               </li>
             </ol>
             <br>
