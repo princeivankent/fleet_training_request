@@ -2,8 +2,23 @@
 
 @push('styles')
 	<link rel="stylesheet" href="{{ url('public/libraries/adminlte/dataTables.bootstrap.min.css') }}">
-	{{-- <link rel="stylesheet" href="{{ url('public/libraries/adminlte/jquery.datetimepicker.min.css') }}"> --}}
 	<link rel="stylesheet" href="{{ url('public/libraries/adminlte/bootstrap-datetimepicker.min.css') }}">
+	<style>
+		@media screen and (max-width: 1400px) {
+			.table-responsive {
+				margin-bottom: 15px;
+				overflow-x: auto;
+				overflow-y: hidden;
+				width: 100%;
+			}
+			.table-responsive > .table {
+				margin-bottom: 0;
+			}
+			.table-responsive > .table > thead > tr > th, .table-responsive > .table > tbody > tr > th, .table-responsive > .table > tfoot > tr > th, .table-responsive > .table > thead > tr > td, .table-responsive > .table > tbody > tr > td, .table-responsive > .table > tfoot > tr > td {
+				white-space: nowrap;
+			}
+		}
+	</style>
 @endpush
 
 @section('content')
@@ -77,8 +92,8 @@
 			<div class="box-header with-border">
 				<h3 class="box-title">Training Requests</h3>
 			</div>
-			<div class="box-body">
-				<table id="training_requests" class="table table-responsive table-bordered table-hover">
+			<div class="box-body table-responsive">
+				<table id="training_requests" class="table table-bordered table-hover">
 					<thead>
 						<tr>
 							<th class="text-nowrap text-center text-uppercase">&nbsp;</th>
@@ -203,6 +218,14 @@
 			// $.datetimepicker.setLocale('en');
 			// $('#datetimepicker').datetimepicker();
 			$('#datetimepicker1').datetimepicker();
+			
+			$('.table-responsive').on('show.bs.dropdown', function () {
+				$('.table-responsive').css( "overflow", "inherit" );
+			});
+
+			$('.table-responsive').on('hide.bs.dropdown', function () {
+				$('.table-responsive').css( "overflow", "auto" );
+			})
 		});
 
 		new Vue({
