@@ -8,6 +8,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css'
 import {store} from './store/index';
 import ApiService from './services/api.service'
 import App from './App'
+import moment from 'moment'
 
 Vue.use(Vuetify)
 Vue.use(Vuex)

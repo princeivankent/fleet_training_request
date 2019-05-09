@@ -240,9 +240,11 @@ export default {
     updateForm (field, value) {
       this.$store.commit('request/UPDATE_FORM', {key:field,value:value})
     },
+
     allowedDates (date) {
       return this.disabledDates.indexOf(date) === -1 
     },
+
     getDisabledDates () {
       axios.get(`${process.env.MIX_API_URL}guest/schedules/get`)
       .then(({data}) => {
@@ -253,15 +255,21 @@ export default {
           })
         })
 
+        this.addDisabledDates().forEach(element => {
+          dates.push(element)
+        });
+
         this.disabledDates = dates
       })
       .catch((error) => {
         console.log(error.response)
       })
     },
+
     back () {
       this.$store.commit('request/BACK_PAGE')
     },
+
     proceed () {
       if (this.training_participants.length <= 0) {
         alert('Fill out training participants')
@@ -283,7 +291,20 @@ export default {
         time[0] = +time[0] % 12 || 12; // Adjust hours
       }
       return time.join (''); // return adjusted time or original string
-    }
+    },
+
+    addDisabledDates () {
+      var now = moment().format('YYYY-MM-DD')
+      var tomorrow = moment(now).add(1, 'day').format('YYYY-MM-DD')
+      var days = 5;
+      var disabled = [];
+
+      for (let index = 0; index < days; index++) {
+        disabled.push(moment(tomorrow).add(index, 'day').format('YYYY-MM-DD'))
+      }
+
+      return disabled
+    },
   }
 }
 </script>
