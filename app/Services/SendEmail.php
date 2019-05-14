@@ -2,11 +2,23 @@
 
 namespace App\Services;
 
-use App\Mail\ModuleCreated;
 use Illuminate\Support\Facades\Mail;
+use App\Services\FetchMailConfig;
 
 class SendEmail
 {
+    public function __construct(FetchMailConfig $fetch_mail_config)
+    {
+        $mail_credentials = $fetch_mail_config->get_mail_credentials('Fleet Training Request');
+
+        if ($mail_credentials) {
+            config([
+                'mail.username' => $mail_credentials->email,
+                'mail.password' => $mail_credentials->email_password,
+            ]);
+        }
+    }
+
     public function send($params)
     {
         $data = [
