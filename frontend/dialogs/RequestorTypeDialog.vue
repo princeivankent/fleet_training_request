@@ -9,8 +9,9 @@
         <v-card-title
           class="headline"
           primary-title
+          style="color: #444444"
         >
-          Who are you?
+          Please select which type <br/>of Requestor you are?
         </v-card-title>
 
         <v-card-text>

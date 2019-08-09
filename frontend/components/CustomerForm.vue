@@ -92,11 +92,11 @@
             <v-layout justify-center row wrap>
               <v-flex xs6 sm4>
                 <v-select
-                label="Isuzu Dealership Name"
-                name="Isuzu Dealership Name"
+                label="Selling Dealer"
+                name="Selling Dealer"
                 v-model="selling_dealer"
                 v-validate="'required'"
-                :error-messages="errors.first('Isuzu Dealership Name')"
+                :error-messages="errors.first('Selling Dealer')"
                 :items="dealers"
                 item-text="dealer"
                 item-value="dealer_id"
@@ -113,11 +113,11 @@
 
               <v-flex xs6 sm4>
                 <v-select
-                label="Isuzu Specific Model"
-                name="Isuzu Specific Model"
+                label="Owned Isuzu Vehicles"
+                name="Owned Isuzu Vehicles"
                 v-model="unit_models"
                 v-validate="'required'"
-                :error-messages="errors.first('Isuzu Specific Model')"
+                :error-messages="errors.first('Owned Isuzu Vehicles')"
                 :items="models"
 								item-text="model_name"
                 item-value="model_name"

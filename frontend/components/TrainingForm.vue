@@ -24,7 +24,7 @@
                   <v-text-field
                   slot="activator"
                   :value="dateFormatted"
-                  label="Request Training Date"
+                  label="Training Date"
                   append-icon="event"
                   outline
                   clearable
@@ -41,11 +41,46 @@
                   width="100%"
                   color="green"
                   scrollable
+                  dark
                   >
                     <v-spacer></v-spacer>
                     <v-btn flat color="green" @click="modal = false">Cancel</v-btn>
                     <v-btn flat color="green" @click="$refs.dialog.save(form.training_date)">OK</v-btn>
                   </v-date-picker>
+                </v-dialog>
+              </v-flex>
+            </v-layout>
+
+            <v-layout justify-center row wrap>
+              <v-flex xs8 sm8 md8 lg5>
+                <v-dialog
+                  ref="dialog2"
+                  v-model="timePickerModal"
+                  :return-value.sync="form.training_time"
+                  persistent
+                  lazy
+                  full-width
+                  width="290px"
+                >
+                  <v-text-field
+                  slot="activator"
+                  :value="timeFormatted"
+                  label="Training Time"
+                  append-icon="access_time"
+                  outline
+                  clearable
+                  readonly
+                  ></v-text-field>
+
+                  <v-time-picker
+                    v-if="timePickerModal"
+                    v-model="training_time"
+                    full-width
+                  >
+                    <v-spacer></v-spacer>
+                    <v-btn flat color="primary" @click="timePickerModal = false">Cancel</v-btn>
+                    <v-btn flat color="primary" @click="$refs.dialog2.save(form.training_time)">OK</v-btn>
+                  </v-time-picker>
                 </v-dialog>
               </v-flex>
             </v-layout>
@@ -67,11 +102,11 @@
             <v-layout justify-center row wrap>
               <v-flex xs8 sm8 md8 lg5>
                 <v-text-field
-                label="Training Address"
-                name="Training Address"
+                label="Training Venue Address"
+                name="Training Venue Address"
                 v-model="training_address"
                 v-validate="'required'"
-                :error-messages="errors.first('Training Address')"
+                :error-messages="errors.first('Training Venue Address')"
                 outline
                 ></v-text-field>
               </v-flex>
@@ -124,15 +159,20 @@ export default {
       // date: new Date().toISOString().substr(0, 10),
       modal: false,
       reactive: true,
-      training_venues: ['IPC Customer', 'IPC'],
+      training_venues: ['Fleet Customer Premises', 'Isuzu Training Center'], // Isuzu Training Center
       disabledDates: [],
       shouldDisable: false,
+      timePickerModal: false,
+      time: ''
     }
   },
   computed: {
     ...mapState('request', ['form']),
     dateFormatted () {
       return this.form.training_date ? moment(this.form.training_date).format('dddd, MMMM Do YYYY') : ''
+    },
+    timeFormatted () {
+      return this.form.training_time ? this.convertTime(this.form.training_time) : ''
     },
     isFormInvalid () {
       return Object.keys(this.fields).some(key => this.fields[key].invalid);
@@ -145,11 +185,26 @@ export default {
         this.$store.commit('request/UPDATE_FORM', {key:'training_date',value:val})
       }
     },
+    training_time: {
+      get () {
+        return this.$store.state.request.form.training_time
+      },
+      set (val) {
+        this.$store.commit('request/UPDATE_FORM', {key:'training_time',value:val})
+      }
+    },
     training_venue: {
       get () {
         return this.$store.state.request.form.training_venue
       },
       set (val) {
+        if (val === 'Isuzu Training Center') {
+          this.training_address = 'Isuzu Philippines Corporation 114 Technology Avenue Phase II, Laguna Technopark Biñan Laguna 4024 Philippines'
+        }
+        else {
+          this.training_address = ''
+        }
+
         this.$store.commit('request/UPDATE_FORM', {key:'training_venue',value:val})
       }
     },
@@ -176,7 +231,7 @@ export default {
       set (val) {
         this.$store.commit('request/UPDATE_FORM', {key:'training_participants',value:val})
       }
-    },
+    }
   },
   mounted () {
     this.getDisabledDates()
@@ -185,9 +240,11 @@ export default {
     updateForm (field, value) {
       this.$store.commit('request/UPDATE_FORM', {key:field,value:value})
     },
+
     allowedDates (date) {
       return this.disabledDates.indexOf(date) === -1 
     },
+
     getDisabledDates () {
       axios.get(`${process.env.MIX_API_URL}guest/schedules/get`)
       .then(({data}) => {
@@ -198,15 +255,21 @@ export default {
           })
         })
 
+        this.addDisabledDates().forEach(element => {
+          dates.push(element)
+        });
+
         this.disabledDates = dates
       })
       .catch((error) => {
         console.log(error.response)
       })
     },
+
     back () {
       this.$store.commit('request/BACK_PAGE')
     },
+
     proceed () {
       if (this.training_participants.length <= 0) {
         alert('Fill out training participants')
@@ -214,7 +277,34 @@ export default {
       else {
         this.$store.commit('request/NEXT_PAGE')
       }
-    }
+    },
+    /**
+     * Convert 24hr time into 12hr time (12:00 AM)
+     */
+    convertTime (time) {
+      // Check correct time format and split into components
+      time = time.toString().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+      if (time.length > 1) { // If time format correct
+        time = time.slice (1);  // Remove full string match value
+        time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
+        time[0] = +time[0] % 12 || 12; // Adjust hours
+      }
+      return time.join (''); // return adjusted time or original string
+    },
+
+    addDisabledDates () {
+      var now = moment().format('YYYY-MM-DD')
+      var tomorrow = moment(now).add(1, 'day').format('YYYY-MM-DD')
+      var days = 5;
+      var disabled = [];
+
+      for (let index = 0; index < days; index++) {
+        disabled.push(moment(tomorrow).add(index, 'day').format('YYYY-MM-DD'))
+      }
+
+      return disabled
+    },
   }
 }
 </script>

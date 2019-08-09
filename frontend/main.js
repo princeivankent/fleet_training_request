@@ -8,6 +8,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css'
 import {store} from './store/index';
 import ApiService from './services/api.service'
 import App from './App'
+import moment from 'moment'
 
 Vue.use(Vuetify)
 Vue.use(Vuex)
@@ -15,13 +16,14 @@ Vue.use(VeeValidate)
 
 // Set axios base URL
 const origin = window.location.origin
-const api = `${origin}/fleet_training_request/api/`
+const api = `${origin}/fleet_training_request/api`
 ApiService.init(api)
 
 Vue.mixin({
   data () {
     return {
-      base_url: process.env.MIX_PROD_URL
+      base_url: process.env.MIX_PROD_URL,
+      api_url: `${origin}/fleet_training_request/api/`
     }
   }
 })

@@ -4,11 +4,11 @@
       <v-card flat>
         <v-card-title primary-title>
           <div>
-            <h3 class="raleway headline mb-0">Choose Isuzu Model</h3>
+            <h3 class="raleway headline mb-0">
+              Choose the Isuzu model for the requested training
+            </h3>
             <v-btn 
             @click="back"
-            color="red darken-1" 
-            dark
             >
               <v-icon small>fa fa-arrow-circle-left</v-icon>&nbsp;
               Back
@@ -55,10 +55,16 @@ import { mapGetters, mapState } from 'vuex'
 
 export default {
   name: 'IsuzuModels',
-  computed: mapState('request', [
-    'form',
-    'unit_models'
-  ]),
+  computed: {
+    ...mapState('request', [
+      'form',
+      'unit_models'
+    ]),
+    ...mapGetters('request', [
+      'getCurrentPage',
+      'getSpecialTrainings'
+    ])
+  },
   created () {
     this.displayImages ()
   },
@@ -77,6 +83,10 @@ export default {
     },
     nextPage () {
       this.$store.commit('request/NEXT_PAGE')
+
+      if (this.getCurrentPage >= 5) {
+        this.$store.dispatch('request/setSpecialTrainings')
+      }
     },
     back () {
       this.$store.commit('request/BACK_PAGE')

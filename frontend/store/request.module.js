@@ -24,6 +24,7 @@ const request = {
 
       selling_dealer: [],
       training_date: '',
+      training_time: '',
       training_venue: '',
       training_address: '',
       training_program_id: 0,
@@ -53,6 +54,12 @@ const request = {
     getFeatures: state => payload => {
       const data = state.training_programs.find((item, index) => index === payload)
       return data.program_features
+    },
+    getCurrentPage (state) {
+      return state.current_page
+    },
+    getSpecialTrainings (state) {
+      return state.special_trainings
     }
   },
   mutations: {
@@ -92,6 +99,7 @@ const request = {
 
         selling_dealer: [],
         training_date: '',
+        training_time: '',
         training_venue: '',
         training_address: '',
         training_program_id: 0,
@@ -152,7 +160,10 @@ const request = {
       state.isSubmitting = false      
     },
     TRIGGER_NOTIFICATION: (state, payload) => state.toastNotif = {status: payload.status, message: payload.message},
-    CLOSE_NOTIFICATION: (state) => state.toastNotif = {status: false, message: ''}
+    CLOSE_NOTIFICATION: (state) => state.toastNotif = {status: false, message: ''},
+    RESET_SPECIAL_TRAININGS (state) {
+      state.special_trainings = []
+    }
   },
   actions: {
     requestorType ({commit}, requestor) {
@@ -187,10 +198,14 @@ const request = {
       const {data} = await ApiService.get('special_trainings')
       commit('SET_SPECIAL_TRAININGS', data)
     },
-    async submitRequest ({commit}, payload) {
+    async submitRequest ({commit,state}, payload) {
       commit('INITIALIZE_LOADER')
 
-      const submitRequest = async () => {
+      // Added Time on training_date for adjustment feature
+      let datetime = state.form.training_date + ' ' + state.form.training_time
+      payload['training_date'] = datetime
+
+      const submit = async () => {
         try {
           const {data} = await ApiService.post('submit', payload)
           return data
@@ -199,7 +214,7 @@ const request = {
         }
       }
 
-      submitRequest()
+      submit()
       .then(() => {
         commit('TERMINATE_LOADER')
       })

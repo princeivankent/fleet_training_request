@@ -2,11 +2,11 @@
   <v-layout>
     <v-flex>
       <v-card>
-        <v-card-title primary-title>
+        <!-- <v-card-title primary-title>
           <div>
             <h5 class="display-1">Choose Program</h5>
           </div>
-        </v-card-title>
+        </v-card-title> -->
 
         <v-card-text>
           <v-alert
@@ -14,10 +14,13 @@
           color="red lighten-1"
           >
             <p><i class="fa fa-bell"></i>&nbsp; Important Reminders</p>
-            <ul>
-              <li>Make sure all date given is correct, for this will serve as our guide for your trining request.</li>
-              <li>Please check your email regularly for the final notification and training reminders</li>
-            </ul>
+            <ol>
+              <li>All data provided will serve as our guide for your training request.</li>
+              <li>In case you have correction with the information you provided, changes on training venue, please contact your Isuzu dealer immediately.</li>
+              <li>
+                Please regulary check your registered email address for the updates of your training request. <br>
+              </li>
+            </ol>
             <br>
             <p>
               In case you need an update on your request you may contact <strong>Isuzu Training Department</strong><br>
@@ -91,6 +94,7 @@ export default {
     },
     back () {
       this.$store.commit('request/BACK_PAGE')
+      this.$store.commit('request/RESET_SPECIAL_TRAININGS')
     },
     changeButtonState () {
       this.button_status = Object.assign({}, this.button_status, {

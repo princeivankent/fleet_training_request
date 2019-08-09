@@ -12,15 +12,20 @@
 
             <v-layout justify-center row wrap>
               <v-flex xs6 sm6>
-                <v-text-field
+                <v-select
                 label="Isuzu Dealership Name"
-                name="Dealership Name"
+                name="Isuzu Dealership Name"
                 v-model="dealership_name"
                 v-validate="'required'"
+                :items="dealers"
+                item-text="dealer"
+                item-value="dealer"
                 :error-messages="errors.first('Dealership Name')"
+                search-input
                 outline
                 required
-                ></v-text-field>
+                >
+                </v-select>
               </v-flex>
             </v-layout>
 
@@ -97,9 +102,15 @@
 
 <script>
 import { mapState } from 'vuex'
+import axios from 'axios'
 
 export default {
   name: 'DealerForm',
+  data () {
+    return {
+      dealers: []
+    }
+  },
   computed: {
     ...mapState('request', ['form']),
     isFormInvalid () {
@@ -146,12 +157,27 @@ export default {
       }
     }
   },
+  mounted () {
+    this.getDealers()
+  },
   methods: {
     updateForm (field, value) {
       this.$store.commit('request/UPDATE_DEALER_FORM', {key:field,value:value})
     },
     proceed () {
       this.$store.commit('request/NEXT_PAGE')
+    },
+    getDealers () {
+      axios.get(`${this.api_url}/guest/dealers/get`)
+      .then(({data}) => {
+        data.forEach(element => {
+          element.dealer = element.dealer + ' | ' + element.branch
+        });
+        this.dealers = data
+      })
+      .catch((error) => {
+        console.log(error)
+      })
     }
   }
 }
